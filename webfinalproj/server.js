@@ -16,10 +16,10 @@ const User = mongoose.model('User', {
   type: String,
   required: true,
   },
-//   role: {
-//     type: String,
-//     required: true,
-//   },
+  role: {
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
     unique: true,
@@ -33,20 +33,23 @@ const User = mongoose.model('User', {
 
 app.post('/user/create', async (req, res) => {
   try {
-    const { fullName, email, password } = req.body;
+    const { fullName,role, email, password } = req.body;
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^(?!^\s*$)[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({ message: 'Invalid email format' });
     }
-
-    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    const passwordRegex = /^(?!^\s*$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
     if (!passwordRegex.test(password)) {
       return res.status(400).json({ message: 'Invalid password format' });
     }
-    const fullNameRegex = /^[A-Za-z\s]+$/;
+    const fullNameRegex = /^(?!^\s*$)[A-Za-z\s]+$/;
     if (!fullNameRegex.test(fullName)) {
       return res.status(400).json({ message: 'Full name must contain only letters and spaces.' });
+    }
+    const roleRegex = /^(?!^\s*$)[A-Za-z\s]+$/;
+    if (!roleRegex.test(role)) {
+      return res.status(400).json({ message: 'Role must contain only letters and spaces.' });
     }
 
   
@@ -54,6 +57,7 @@ app.post('/user/create', async (req, res) => {
 
     const user = new User({
       fullName,
+      role,
       email,
       password: hashedPassword
     });
@@ -102,9 +106,15 @@ app.put('/user/edit', async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
+    if(!fullName){
+      return res.status(400).json({ message: 'Full name cant be emmpty.' });
+    }
+    if(!password){
+      return res.status(400).json({ message: 'Password cant be emmpty.' });
+    }
 
     if (fullName) {
-      const fullNameRegex = /^[A-Za-z\s]+$/;
+      const fullNameRegex = /^(?!^\s*$)[A-Za-z\s]+$/;
       if (!fullNameRegex.test(fullName)) {
         return res.status(400).json({ message: 'Full name must contain only letters and spaces.' });
       }
@@ -113,7 +123,7 @@ app.put('/user/edit', async (req, res) => {
 
     if (password) {
 
-      const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+      const passwordRegex = /^(?!^\s*$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
       if (!passwordRegex.test(password)) {
         return res.status(400).json({ message: 'Invalid password format' });
       }
@@ -153,7 +163,7 @@ app.delete('/user/delete', async (req, res) => {
 
 app.get('/user/getAll', async (req, res) => {
   try {
-    const users = await User.find({}, 'fullName email password');
+    const users = await User.find({}, 'fullName role email password');
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ message: 'An error occurred' });
