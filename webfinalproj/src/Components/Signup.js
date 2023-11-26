@@ -6,6 +6,7 @@ function SignUpForm() {
   const [formData, setFormData] = useState({
     fullName: '',
     role: '',
+    role: '',
     email: '',
     password: '',
     confirmPassword: ''
@@ -26,7 +27,60 @@ function SignUpForm() {
       console.error("Passwords do not match");
     }
   };
-  
+
+  const containerStyle = {
+    // backgroundImage: `url(${backgroundImage})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    height: '100vh',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '0 20px', // Add padding on the sides
+  };
+
+  const formStyle = {
+    padding: '2rem',
+    maxWidth: '400px',
+    width: '100%',
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    borderRadius: '8px',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '20px', // Use gap to add space between form items
+  };
+
+  const labelStyle = {
+    fontSize: '1rem',
+    fontWeight: '600',
+    marginBottom: '0.5rem', // Space between label and input
+  };
+
+  const inputStyle = {
+    padding: '0.75rem 1rem',
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+    fontSize: '1rem',
+  };
+
+  const buttonStyle = {
+    padding: '0.75rem 1rem',
+    border: 'none',
+    borderRadius: '4px',
+    backgroundColor: '#007bff',
+    color: 'white',
+    fontSize: '1rem',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s',
+    marginTop: '1rem', // Add space before the button
+  };
+
+
+
+  //api test
 
   const signup = async () => {
     const email = formData.email;
@@ -56,76 +110,56 @@ function SignUpForm() {
     }
   };
 
-  
+
+
+  ////
   return (
-    <div className="vh-100 d-flex align-items-center justify-content-center"
-         style={{ 
-           backgroundImage: 'url(/signup.jpg)', 
-           backgroundSize: 'cover',
-           backgroundPosition: 'center',
-           backgroundRepeat: 'no-repeat',
-         }}>
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-md-4 col-lg-5"> {/* Adjust col sizes as needed */}
-            <form onSubmit={handleSubmit} className="p-4 bg-white rounded shadow">
-              <h2 className="text-center mb-4">Sign Up</h2>
-              <div className="mb-3">
-                <label className="form-label">Full Name</label>
-                <input
-                  type="text"
-                  name="fullName"
-                  className="form-control"
-                  value={formData.fullName}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Role</label>
-                <input
-                  type="role"
-                  name="role"
-                  className="form-control"
-                  value={formData.role}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  className="form-control"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  className="form-control"
-                  value={formData.password}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="mb-4">
-                <label className="form-label">Confirm Password</label>
-                <input
-                  type="password"
-                  name="confirmPassword"
-                  className="form-control"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                />
-              </div>
-              <button type="submit"   onClick={signup}  className="btn btn-primary w-100"> Create new account</button>
-            </form>
-            
-          </div>
+    <div style={containerStyle}>
+    
+      <form onSubmit={handleSubmit} style={formStyle}>
+        <h2 style={{ textAlign: 'center' }}>Sign Up</h2>
+        <div>
+        <label style={labelStyle}>Full Name</label>
+          <input
+            type="text"
+            name="fullName"
+            style={inputStyle}
+            value={formData.fullName}
+            onChange={handleChange}
+          />
         </div>
-      </div>
+        <div>
+        <label style={labelStyle}>Email</label>
+          <input
+            type="email"
+            name="email"
+            style={inputStyle}
+            value={formData.email}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+        <label style={labelStyle}>Password</label>
+          <input
+            type="password"
+            name="password"
+            style={inputStyle}
+            value={formData.password}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+        <label style={labelStyle}>Confirm Password</label>
+          <input
+            type="password"
+            name="confirmPassword"
+            style={inputStyle}
+            value={formData.confirmPassword}
+            onChange={handleChange}
+          />
+        </div>
+        <button type="submit" onClick={signup} style={buttonStyle}>Create new account</button>
+      </form>
     </div>
   );
 }
