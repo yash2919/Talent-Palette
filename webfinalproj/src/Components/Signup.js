@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function SignUpForm() {
   const [formData, setFormData] = useState({
     fullName: '',
+    role: '',
     email: '',
     password: '',
     confirmPassword: ''
@@ -26,6 +27,36 @@ function SignUpForm() {
     }
   };
   
+
+  const signup = async () => {
+    const email = formData.email;
+    const password = formData.password;
+    const fullName=formData.fullName;
+    const role="artist"
+
+    try {
+      const response = await fetch('http://localhost:3000/user/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify( {fullName,role,email,password} ),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert(data.message);
+      //  navigate('/home');
+      } else {
+        alert(`SignUp failed: ${data.message}`);
+      }
+    } catch (error) {
+      console.error('Error during signUp:', error);
+      alert('An error occurred during signUp.');
+    }
+  };
+
+  
   return (
     <div className="vh-100 d-flex align-items-center justify-content-center"
          style={{ 
@@ -46,6 +77,16 @@ function SignUpForm() {
                   name="fullName"
                   className="form-control"
                   value={formData.fullName}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Role</label>
+                <input
+                  type="role"
+                  name="role"
+                  className="form-control"
+                  value={formData.role}
                   onChange={handleChange}
                 />
               </div>
@@ -79,7 +120,7 @@ function SignUpForm() {
                   onChange={handleChange}
                 />
               </div>
-              <button type="submit" className="btn btn-primary w-100">Create new account</button>
+              <button type="submit"   onClick={signup}  className="btn btn-primary w-100"> Create new account</button>
             </form>
             
           </div>

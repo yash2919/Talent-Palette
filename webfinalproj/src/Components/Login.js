@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
-  const login = async () => {
+  const login = async (event) => {
+    event.preventDefault(); // Prevent default form submission behavior
+
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
     try {
       const response = await fetch('http://localhost:3000/user/login', {
         method: 'POST',
@@ -20,7 +23,7 @@ function Login() {
       const data = await response.json();
       if (response.ok) {
         alert(data.message);
-        navigate('/home');
+        // navigate('/home'); // Navigation is commented out
       } else {
         alert(`Login failed: ${data.message}`);
       }
@@ -35,19 +38,16 @@ function Login() {
         backgroundImage: 'url(/artistic.jpg)', 
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
-        backgroundPosition: 'center' // This ensures the image is centered in the container
+        backgroundPosition: 'center'
       }}>
       <div className="row min-vh-100 align-items-center justify-content-center">
         <div className="col-md-6 text-center text-md-start">
-          {/* Marquee tag for scrolling text */}
           <h1 className="display-4">Talent Palette</h1>
           <marquee behavior="scroll" direction="left" scrollamount="5">
-            
             <p className="lead d-none d-md-block">
-            Connect with talents and the world around you on Talent Palette.
-          </p>
+              Connect with talents and the world around you on Talent Palette.
+            </p>
           </marquee>
-          
         </div>
 
         <div className="col-md-4">
@@ -59,8 +59,6 @@ function Login() {
                   className="form-control"
                   id="email"
                   placeholder="Email or phone number"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </div>
@@ -70,13 +68,11 @@ function Login() {
                   className="form-control"
                   id="password"
                   placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
                   required
                 />
               </div>
               <div className="d-grid gap-2 mb-3">
-                <button type="submit" className="btn btn-primary">Log In</button>
+                <button type="submit" className="btn btn-primary"   onClick={login}>Log In</button>
                 <button type="button" className="btn btn-link">Forgot password?</button>
               </div>
               <div className="text-center">
