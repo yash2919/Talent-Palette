@@ -8,8 +8,8 @@
     "@testing-library/user-event": "^13.5.0",
     "bcrypt": "^5.1.1",
     "mongodb": "^6.3.0",
-    "mongoose": "^8.0.1",
-    "mongose": "^0.0.2-security",
+
+    
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.0",
