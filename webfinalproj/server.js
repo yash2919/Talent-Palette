@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const app = express();
-
+const cors = require('cors');
 app.use(bodyParser.json());
-
+app.use(cors());
 mongoose.connect('mongodb+srv://webd:webd@dbwebd.hvwp00i.mongodb.net/', {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -71,7 +71,7 @@ app.post('/user/create', async (req, res) => {
 
     res.status(201).json({ message: 'User created successfully' });
   } catch (error) {
-    res.status(500).json({ message: 'An error occurred' });
+    res.status(500).json({ message: error.message });
   }
 });
 
@@ -90,10 +90,11 @@ app.post('/user/login', async (req, res) => {
     if (!isPasswordValid) {
       throw new Error('Invalid password');
     }
-  
+    
     res.status(200).json({ message: 'Login successful', user });
   } catch (error) {
-    res.status(401).json({ message: 'Login failed', error: error.message });
+    console.log(error.message);
+    res.status(401).json({ message: error.message });
   }
 });
 app.put('/user/edit', async (req, res) => {
