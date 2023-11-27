@@ -1,97 +1,100 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Routes, Route, Link } from "react-router-dom";
+import styled, { keyframes } from "styled-components";
+import { useNavigate } from "react-router-dom";
 import image1 from "../assets/images/Lan.webp";
 import image2 from "../assets/images/dancers.jpg";
 import image3 from "../assets/images/artist.jpg";
 import image4 from "../assets/images/hire_musician.jpg";
 import image5 from "../assets/images/paint.jpeg";
 import image6 from "../assets/images/sing.jpg";
-import styled from "styled-components";
-import SignUpForm from "./Signup";
-import Login from "./Login";
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 
 const AppWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  background-color: #121212; /* Dark background color */
-  color: #ffffff; /* Text color */
-`;
-
-const Header = styled.header`
-  padding: 1em;
-  text-align: center;
-  background-color: #333; /* Header background color */
+  height: 100vh;
+  background-color: #121212;
+  color: #ffffff;
+  overflow: hidden;
 `;
 
 const Main = styled.div`
   display: flex;
   flex: 1;
+  transition: transform 1s ease;
 `;
 
 const LeftSection = styled.div`
   flex: 0.7;
   position: relative;
   overflow: hidden;
-  max-width: 70%; /* Set a fixed width for the LeftSection */
+  max-width: 70%;
 `;
 
 const ImageContainer = styled.div`
   display: flex;
-  transition: transform 1s ease; /* Slower transition for shuffling */
-  overflow: hidden;
+  transition: transform 1s ease;
+  width: ${(props) => `${props.totalimages * 100}%`};
+  transform: translateX(
+    ${(props) => `-${(props.currentindex / props.totalimages) * 100}%`}
+  );
 `;
 
 const Image = styled.img`
   width: 100%;
   height: auto;
-  object-fit: cover; /* Maintain aspect ratio while covering the container */
-`;
-
-const TextOverlay = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1; /* Ensure text is on top of images */
-  text-align: center;
-  color: #61dafb; /* Text color for overlay */
+  object-fit: cover;
 `;
 
 const Content30 = styled.div`
   flex: 0.3;
   padding: 20px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #1a1a1a; /* Dark background color for right section */
-  color: #ffffff; /* Text color for right section */
+  background-color: #1a1a1a;
+  color: #ffffff;
+  text-align: center;
+  animation: ${fadeIn} 2s forwards;
 `;
 
 const ButtonContainer = styled.div`
-  text-align: center;
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
 `;
 
 const CtaButton = styled.button`
   margin: 10px;
-  padding: 10px 20px;
+  padding: 15px 30px;
   font-size: 16px;
-  background-color: #61dafb; /* Button background color */
-  color: #ffffff; /* Button text color */
+  width: 200px;
+  background: linear-gradient(to right, #61dafb, #4fa3d1);
+  color: #000000;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.5s ease; /* Slightly faster transition on hover */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
-    background-color: #4fa3d1; /* Button background color on hover */
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   }
 `;
 
 const Footer = styled.footer`
   padding: 1em;
   text-align: center;
-  background-color: #333; /* Footer background color */
+  background-color: #333;
 `;
 
 const images = [image1, image2, image3, image4, image5, image6];
@@ -102,56 +105,56 @@ const WelApp = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 5000); /* Slower interval for a more relaxed transition */
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [currentIndex, images.length]);
 
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate("/login");
+  };
+
+  const handleSignup = () => {
+    navigate("/signup");
+  };
+
   return (
     <AppWrapper>
-      <Header>
-        <h1>Talent Palette</h1>
-      </Header>
-
       <Main>
         <LeftSection>
           <ImageContainer
-            style={{ transform: `translateX(${-currentIndex * 100}%)` }}
+            totalimages={images.length}
+            currentindex={currentIndex}
           >
             {images.map((image, index) => (
               <Image key={index} src={image} alt={`Image ${index}`} />
             ))}
           </ImageContainer>
-          <TextOverlay>
-            <h2>Welcome to Talent Palette</h2>
-            <p>Your go-to platform for exploring and showcasing talent!</p>
-          </TextOverlay>
         </LeftSection>
 
         <Content30>
+          <h2
+            style={{
+              fontFamily: "cursive",
+              fontSize: "2em",
+              marginBottom: "10px",
+            }}
+          >
+            Welcome to Talent Palette
+          </h2>
+          <p style={{ fontSize: "1.2em" }}>
+            Your go-to platform for exploring and showcasing talent!
+          </p>
           <ButtonContainer>
-            <CtaButton>Login</CtaButton>
-            <CtaButton>SignUp</CtaButton>
+            <CtaButton onClick={handleLogin}>Login</CtaButton>
+            <CtaButton onClick={handleSignup}>SignUp</CtaButton>
           </ButtonContainer>
         </Content30>
       </Main>
-
-      <Footer>
-        <p>&copy; 2023 Talent Palette. All rights reserved.</p>
-      </Footer>
     </AppWrapper>
   );
-};
-
-export {
-  AppWrapper,
-  Header,
-  Main,
-  LeftSection,
-  Content30,
-  ButtonContainer,
-  CtaButton,
-  Footer,
 };
 
 export default WelApp;
