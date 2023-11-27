@@ -4,13 +4,26 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const app = express();
 const cors = require('cors');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 app.use(bodyParser.json());
 app.use(cors());
 mongoose.connect('mongodb+srv://webd:webd@dbwebd.hvwp00i.mongodb.net/', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
-
+app.use(session({
+  name: 'cookie.sid',
+  secret: 'key777',
+  httpOnly: true,
+  secure: true,
+  maxAge: 1000 * 60 * 60 * 7,
+  resave: false,
+  saveUninitialized: true,
+  store: MongoStore.create({
+      mongoUrl: 'mongodb+srv://webd:webd@dbwebd.hvwp00i.mongodb.net/'
+  })
+}));
 const User = mongoose.model('User', {
   fullName: {
   type: String,
@@ -30,6 +43,28 @@ const User = mongoose.model('User', {
   required: true,
   }
 });
+
+app.get('/name', (req, res) => {
+  let name;
+
+  if (!req.session.user) {
+      return res.status(404).send("No User Logged in");
+  }
+
+  name = req.session.user.name;
+
+  return res.status(200).send({name});
+})
+app.post('/logout', async (req, res, next) => {
+  try {
+      await req.session.destroy();
+  } catch (err) {
+      console.error('Error logging out:', err);
+      return next(new Error('Error logging out'));
+  }
+  
+  return res.status(200).send("loggedOut");
+})
 
 app.post('/user/create', async (req, res) => {
   try {
@@ -74,6 +109,22 @@ app.post('/user/create', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+app.post('/', async (req, res, next) => {
+  const {name} = req.body;
+  req.session.user = {
+      name,
+      isLoggedIn: true
+  }
+
+  try {
+      await req.session.save();
+  } catch (err) {
+      console.error('Error saving to session storage: ', err);
+      return next(new Error('Error creating user'));
+  }
+
+  res.status(200).send();
+})
 
 app.post('/user/login', async (req, res) => {
   try {
