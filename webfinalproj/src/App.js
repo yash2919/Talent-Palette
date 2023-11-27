@@ -4,7 +4,7 @@ import SignUpForm from "./Components/Signup"; // Ensure this path is correct
 import Login from "./Components/Login";
 import "./App.css";
 import Navbar from "./Components/Header/Navbar";
-import Landing from "./Components/Landingpage";
+
 import WelApp from "./Components/wel";
 
 function App() {
@@ -15,7 +15,6 @@ function App() {
         <Route path="/home" element={<Navbar />} />
         <Route path="/signup" element={<SignUpForm />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/welcome" element={<Landing />} />
       </Routes>
     </BrowserRouter>
   );
