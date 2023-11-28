@@ -15,7 +15,7 @@ function Navbar() {
     { label: "Home", path: "/" },
     { label: "Profession", path: "/profession" },
     { label: "My Profile", path: "/profile" },
-    { label: "Sign In or Register", path: "/login" },
+    { label: "Sign Out", path: "/" },
   ];
   const NavItem = ({ to, icon, label }) => (
     <li className="nav-item">
@@ -28,10 +28,11 @@ function Navbar() {
   return (
     <nav className="navbar">
       <ul className="nav-list">
-        <NavItem to="/" icon={faHome} label="Home" />
+        <NavItem to="/home" icon={faHome} label="Home" />
         <NavItem to="/profession" icon={faBriefcase} label="Profession" />
         <NavItem to="/profile" icon={faUser} label="My Profile" />
-        <NavItem to="/login" icon={faSignInAlt} label="Sign In or Register" />
+        <NavItem to="/profile" icon={faUser} label="Contact Us" />
+        <NavItem to="/" icon={faSignInAlt} label="Sign Out" />
       </ul>
     </nav>
   );

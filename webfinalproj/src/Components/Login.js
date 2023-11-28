@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import image3 from "../assets/images/paint.jpeg";
 
 function Login() {
   const navigate = useNavigate();
@@ -23,8 +22,8 @@ function Login() {
 
       const data = await response.json();
       if (response.ok) {
-        alert(data.message);
-        // navigate('/home'); // Navigation is commented out
+        //  alert(data.message);
+        navigate("/home");
       } else {
         alert(`Login failed: ${data.message}`);
       }
@@ -38,7 +37,7 @@ function Login() {
     <div
       className="container-fluid py-5"
       style={{
-        backgroundImage: image3,
+        backgroundImage: "url(/signup.jpg)",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "center",
