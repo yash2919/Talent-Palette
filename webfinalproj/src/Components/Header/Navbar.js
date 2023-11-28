@@ -12,7 +12,7 @@ import {
 
 function Navbar() {
   const menuData = [
-    { label: "Home", path: "/" },
+    { label: "Home", path: "/home" },
     { label: "Profession", path: "/profession" },
     { label: "My Profile", path: "/profile" },
     { label: "Sign Out", path: "/" },
