@@ -6,26 +6,61 @@ const app = express();
 const cors = require("cors");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
+const axios=require("axios");
+const cookieParser=require("cookie-parser")
+app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(cors());
+const allowedOrigins = ["http://localhost:3001", "http://localhost:3000","http://localhost:3000/email","localhost"]; // Add your actual domain here
+
+// Configure CORS with specific origins and credentials
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ["POST","GET"],
+  credentials: true, // Allow credentials (cookies)
+};
+
+app.use(cors(corsOptions));
+
+axios.defaults.withCredentials = true;
+
 mongoose.connect("mongodb+srv://webd:webd@dbwebd.hvwp00i.mongodb.net/", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+// app.use(
+//   session({
+//     name: "cookie.sid",
+//     secret: "key777",
+//     // httpOnly: true,
+//     secure: true,
+//     maxAge: 1000 * 60 * 60 * 7,
+//     resave: false,
+//     saveUninitialized: true,
+//     store: MongoStore.create({
+//       mongoUrl: "mongodb+srv://webd:webd@dbwebd.hvwp00i.mongodb.net/",
+//     }),
+//   })
+// );
 app.use(
   session({
     name: "cookie.sid",
     secret: "key777",
-    httpOnly: true,
-    secure: true,
+    secure: false,
     maxAge: 1000 * 60 * 60 * 7,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: MongoStore.create({
       mongoUrl: "mongodb+srv://webd:webd@dbwebd.hvwp00i.mongodb.net/",
     }),
   })
 );
+
 const User = mongoose.model("User", {
   fullName: {
     type: String,
@@ -45,17 +80,43 @@ const User = mongoose.model("User", {
     required: true,
   },
 });
+app.post("/user/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
 
-app.get("/name", (req, res) => {
-  let name;
+    if (!user) {
+      throw new Error("User not found");
+    }
 
-  if (!req.session.user) {
-    return res.status(404).send("No User Logged in");
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      throw new Error("Invalid password");
+    }
+    if(user){
+      req.session.email1 = user.email;
+      await req.session.save(); // Save the session after setting data
+  
+  //  console.log(req.session.email1+"s");
+    }
+
+    res.status(200).json({ message: "Login successful", user });
+  
+  } catch (error) {
+    console.log(error.message);
+    res.status(401).json({ message: error.message });
   }
-
-  name = req.session.user.name;
-
-  return res.status(200).send({ name });
+});
+app.get("/", (req, res) => {
+  if (req.session.email1) {
+    console.log("logged in");
+   // return res.status(200).send(req.session.email1);
+    return res.json({ valid: true, email: req.session.email1 });
+  } else {
+    console.log("dhccchs");
+    return res.json({valid: false});
+  }
 });
 app.post("/logout", async (req, res, next) => {
   try {
@@ -114,45 +175,24 @@ app.post("/user/create", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-app.post("/", async (req, res, next) => {
-  const { name } = req.body;
-  req.session.user = {
-    name,
-    isLoggedIn: true,
-  };
+// app.post("/", async (req, res, next) => {
+//   const { name } = req.body;
+//   req.session.user = {
+//     name,
+//     isLoggedIn: true,
+//   };
 
-  try {
-    await req.session.save();
-  } catch (err) {
-    console.error("Error saving to session storage: ", err);
-    return next(new Error("Error creating user"));
-  }
+//   try {
+//     await req.session.save();
+//   } catch (err) {
+//     console.error("Error saving to session storage: ", err);
+//     return next(new Error("Error creating user"));
+//   }
 
-  res.status(200).send();
-});
+//   res.status(200).send();
+// });
 
-app.post("/user/login", async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
-    console.log(email);
-    console.log(password);
-    if (!user) {
-      throw new Error("User not found");
-    }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-
-    if (!isPasswordValid) {
-      throw new Error("Invalid password");
-    }
-
-    res.status(200).json({ message: "Login successful", user });
-  } catch (error) {
-    console.log(error.message);
-    res.status(401).json({ message: error.message });
-  }
-});
 app.put("/user/edit", async (req, res) => {
   try {
     const { fullName, email, password } = req.body;

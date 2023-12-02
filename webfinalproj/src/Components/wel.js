@@ -103,6 +103,39 @@ const WelApp = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
+    async function fetchUserEmail() {
+      try {
+          const response = await fetch('http://localhost:3000', {
+            method: 'GET',
+            credentials: 'include', // Send cookies with the request
+          });
+      
+          if (response.ok ) {
+            const data = await response.json();
+            console.log(data.email); // Handle email data as needed
+            
+            if(data.email!=null)
+           navigate("/home");
+          else{
+            //
+          }
+          
+
+          } else {
+            throw new Error('Failed to fetch email');
+          }
+        } catch (error) {
+          console.error('Error fetching email:', error);
+          // Handle errors
+        }
+  }
+  
+
+   fetchUserEmail();
+
+
+
+
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
     }, 5000);
