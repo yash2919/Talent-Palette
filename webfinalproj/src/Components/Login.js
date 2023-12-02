@@ -1,9 +1,45 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import  { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function Login() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    async function fetchUserEmail() {
+        try {
+            const response = await fetch('http://localhost:3000', {
+              method: 'GET',
+              credentials: 'include', // Send cookies with the request
+            });
+        
+            if (response.ok ) {
+              const data = await response.json();
+              console.log(data.email); // Handle email data as needed
+    
+
+            if(data.valid===false){
+             // chill
+            }
+            else{
+              navigate("/home");
+            }
+            
+
+            } else {
+              throw new Error('Failed to fetch email');
+            }
+          } catch (error) {
+            console.error('Error fetching email:', error);
+            // Handle errors
+          }
+    }
+    
+
+     fetchUserEmail();
+  
+  }, []);
 
   const login = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior

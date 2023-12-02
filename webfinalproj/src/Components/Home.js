@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Navbar from "./Header/Navbar"
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState(null);
 
   useEffect(() => {
@@ -15,9 +17,13 @@ function Home() {
         
             if (response.ok) {
               const data = await response.json();
-              console.log(data.email); // Handle email data as needed
+              console.log(data); // Handle email data as needed
               
               //if()
+              if(data.valid===false){
+                navigate('/');
+              }
+              else
             setUserEmail(data.email);
 
             } else {
