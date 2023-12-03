@@ -4,6 +4,8 @@ import Navbar from "./Header/Navbar";
 import { useNavigate } from "react-router-dom";
 import Card from "./Common/PostCard/FeedCard";
 import image3 from "../assets/images/artist.jpg";
+import CreatePost from "../Components/Post";
+
 
 function Home() {
   const navigate = useNavigate();
@@ -56,6 +58,7 @@ function Home() {
         <p>No user logged in or error fetching user email</p>
       )}
       <div>
+        <CreatePost userProfilePicture={image3} />
         <Card {...samplePost} />
       </div>
     </div>

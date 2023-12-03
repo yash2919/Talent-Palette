@@ -1,0 +1,192 @@
+/* Post.css */
+
+.create-post-container {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1) inset;
+  width: 45%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 16px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.create-post-container:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.2) inset;
+}
+
+.user-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+.user-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 16px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.user-image:hover {
+  transform: scale(1.1);
+}
+
+.start-post-button {
+  cursor: pointer;
+  background-color: #fff;
+  outline: none;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+}
+
+.media-buttons {
+  display: flex;
+  gap: 12px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.post-box::placeholder {
+  font-size: 21px; 
+}
+
+.post-box {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  resize: none;
+  transition: background-color 0.3s;
+}
+
+.post-box:hover {
+  background-color: #f0f0f0;
+}
+
+.media-button {
+  cursor: pointer;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  outline: none;
+  border: none;
+  padding: 8px 35px;
+  border-radius: 4px;
+  margin-right: 45px;
+}
+
+.media-buttons .media-button:last-child {
+  margin-right: 0;
+}
+
+.media-buttons .media-button:first-child {
+  margin-left: 85px;
+}
+
+.media-type-icon {
+  font-size: 2rem;
+  margin-right: 8px;
+}
+
+.media-button svg {
+  margin-right: 8px;
+}
+
+.media-button:hover {
+  background-color: #0073b1;
+  color: #fff;
+}
+
+/* Style for Media Modal */
+.media-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-60%, -50%);
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 250px;
+  z-index: 1000;
+}
+
+.close-modal-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.close-icon {
+  font-size: 1.5rem;
+  color: #999;
+}
+
+.media-modal h3 {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+}
+
+.media-modal textarea {
+  display: block;
+  margin-bottom: 16px;
+  width: 100%;
+  padding: 150px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.media-modal input {
+  display: block;
+  margin-bottom: 16px;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.media-modal button {
+  background-color: #0073b1;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.media-modal button:hover {
+  background-color: #005686;
+}
+
+.uploaded-files {
+  margin-top: 20px;
+}
+
+.uploaded-files h3 {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+}
+
+.uploaded-files ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.uploaded-files li {
+  margin-bottom: 8px;
+}
