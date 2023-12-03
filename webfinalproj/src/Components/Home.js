@@ -6,6 +6,7 @@ import Card from "./Common/PostCard/FeedCard";
 import image3 from "../assets/images/artist.jpg";
 import CreatePost from "../Components/Post";
 
+
 function Home() {
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState(null);
