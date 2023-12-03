@@ -1,0 +1,14 @@
+/* PortfolioPage.css */
+.portfolio-page {
+    max-width: 800px;
+    margin: auto;
+  }
+  
+  .profile-section img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+  }
+  
+  /* Further styling for about-section, skills-section, experience-section, etc. */
+  
