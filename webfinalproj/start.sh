@@ -4,9 +4,11 @@ npm install
 
 npm install bcrypt mongoose
 
+npm install react-type-animation
+
 node server.js
 
-npm start
+
 
 
 # git fetch origin main
