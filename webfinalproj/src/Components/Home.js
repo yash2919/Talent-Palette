@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Navbar from "./Header/Navbar";
 import { useNavigate } from "react-router-dom";
-import Card from "../Components/FeedCard";
+import Card from "./Common/PostCard/FeedCard";
 import image3 from "../assets/images/artist.jpg";
 
 function Home() {

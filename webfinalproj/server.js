@@ -10,9 +10,9 @@ const axios=require("axios");
 const cookieParser=require("cookie-parser")
 app.use(cookieParser());
 app.use(bodyParser.json());
+const postRouter = require('./api/routes/postRouter');
 const allowedOrigins = ["http://localhost:3001", "http://localhost:3000","http://localhost:3000/email","localhost"]; // Add your actual domain here
 
-// Configure CORS with specific origins and credentials
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -79,7 +79,15 @@ const User = mongoose.model("User", {
     type: String,
     required: true,
   },
+  about:{
+    type: String
+  }
 });
+
+
+app.use('/post', postRouter);
+
+
 app.post("/user/login", async (req, res) => {
   try {
     const { email, password } = req.body;
