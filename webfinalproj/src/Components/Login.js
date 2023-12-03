@@ -47,6 +47,8 @@ function Login() {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
+  
+
     try {
       const response = await fetch("http://localhost:3000/user/login", {
         method: "POST",
@@ -70,25 +72,28 @@ function Login() {
     }
   };
 
+
+  const handleSignup = () => {
+    navigate("/Signup");
+  };
+
   return (
     <div
       className="container-fluid py-5"
       style={{
-        backgroundImage: "url(/signup.jpg)",
+        // backgroundImage: "url(/login_.jpg)",
+       backgroundColor:"#483d8b",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      <div className="row min-vh-100 align-items-center justify-content-center">
-        <div className="col-md-6 text-center text-md-start">
-          <h1 className="display-4">Talent Palette</h1>
-          <marquee behavior="scroll" direction="left" scrollamount="5">
-            <p className="lead d-none d-md-block">
-              Connect with talents and the world around you on Talent Palette.
-            </p>
-          </marquee>
-        </div>
+     <div className="row min-vh-100 align-items-center justify-content-center">
+  <div className="col-md-6 text-center text-md-start">
+    <h1 className="display-3 text-white">Talent Palette</h1>
+    <h2 className="text-white">Connect with talents and the world around you on Talent Palette.</h2>
+  </div>
+
 
         <div className="col-md-4">
           <div className="card p-4 shadow">
@@ -98,7 +103,7 @@ function Login() {
                   type="email"
                   className="form-control"
                   id="email"
-                  placeholder="Email or phone number"
+                  placeholder="Email"
                   required
                 />
               </div>
@@ -119,12 +124,12 @@ function Login() {
                 >
                   Log In
                 </button>
-                <button type="button" className="btn btn-link">
+                {/* <button type="button" className="btn btn-link">
                   Forgot password?
-                </button>
+                </button> */}
               </div>
               <div className="text-center">
-                <button type="button" className="btn btn-success">
+                <button type="button" className="btn btn-secondary"  onClick={handleSignup}  style={{ backgroundColor: '#483d8b'}}>  
                   Create new account
                 </button>
               </div>

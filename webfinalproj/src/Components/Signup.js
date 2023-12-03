@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function SignUpForm() {
@@ -6,8 +7,7 @@ function SignUpForm() {
     fullName: "",
     role: "",
     email: "",
-    password: "",
-    confirmPassword: "",
+    password: ""
   });
 
   const handleChange = (e) => {
@@ -24,6 +24,11 @@ function SignUpForm() {
     } else {
       console.error("Passwords do not match");
     }
+  };
+  const navigate = useNavigate();
+
+  const handleSignup = () => {
+    navigate("/Login");
   };
 
   const signup = async () => {
@@ -54,90 +59,99 @@ function SignUpForm() {
     }
   };
 
+
   return (
-    <div
-      className="vh-100 d-flex align-items-center justify-content-center"
-      style={{
-        backgroundImage: "url(/signup.jpg)",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-md-4 col-lg-5">
-            {" "}
-            {/* Adjust col sizes as needed */}
-            <form
-              onSubmit={handleSubmit}
-              className="p-4 bg-white rounded shadow"
-            >
-              <h2 className="text-center mb-4">Sign Up</h2>
-              <div className="mb-3">
-                <label className="form-label">Full Name</label>
-                <input
-                  type="text"
-                  name="fullName"
-                  className="form-control"
-                  value={formData.fullName}
-                  onChange={handleChange}
-                />
+    <>
+
+<style>
+        {`
+          @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+        `}
+      </style>
+     
+      <div className="vh-100 d-flex align-items-center justify-content-center" style={{ background: 'linear-gradient(135deg, #00008b 0%, #c3cfe2 100%)' }}>
+        <div className="card" style={{ minWidth: '900px', boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)' }}>
+          <div className="row g-0">
+            <div className="col-md-6">
+              <div className="card-body p-5">
+                <h3 className="card-title text-center" style={{ color: '#333' }}>Sign Up</h3>
+                <form onSubmit={handleSubmit} style={{ marginTop: '2rem' }}>
+                  <div className="mb-3">
+                    <input
+                      type="text"
+                      name="fullName"
+                      className="form-control"
+                      placeholder="Full Name"
+                      value={formData.fullName}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <input
+                      type="text"
+                      name="role"
+                      className="form-control"
+                      placeholder="Role"
+                      value={formData.role}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <input
+                      type="email"
+                      name="email"
+                      className="form-control"
+                      placeholder="Email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <input
+                      type="password"
+                      name="password"
+                      className="form-control"
+                      placeholder="Password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <input
+                      type="password"
+                      name="confirmPassword"
+                      className="form-control"
+                      placeholder="Confirm Password"
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <button type="submit" onClick={signup} className="btn btn-primary w-100" style={{backgroundColor: '#7c4dff' }}>
+                    Create new account
+                  </button>
+                </form>
               </div>
-              <div className="mb-3">
-                <label className="form-label">Role</label>
-                <input
-                  type="role"
-                  name="role"
-                  className="form-control"
-                  value={formData.role}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  className="form-control"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  className="form-control"
-                  value={formData.password}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="mb-4">
-                <label className="form-label">Confirm Password</label>
-                <input
-                  type="password"
-                  name="confirmPassword"
-                  className="form-control"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                />
-              </div>
-              <button
-                type="submit"
-                onClick={signup}
-                className="btn btn-primary w-100"
-              >
-                {" "}
-                Create new account
-              </button>
-            </form>
+            </div>
+            <div className="col-md-6 d-flex align-items-center justify-content-center" style={{ backgroundColor: '#7c4dff' }}>
+            <div className="text-center w-100">
+              <h3 className="text-white mb-3" style={{ animation: 'fadeIn 2s ease-in-out' }}>Hey, Welcome!</h3>
+              <p className="text-white px-5" style={{ animation: 'fadeIn 2s ease-in-out' }}>Join us and share your art with the world.</p>
+                </div>
+                </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
+
 
 export default SignUpForm;

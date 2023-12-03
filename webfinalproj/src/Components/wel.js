@@ -1,25 +1,11 @@
-import React, { useState, useEffect } from "react";
-import styled, { keyframes } from "styled-components";
-import { useNavigate } from "react-router-dom";
-import image1 from "../assets/images/Lan.webp";
-import image2 from "../assets/images/dancers.jpg";
-import image3 from "../assets/images/artist.jpg";
-import image4 from "../assets/images/hire_musician.jpg";
-import image5 from "../assets/images/paint.jpeg";
-import image6 from "../assets/images/sing.jpg";
+import React from 'react';
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { TypeAnimation } from 'react-type-animation'; // Import TypeAnimation
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
+// Styled components for structured and styled elements
 const AppWrapper = styled.div`
   display: flex;
-  flex-direction: column;
   height: 100vh;
   background-color: #121212;
   color: #ffffff;
@@ -28,162 +14,96 @@ const AppWrapper = styled.div`
 
 const Main = styled.div`
   display: flex;
-  flex: 1;
-  transition: transform 1s ease;
+  width: 100%;
 `;
 
 const LeftSection = styled.div`
   flex: 0.7;
-  position: relative;
-  overflow: hidden;
-  max-width: 70%;
-`;
-
-const ImageContainer = styled.div`
   display: flex;
-  transition: transform 1s ease;
-  width: ${(props) => `${props.totalimages * 100}%`};
-  transform: translateX(
-    ${(props) => `-${(props.currentindex / props.totalimages) * 100}%`}
-  );
+  align-items: center;
+  justify-content: center;
+  background-color: #191970;
+  padding: 20px; 
+  position: relative; 
 `;
 
-const Image = styled.img`
-  width: 100%;
-  height: auto;
-  object-fit: cover;
+const Logo = styled.div`
+font-size: 2em; /* Font size for the logo */
+color: #ffffff;
+margin-bottom: 20px; /* Add margin for spacing */
+position: absolute;
+top: 20px; /* Adjust top position as needed */
+left: 20px; /* Adjust left position as needed */
 `;
-
-const Content30 = styled.div`
-  flex: 0.3;
-  padding: 20px;
+const RightSection = styled.div`
+flex: 0.3;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #483d8b;
+  font-size : 2em;
+`;
+const Content30 = styled.div`
+  flex: 0.3;
+  display: flex;
   justify-content: center;
-  background-color: #1a1a1a;
-  color: #ffffff;
-  text-align: center;
-  animation: ${fadeIn} 2s forwards;
+  align-items: center;
+  background-color: #483d8b;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   gap: 15px;
-  margin-top: 20px;
 `;
 
 const CtaButton = styled.button`
-  margin: 10px;
-  padding: 15px 30px;
-  font-size: 16px;
-  width: 200px;
+  padding: 10px 60px;
+  font-size: 1rem;
   background: linear-gradient(to right, #61dafb, #4fa3d1);
   color: #000000;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-
   &:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 `;
 
-const Footer = styled.footer`
-  padding: 1em;
-  text-align: center;
-  background-color: #333;
-`;
-
-const images = [image1, image2, image3, image4, image5, image6];
-
+// Welcome Application Component
 const WelApp = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    async function fetchUserEmail() {
-      try {
-          const response = await fetch('http://localhost:3000', {
-            method: 'GET',
-            credentials: 'include', // Send cookies with the request
-          });
-      
-          if (response.ok ) {
-            const data = await response.json();
-            console.log(data.email); // Handle email data as needed
-            
-            if(data.email!=null)
-           navigate("/home");
-          else{
-            //
-          }
-          
-
-          } else {
-            throw new Error('Failed to fetch email');
-          }
-        } catch (error) {
-          console.error('Error fetching email:', error);
-          // Handle errors
-        }
-  }
-  
-
-   fetchUserEmail();
-
-
-
-
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [currentIndex, images.length]);
-
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    navigate("/login");
-  };
-
-  const handleSignup = () => {
-    navigate("/signup");
-  };
+  // Navigation handlers
+  const handleLogin = () => navigate('/login');
+  const handleSignup = () => navigate('/signup');
 
   return (
     <AppWrapper>
       <Main>
         <LeftSection>
-          <ImageContainer
-            totalimages={images.length}
-            currentindex={currentIndex}
-          >
-            {images.map((image, index) => (
-              <Image key={index} src={image} alt={`Image ${index}`} />
-            ))}
-          </ImageContainer>
+        <Logo>Talent Palette</Logo> {/* Add the heading text here */}
+          {/* Use TypeAnimation component to create typed animation */}
+          <TypeAnimation
+            sequence={[
+              'Welcome to Talent Palette',
+              'Discover and share your unique talents with the world!',
+              'Your Unique journey begins here!'
+            ]}
+            speed={200} // Typing speed in ms
+            style={{ fontSize: '3em', color: '#61dafb' }}
+            repeat={Infinity}
+          />
         </LeftSection>
-
         <Content30>
-          <h2
-            style={{
-              fontFamily: "cursive",
-              fontSize: "2em",
-              marginBottom: "10px",
-            }}
-          >
-            Welcome to Talent Palette
-          </h2>
-          <p style={{ fontSize: "1.2em" }}>
-            Your go-to platform for exploring and showcasing talent!
-          </p>
+        <RightSection>
+             Welcome!
           <ButtonContainer>
             <CtaButton onClick={handleLogin}>Login</CtaButton>
             <CtaButton onClick={handleSignup}>SignUp</CtaButton>
           </ButtonContainer>
+          </RightSection>
         </Content30>
       </Main>
     </AppWrapper>
