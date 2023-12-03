@@ -26,20 +26,37 @@ const PortfolioPage = () => {
     profileImage: '',
     gigsInfo: ''
   });
+
   useEffect(() => {
-    // Fetch artist profile information
+    // Flag to check if the component is still mounted
+    let isMounted = true;
+
     const fetchProfile = async () => {
       try {
         const response = await axios.get('/user/profile');
-        setArtistProfile(response.data);
+
+        if (isMounted) {
+          setArtistProfile(response.data);
+        }
       } catch (error) {
         console.error('Error fetching profile:', error);
-        navigate('/');
+
+        // Check if the component is still mounted before navigating
+        if (isMounted) {
+          // Instead of navigating to '/', you might want to handle the error differently
+          // For now, let's log the error and leave the user on the current page
+          console.error('Navigation aborted. Component might be unmounted.');
+        }
       }
     };
 
     fetchProfile();
-  }, [navigate]);
+
+    // Cleanup function to set the isMounted flag to false when the component is unmounted
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handleEdit = () => {
     setEditMode(true);
@@ -60,6 +77,7 @@ const PortfolioPage = () => {
     const { name, value } = e.target;
     setArtistProfile({ ...artistProfile, [name]: value });
   };
+
   return (
     <div>
       <Navbar />
@@ -139,13 +157,12 @@ const PortfolioPage = () => {
           </div>
         </div>
       )}
-  {
-    <div>
-        <CreatePost userProfilePicture={image3} />
-        <Card {...samplePost} />
-    </div>}
-</div>
-
+      {
+        <div>
+          <CreatePost userProfilePicture={image3} />
+          <Card {...samplePost} />
+        </div>}
+    </div>
   );
 };
 
