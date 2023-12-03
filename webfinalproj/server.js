@@ -319,10 +319,10 @@ app.put("/user/profile", async (req, res) => {
 });
 
 // Node.js backend using Express
-app.get("/user/profile", async (req, res) => {
+app.get("/user/profile/:email", async (req, res) => {
   try {
     // Assuming you are getting the user's email from a session or a token
-    const email = req.session.user.email; // Replace with your session or token parsing logic
+    const email = req.params.email; // Replace with your session or token parsing logic
 
     const user = await User.findOne({ email }, 'fullName about skills profileImage gigsInfo -_id');
 
