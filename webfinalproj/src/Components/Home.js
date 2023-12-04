@@ -92,20 +92,21 @@ function Home() {
         <CreatePost userProfilePicture={image3} />
         {/* <h1>{allPosts[0]}</h1> */}
 
-        {allPosts && allPosts[1] ?( allPosts.map((post,index)=>(
-         
-          <Card >
-                key={index}
-    userName={ "fsdf"}
-    userImg={post.userImg}
-    postContent={post.postName}
-    postUrl={post.postimgUrl}
-    mediaType={post.postType}
-    timestamp={post.timestamp}
-          </Card>
-        ))):(
+        {allPosts && allPosts[1] ? (
+          allPosts.map((post, index) => (
+            <Card
+              key={index}
+              userName={post.userName}
+              userImg={post.userImg}
+              postContent={post.postName}
+              postUrl={post.postimgUrl}
+              mediaType={"image"}
+              timestamp={post.timestamp}
+            />
+          ))
+        ) : (
           <p>Loading...</p>
-        )}
+          )}
 
 {/* {hourdata && hourdata[1] ? (
             hourdata[days.indexOf(day)].map((dayData, index) => (
