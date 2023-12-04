@@ -1,14 +1,15 @@
 /* PortfolioPage.css */
 
 /* Apply a global reset for margin and padding */
-body, h1, h2, p, input, textarea {
+body, h1, h2, p, input, textarea, button {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 /* Apply a box-sizing border-box to all elements */
-* {
-  box-sizing: border-box;
+*, *::before, *::after {
+  box-sizing: inherit;
 }
 
 /* Style the navbar */
@@ -19,53 +20,122 @@ body, h1, h2, p, input, textarea {
   text-align: center;
 }
 
+/* Style the main profile page */
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(to right, rgb(161, 97, 235), #3b525c); /* Example gradient */
+}
+
 /* Style the profile container */
 .profile-container {
-  max-width: 600px;
-  margin: 20px auto;
+  display: grid;
+  grid-template-columns: min-content auto; /* Profile card takes space as much as its content and the rest is for posts */
+  gap: 20px;
+  align-items: start;
+  padding: 20px;
+  max-width: 100%;
+  margin-left: 0; /* Remove left margin if needed */
+}
+
+/* Style the left-profile */
+.left-profile {
+  width: 300px; /* Only as wide as its contents */
   padding: 20px;
   background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Style the profile image */
 .profile-image {
-  width: 100%;
-  height: auto;
+  width: 120px; /* Adjust as needed */
+  height: 120px;
   border-radius: 50%;
   margin-bottom: 20px;
+  object-fit: cover;
 }
 
-/* Style the profile name */
-h1 {
-  font-size: 24px;
+/* Style the profile name and sections */
+h1, .about-section, .skills-section, .gigs-section {
+  text-align: center;
   margin-bottom: 10px;
-}
-
-/* Style the about, skills, gigs sections */
-.about-section,
-.skills-section,
-.gigs-section {
-  margin-bottom: 20px;
 }
 
 /* Style the edit and save buttons */
 button {
   background-color: #4caf50;
   color: #fff;
-  padding: 10px;
+  padding: 10px 20px;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
+  display: block;
+  margin: 10px auto;
 }
 
-/* Style the posts section */
-.posts-section {
-  margin-top: 20px;
+/* Style the right-posts section */
+
+.posts-section{
+display: grid;
+grid-template-columns: repeat(3, 1fr); /* Three columns grid */
+gap: 20px;
+padding: 20px;
 }
 
-/* Style the post card */
-.post-card {
-  /* Your post card styles go here */
+.posts-section .card {
+ 
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Ensure content doesn't overflow */
+    margin-bottom: 20px; /* Space between cards */
+    width: 100%; /* Use full width of the column */
+    max-width: none; /* Remove max-width if previously set */
+  }
+  
+  .card-content {
+    padding: 15px; /* Padding inside the card */
+    word-wrap: break-word; /* Break long words to prevent overflow */
+  }
+
+  .card img {
+    max-width: 100%; /* Full width of the card */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Remove inline spacing */
+  }
+  
+
+/* Initially hide the like, comment, share options */
+/* Target the actions within the card only within the posts-section */
+.posts-section .card .card-actions {
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+  padding: 10px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-/* Add more styles as needed based on your design */
+/* Show the like, comment, share options on hover */
+/* Hover effect scoped to the posts-section */
+.posts-section .card:hover .card-actions {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* This ensures the hover effect applies only to the post card actions within the PortfolioPage */
+
+
+/* @media (max-width: 768px) {
+  .right-posts {
+    grid-template-columns: 1fr; /* Single column on smaller screens */
+  
