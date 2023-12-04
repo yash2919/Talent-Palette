@@ -13,10 +13,10 @@ const PortfolioPage = () => {
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("dfda");
   const [skills, setSkills] = useState("dfad");
+  const [about, setAbout] = useState("absbado")
   const [profileImage, setProfileImage] = useState("");
   const [gigsInfo, setGigsInfo] = useState("adfad");
   const [allPosts,setallPosts]=useState([]);
-
 
   const [postimgUrl, setpostimgUrl] = useState("dfdf");
 
@@ -31,10 +31,10 @@ const PortfolioPage = () => {
     timestamp: "2 hours ago",
   };
   const [artistProfile, setArtistProfile] = useState({
+    profileImage: '',
     fullName: '',
     about: '',
     skills: '',
-    profileImage: '',
     gigsInfo: ''
   });
 
@@ -147,37 +147,29 @@ const PortfolioPage = () => {
     setEditMode(true);
   };
 
-  // const handleSave = async () => {
-  //   try {
-  //     await axios.put('/user/profile', artistProfile);
-  //     alert('Profile updated successfully!');
-  //     setEditMode(false);
-  //     window.location.reload();
-  //   } catch (error) {
-  //     console.error('Error updating profile:', error);
-  //   }
-  // };
-
   // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setArtistProfile({ ...artistProfile, [name]: value });
+  //   setArtistProfile({
+  //     ...artistProfile,
+  //     [e.target.name]: e.target.value,
+  //   });
   // };
-
-// ...
 
 const handleChange = (e) => {
   const { name, value } = e.target;
 
   // Update the corresponding state based on the name attribute
   switch (name) {
+    case 'profileImage':
+      setProfileImage(value);
+      break;
     case 'fullName':
       setFullName(value);
       break;
+    case 'about':
+      setAbout(value);
+      break;
     case 'skills':
       setSkills(value);
-      break;
-    case 'profileImage':
-      setProfileImage(value);
       break;
     case 'gigsInfo':
       setGigsInfo(value);
@@ -195,7 +187,7 @@ const handleSave = async (result)  => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, fullName, skills, profileImage, gigsInfo }),
+      body: JSON.stringify({ email, profileImage, fullName, about, skills, gigsInfo }),
     });
 
     const data = await response.json();
@@ -209,17 +201,15 @@ const handleSave = async (result)  => {
     console.error("Error during Post Upload:", error);
     alert("An error occurred during Post Upload.");
   }
+  setEditMode(false);
 };
 
-// ...
-
-
-  const handleOntTest = (result) => {
-    if(result!=null){
-     // console.log("url"+result);
-      setProfileImage(result);
-    }
-  };
+const handleOntTest = (result) => {
+  if(result!=null){
+   // console.log("url"+result);
+    setProfileImage(result.secure_url);
+  }
+};
 
   return (
     <div className="profile-page">
