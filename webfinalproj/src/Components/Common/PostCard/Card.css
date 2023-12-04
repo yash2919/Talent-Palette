@@ -4,8 +4,8 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1) inset;
-  height: 20%; /* Adjust the height as needed */
-  width: 60%; /* Adjust the width as needed */
+  height: 20%; 
+  width: 60%; 
   margin-left: 33%;
   margin-right: 0%;
   padding: 16px;
