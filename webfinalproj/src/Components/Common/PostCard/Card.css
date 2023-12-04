@@ -11,6 +11,7 @@
   padding: 16px;
   transition: box-shadow 0.3s ease-in-out;
   margin-top: 20px;
+  
 }
 
 .card:hover {
@@ -77,3 +78,26 @@
 .menu-list li:hover {
   background-color: #f0f0f0;
 }
+
+
+
+.card-actions button {
+  cursor: pointer;
+  font-size: 1rem; /* Adjust the font size as needed */
+  border: none; /* Remove button border */
+  background-color: transparent; /* Make background transparent */
+  color: #000; /* Set button text color to black */
+  margin-right: 20px; /* Adjust the spacing between buttons */
+  display: flex;
+  align-items: center;
+  transition: color 1s;
+}
+
+.card-actions button:last-child {
+  margin-right: 0; /* Remove right margin for the last button */
+}
+
+.card-actions button .fa-icon {
+  margin-right: 8px; /* Adjust the spacing between icon and text */
+}
+

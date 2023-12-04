@@ -1,5 +1,10 @@
 /* PersonCard.css */
 
+:root {
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1) inset;
+  --hover-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.2) inset;
+}
+
 .person-card {
   display: flex;
   flex-direction: column;
@@ -7,7 +12,7 @@
   padding: 16px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1) inset;
+  box-shadow: var(--box-shadow);
   transition: box-shadow 0.3s ease-in-out;
   max-width: 650px; /* Adjusted max-width */
   margin-left: 0%;
@@ -44,7 +49,12 @@
 }
 
 .icon {
-  margin-top: 6px ;
+  margin-top: 6px;
   margin-right: 12px; /* Adjusted margin for better spacing */
   font-size: 1.4rem; /* Adjusted icon size */
+}
+
+/* Common hover effect */
+.person-card:hover {
+  box-shadow: var(--hover-box-shadow);
 }
