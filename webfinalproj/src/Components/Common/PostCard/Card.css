@@ -4,11 +4,13 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1) inset;
-  width: 45%;
-  margin-left: auto;
-  margin-right: auto;
+  height: 20%; /* Adjust the height as needed */
+  width: 60%; /* Adjust the width as needed */
+  margin-left: 33%;
+  margin-right: 0%;
   padding: 16px;
   transition: box-shadow 0.3s ease-in-out;
+  margin-top: 20px;
 }
 
 .card:hover {
@@ -18,13 +20,13 @@
 .card-header {
   display: flex;
   align-items: center;
-  justify-content: between;
+  justify-content: space-between; /* Adjust the alignment as needed */
   margin-bottom: 12px;
 }
 
 .profile-picture {
-  width: 40px;
-  height: 40px;
+  width: 30px; /* Adjust the width as needed */
+  height: 30px; /* Adjust the height as needed */
   object-fit: cover;
   border-radius: 50%;
   margin-right: 12px;
@@ -41,12 +43,12 @@
 
 .card-content {
   margin-bottom: 16px;
-  font-size: 1.2rem;
+  font-size: 1rem; /* Adjust the font size as needed */
 }
 
 .menu-icon {
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: 1.2rem; /* Adjust the font size as needed */
 }
 
 .menu-list {

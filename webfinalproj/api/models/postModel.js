@@ -13,6 +13,9 @@ var postSchema = new mongoose.Schema({
       type: String,
    
       },
+      postType: {
+        type: String,
+        },
     timestamp: { type: Date, default: Date.now }
 });
 const Post = mongoose.model('Post', postSchema);

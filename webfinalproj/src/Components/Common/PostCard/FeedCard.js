@@ -1,6 +1,6 @@
 // Card.js
 import { useState } from "react";
-import React, { useRef, useEffect } from "react"; // Added useRef and useEffect
+import React, { useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -42,6 +42,7 @@ const Card = ({
     };
   }, []);
 
+
   return (
     <div className="card p-3">
       <div className="card-header d-flex align-items-center mb-3">
@@ -76,6 +77,14 @@ const Card = ({
             alt={`${userName}'s post`}
             className="img-fluid rounded"
           />
+        </div>
+      )}
+      {mediaType === "video" && postUrl && (
+        <div className="card-video mb-3">
+          <video controls className="img-fluid rounded">
+            <source src={postUrl} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
         </div>
       )}
       <div className="card-actions d-flex">

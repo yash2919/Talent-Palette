@@ -1,3 +1,5 @@
+// UserList.js
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
 import PropTypes from "prop-types";
@@ -29,34 +31,22 @@ const UserList = ({ users }) => {
             >
               <img
                 className="user-list-image"
-                src={user.profilePicture}
+                src={user.userImg}
                 alt={`User ${index + 1}`}
               />
               <div className="user-details ms-3">
-                <h3 className="user-name">{user.name}</h3>
-                <div className="user-email d-flex align-items-center">
+                <h3 className="user-name">{user.userName}</h3>
+                <div className="user-email  align-items-center">
                   <FontAwesomeIcon icon={faEnvelope} className="icon me-1" />
-                  <span className="email">{user.email}</span>
+                  <div>
+                    <span className="email">{user.userEmail}</span>
+                  </div>
                 </div>
               </div>
             </div>
           </li>
         ))}
       </ul>
-
-      {selectedUser && (
-        <div className={`user-profile-popup ${selectedUser ? "active" : ""}`}>
-          <button
-            className="btn btn-primary me-2"
-            onClick={() => alert("View clicked!")}
-          >
-            <FontAwesomeIcon icon={faEye} /> View
-          </button>
-          <button className="btn btn-danger" onClick={closeUserProfile}>
-            <FontAwesomeIcon icon={faTimes} /> Close
-          </button>
-        </div>
-      )}
     </div>
   );
 };

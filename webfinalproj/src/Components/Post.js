@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -7,13 +7,14 @@ import {
   faFile,
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
-import "./Post.css"; 
-import UploadWidget from "./Common/UploadWidget/UploadWidget"
+import "./Post.css";
+import UploadWidget from "./Common/UploadWidget/UploadWidget";
 
-const CreatePost = ({ userProfilePicture ,onPostCreated}) => {
+const CreatePost = ({ userProfilePicture, onPostCreated }) => {
   const [mediaType, setMediaType] = useState(null);
   const [postimgUrl, setpostimgUrl] = useState("");
   const [postName, setpostName] = useState("");
+  const [postType, setpostType] = useState("");
   const [email, setemail] = useState(null);
 
   const openMediaModal = (type) => {
@@ -25,13 +26,11 @@ const CreatePost = ({ userProfilePicture ,onPostCreated}) => {
   };
 
   const handleFileUpload = (files) => {
-
     setpostimgUrl((prevFiles) => [...prevFiles, ...files]);
     closeMediaModal();
   };
 
   const handlePost = async () => {
-   
     // console.log("Post Data:", {
     //   userEmail,
     //   postContent,
@@ -46,7 +45,7 @@ const CreatePost = ({ userProfilePicture ,onPostCreated}) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, postName, postimgUrl })
+        body: JSON.stringify({ email, postName, postimgUrl ,postType}),
       });
 
       const data = await response.json();
@@ -64,8 +63,6 @@ const CreatePost = ({ userProfilePicture ,onPostCreated}) => {
       alert("An error occurred during Post Upload.");
     }
 
-
-
     // setPostContent("");
   };
   useEffect(() => {
@@ -78,9 +75,8 @@ const CreatePost = ({ userProfilePicture ,onPostCreated}) => {
 
         if (response.ok) {
           const data = await response.json();
-          console.log(data); 
+          console.log(data);
           if (data.valid === false) {
-     
           } else setemail(data.email);
         } else {
           throw new Error("Failed to fetch email");
@@ -95,11 +91,13 @@ const CreatePost = ({ userProfilePicture ,onPostCreated}) => {
   }, []);
 
   const handleOntTest = (result) => {
-    if(result!=null){
-     // console.log("url"+result);
-      setpostimgUrl(result);
+    if (result != null) {
+      // console.log("url"+result);
+      setpostimgUrl(result.secure_url);
+      console.log(result.secure_url);
+      setpostType(result.resource_type);
     }
-  }
+  };
 
   return (
     <div className="create-post-container">
@@ -111,7 +109,6 @@ const CreatePost = ({ userProfilePicture ,onPostCreated}) => {
         />
         {"       "}
         <h3 className="want-to-post">Want to Post Something ? </h3>
-        <UploadWidget onTest={handleOntTest}></UploadWidget>
       </div>
       <div className="post-box-container">
         <textarea
@@ -122,24 +119,7 @@ const CreatePost = ({ userProfilePicture ,onPostCreated}) => {
         ></textarea>
       </div>
       <div className="media-buttons">
-        <button
-          className="media-button"
-          onClick={() => openMediaModal("image")}
-        >
-          <FontAwesomeIcon icon={faImage} className="media-type-icon" />
-          Media
-        </button>
-        <button
-          className="media-button"
-          onClick={() => openMediaModal("video")}
-        >
-          <FontAwesomeIcon icon={faVideo} className="media-type-icon" />
-          Video
-        </button>
-        <button className="media-button" onClick={() => openMediaModal("file")}>
-          <FontAwesomeIcon icon={faFile} className="media-type-icon" />
-          File
-        </button>
+        <UploadWidget onTest={handleOntTest}></UploadWidget>
         <button className="media-button post-button" onClick={handlePost}>
           <FontAwesomeIcon icon={faPaperPlane} className="media-type-icon" />
           Post

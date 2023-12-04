@@ -1,18 +1,39 @@
+/* UserList.css */
 
 .user-list-container {
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1) inset;
-  width: 20%;
-  margin-left: auto;
+  width: 85%; /* Adjusted width */
+  margin-left: 0%; /* Adjusted margin */
   margin-right: auto;
   padding: 16px;
   margin-bottom: 20px;
   margin-top: 20px;
   transition: box-shadow 0.3s ease-in-out;
   position: relative;
+  max-height: 1000px; /* Set a max height for scrolling */
+  overflow-y: auto;
+  
 }
 
+.user-list-container {
+  /* ... (other styles) */
+  max-height: 1000px;
+  overflow-y: auto;
+}
+
+.list-group-item {
+  /* ... (other styles) */
+  overflow: hidden; /* Hide overflow content */
+}
+
+.email {
+  /* ... (other styles) */
+  white-space: nowrap; /* Prevent email from wrapping to the next line */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Display ellipsis (...) when text overflows */
+}
 .user-list-container h2 {
   margin-bottom: 20px;
 }
@@ -25,7 +46,7 @@
 
 .list-group-item {
   display: flex;
-  justify-content: space-between; /* Updated to space between */
+  justify-content: space-between;
   align-items: center;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -65,7 +86,8 @@
 
 .email {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .icon {
