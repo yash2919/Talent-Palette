@@ -14,7 +14,9 @@ const StyledUploadButton = styled.button`
   padding: 8px 35px;
   border-radius: 4px;
   margin-right: 45px;
+
   color: #000;
+
 
   &:hover {
     background-color: #0073b1;
@@ -36,6 +38,7 @@ const UploadWidget = (props) => {
       function (error, result) {
         if (result.event === "success") props.onTest(result.info);
         console.log(result.secure_url);
+
       }
     );
   }, []);
