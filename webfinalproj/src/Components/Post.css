@@ -10,7 +10,7 @@
   margin-right: 0;
   padding: 16px;
   transition: box-shadow 0.3s ease-in-out;
-  margin-top: 20px;
+  margin-top: -315px;
 }
 
 .create-post-container:hover {
@@ -79,6 +79,7 @@
   border: none;
   padding: 8px 35px;
   border-radius: 4px;
+  color: #000; /* Set text color to black */
 }
 
 .media-buttons .media-button:last-child {

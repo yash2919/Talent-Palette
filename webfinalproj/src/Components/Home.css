@@ -4,14 +4,20 @@
   display: flex;
 }
 
+.person-card-container,
+.main-content,
+.user-list {
+  padding: 16px;
+}
+
+.person-card-container {
+  width: 25%; /* Adjust the width as needed */
+}
+
 .main-content {
-  width: 10000px;
-  min-width: 50%;
-  margin-right: 0%;
-  padding: 1px; /* Adjust the padding as needed */
+  flex: 1;
 }
 
 .user-list {
   width: 25%; /* Adjust the width as needed */
-   /* Adjust the padding as needed */
 }

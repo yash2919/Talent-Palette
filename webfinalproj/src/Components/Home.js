@@ -7,6 +7,7 @@ import image3 from "../assets/images/artist.jpg";
 import CreatePost from "../Components/Post";
 import UserList from "./Common/PostCard/Users";
 import "./Home.css";
+import PersonCard from "../Components/PersonCards";
 
 function Home() {
   const navigate = useNavigate();
@@ -150,12 +151,19 @@ function Home() {
   console.log("Users");
   console.log(allUsers);
 
-  
   return (
     <div>
       <Navbar></Navbar>
       <div className="home-container">
         <div className="main-content">
+          <div className="person-card-container">
+            <PersonCard
+              userName={userEmail} // Assuming the logged-in user's email is the username
+              userImg={image3} // Use the logged-in user's profile picture
+              userEmail={userEmail}
+              userRole="User" // You may need to fetch the user role from the server
+            />
+          </div>
           <div>
             <CreatePost
               userProfilePicture={image3}
@@ -163,24 +171,25 @@ function Home() {
             />
 
             {/* <h1>{allPosts[0]}</h1> */}
-         
-        {allPosts && allPosts.length > 0 ? (
-  allPosts.slice().reverse().map((post, index) => (
-    <Card
-      key={index}
-      userName={post.userName}
-      userImg={post.userImg}
-      postContent={post.postName}
-      postUrl={post.postimgUrl}
-      mediaType={post.postType}
-      timestamp={post.timestamp}
-    />
-  ))
-) : (
-  <p>Loading...</p>
-)}
 
-      
+            {allPosts && allPosts.length > 0 ? (
+              allPosts
+                .slice()
+                .reverse()
+                .map((post, index) => (
+                  <Card
+                    key={index}
+                    userName={post.userName}
+                    userImg={post.userImg}
+                    postContent={post.postName}
+                    postUrl={post.postimgUrl}
+                    mediaType={post.postType}
+                    timestamp={post.timestamp}
+                  />
+                ))
+            ) : (
+              <p>Loading...</p>
+            )}
 
             {/* {hourdata && hourdata[1] ? (
             hourdata[days.indexOf(day)].map((dayData, index) => (
