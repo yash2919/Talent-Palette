@@ -88,7 +88,7 @@ const Card = ({
         </div>
       )}
       <div className="card-actions d-flex">
-        <button className="btn btn-outline-primary btn-lg me-3">
+        <button className="btn btn-primary btn-lg me-3">
           <FontAwesomeIcon icon={faThumbsUp} /> Like
         </button>
         <button className="btn btn-outline-primary btn-lg me-3">

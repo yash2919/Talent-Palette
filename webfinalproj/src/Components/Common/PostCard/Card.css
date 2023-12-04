@@ -4,13 +4,14 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1) inset;
-  height: 20%; /* Adjust the height as needed */
-  width: 60%; /* Adjust the width as needed */
+  height: 20%; 
+  width: 60%; 
   margin-left: 33%;
   margin-right: 0%;
   padding: 16px;
   transition: box-shadow 0.3s ease-in-out;
   margin-top: 20px;
+
 }
 
 .card:hover {
@@ -56,7 +57,7 @@
   top: 50px; /* Adjust as needed */
   right: 10px; /* Adjust as needed */
   background-color: #fff;
-  border: 1px solid #ddd;
+  
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 8px;
@@ -77,3 +78,26 @@
 .menu-list li:hover {
   background-color: #f0f0f0;
 }
+
+
+
+.card-actions button {
+  cursor: pointer;
+  font-size: 1rem; /* Adjust the font size as needed */
+  border: none; /* Remove button border */
+  background-color: transparent; /* Make background transparent */
+  color: #000; /* Set button text color to black */
+  margin-right: 20px; /* Adjust the spacing between buttons */
+  display: flex;
+  align-items: center;
+  transition: color 1s;
+}
+
+.card-actions button:last-child {
+  margin-right: 0; /* Remove right margin for the last button */
+}
+
+.card-actions button .fa-icon {
+  margin-right: 8px; /* Adjust the spacing between icon and text */
+}
+
