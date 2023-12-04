@@ -10,7 +10,7 @@ import {
 import "./Post.css"; 
 import UploadWidget from "./Common/UploadWidget/UploadWidget"
 
-const CreatePost = ({ userProfilePicture }) => {
+const CreatePost = ({ userProfilePicture ,onPostCreated}) => {
   const [mediaType, setMediaType] = useState(null);
   const [postimgUrl, setpostimgUrl] = useState("");
   const [postName, setpostName] = useState("");
@@ -52,6 +52,9 @@ const CreatePost = ({ userProfilePicture }) => {
       const data = await response.json();
       if (response.ok) {
         alert(data.message);
+
+        onPostCreated();
+
         //  navigate('/home');
       } else {
         alert(`Post Upload failed: ${data.message}`);
