@@ -1,0 +1,17 @@
+/* Home.css */
+
+.home-container {
+  display: flex;
+}
+
+.main-content {
+  width: 10000px;
+  min-width: 50%;
+  margin-right: 0%;
+  padding: 1px; /* Adjust the padding as needed */
+}
+
+.user-list {
+  width: 25%; /* Adjust the width as needed */
+   /* Adjust the padding as needed */
+}
