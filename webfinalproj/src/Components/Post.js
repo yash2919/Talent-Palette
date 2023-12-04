@@ -1,4 +1,3 @@
-
 import React, { useEffect,useState } from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,7 +7,6 @@ import {
   faFile,
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
-
 import "./Post.css"; 
 import UploadWidget from "./Common/UploadWidget/UploadWidget"
 
@@ -17,7 +15,6 @@ const CreatePost = ({ userProfilePicture }) => {
   const [postimgUrl, setpostimgUrl] = useState("");
   const [postName, setpostName] = useState("");
   const [email, setemail] = useState(null);
-
 
   const openMediaModal = (type) => {
     setMediaType(type);
@@ -28,7 +25,6 @@ const CreatePost = ({ userProfilePicture }) => {
   };
 
   const handleFileUpload = (files) => {
-
 
     setpostimgUrl((prevFiles) => [...prevFiles, ...files]);
     closeMediaModal();
@@ -102,24 +98,6 @@ const CreatePost = ({ userProfilePicture }) => {
     }
   }
 
-    // Process the uploaded files, e.g., save them to state
-    setUploadedFiles((prevFiles) => [...prevFiles, ...files]);
-    closeMediaModal();
-  };
-
-  const handlePost = () => {
-    // Implement logic to handle the post, e.g., send data to the server
-    console.log("Post Data:", {
-      userProfilePicture,
-      uploadedFiles,
-      postContent,
-    });
-    // Reset state after posting
-    setUploadedFiles([]);
-    setPostContent("");
-  };
-
-
   return (
     <div className="create-post-container">
       <div className="user-image-container">
@@ -130,21 +108,14 @@ const CreatePost = ({ userProfilePicture }) => {
         />
         {"       "}
         <h3 className="want-to-post">Want to Post Something ? </h3>
-
         <UploadWidget onTest={handleOntTest}></UploadWidget>
-
       </div>
       <div className="post-box-container">
         <textarea
           className="post-box"
           placeholder="Start a post..."
-
           value={postName}
           onChange={(e) => setpostName(e.target.value)}
-
-          value={postContent}
-          onChange={(e) => setPostContent(e.target.value)}
-
         ></textarea>
       </div>
       <div className="media-buttons">
@@ -193,10 +164,17 @@ const CreatePost = ({ userProfilePicture }) => {
           <button onClick={closeMediaModal}>Close</button>
         </div>
       )}
-
-
-      )}
-
+      {/* Section to display uploaded files */}
+      {/* {uploadedFiles.length > 0 && (
+        <div className="uploaded-files">
+          <h3>Uploaded Files</h3>
+          <ul>
+            {uploadedFiles.map((file, index) => (
+              <li key={index}>{file.name}</li>
+            ))}
+          </ul>
+        </div>
+      )} */}
     </div>
   );
 };
