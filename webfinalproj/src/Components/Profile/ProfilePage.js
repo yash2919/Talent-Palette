@@ -222,84 +222,86 @@ const handleSave = async (result)  => {
   };
 
   return (
-    <div>
+    <div className="profile-page">
       <Navbar />
-      {artistProfile && (
-        <div className="profile-container">
-          
+      <div className="profile-container">
+        <div className="left-profile">
+          {/* Profile Image */}
           {editMode ? (
-            <div>
-            <h3 className="want-to-post">Want to Post Something?</h3>
-            <UploadWidget onTest={handleOntTest}></UploadWidget>
-          </div>
+            <>
+              <UploadWidget onTest={ handleOntTest} />
+              {profileImage && (
+                <img
+                  src={profileImage}
+                  alt={`${fullName || 'Profile'}`}
+                  className="profile-image"
+                />
+              )}
+            </>
           ) : (
             <img
               src={profileImage || image3}
-              alt={`${artistProfile.profileImage}'s Profile`}
+              alt={`${fullName || 'Profile'}`}
               className="profile-image"
             />
           )}
+
+          {/* Profile Name */}
           {editMode ? (
             <input
               type="text"
               name="fullName"
-              value={artistProfile.fullName}
+              value={fullName}
               onChange={handleChange}
             />
           ) : (
-            <h1>{artistProfile.fullName}</h1>
+            <h1>{fullName || 'Your Name'}</h1>
           )}
-          <div className="about-section">
-            {editMode ? (
-              <input
-                name="about"
-                type="text"
-                value={artistProfile.about}
-                onChange={handleChange}
-              />
-            ) : (
-              <p>{artistProfile.about}</p>
-            )}
-          </div>
-          <div className="skills-section">
-            {editMode ? (
-              <input
-                type="text"
-                name="skills"
-                value={artistProfile.skills}
-                onChange={handleChange}
-              />
-            ) : (
-              <p>{artistProfile.skills}</p>
-            )}
-          </div>
-          <div className="gigs-section">
-            {editMode ? (
-              <input
-                type="text"
-                name="gigsInfo"
-                value={artistProfile.gigsInfo}
-                onChange={handleChange}
-              />
-            ) : (
-              <p>{artistProfile.gigsInfo}</p>
-            )}
-          </div>
+
+          {/* About Section */}
+          {editMode ? (
+            <textarea
+              name="about"
+              value={artistProfile.about}
+              onChange={handleChange}
+            />
+          ) : (
+            <p>{artistProfile.about || 'About section'}</p>
+          )}
+
+          {/* Skills Section */}
+          {editMode ? (
+            <textarea
+              name="skills"
+              value={skills}
+              onChange={handleChange}
+            />
+          ) : (
+            <p>{skills || 'Skills section'}</p>
+          )}
+
+          {/* Gigs Info Section */}
+          {editMode ? (
+            <textarea
+              name="gigsInfo"
+              value={gigsInfo}
+              onChange={handleChange}
+            />
+          ) : (
+            <p>{gigsInfo || 'Gigs info section'}</p>
+          )}
+
           {/* Edit and Save Buttons */}
           {editMode ? (
             <button onClick={handleSave}>Save</button>
           ) : (
             <button onClick={handleEdit}>Edit</button>
           )}
-          <div className="posts-section">
-            {/* ... (other components) */}
-          </div>
         </div>
-      )}
-      {
-        <div>
-          {allPosts && allPosts[1] ? (
-          allPosts.map((post, index) => (
+        <div className="posts-section">
+          {/* Post Cards */}
+          
+          {allPosts.map((post, index) => (
             <Card
               key={index}
               userName={post.userName}
@@ -309,13 +311,11 @@ const handleSave = async (result)  => {
               mediaType={"image"}
               timestamp={post.timestamp}
             />
-          ))
-        ) : (
-          <p>Loading...</p>
-          )}
+          ))}
         </div>
-      }
+      </div>
     </div>
   );
-}  
+};
+
 export default PortfolioPage;
