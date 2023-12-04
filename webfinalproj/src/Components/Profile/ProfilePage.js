@@ -9,6 +9,7 @@ import CreatePost from '../../Components/Post';
 const PortfolioPage = () => {
   const navigate = useNavigate();
   const [editMode, setEditMode] = useState(false);
+  const [email, setEmail] = useState("");
   const [posts, setPosts] = useState([]);
   const samplePost = {
     user: {
@@ -33,7 +34,7 @@ const PortfolioPage = () => {
 
     const fetchProfile = async () => {
       try {
-        const response = await axios.get('/user/profile');
+        const response = await axios.get(`/user/profile/${email}`);
 
         if (isMounted) {
           setArtistProfile(response.data);
@@ -49,6 +50,39 @@ const PortfolioPage = () => {
         }
       }
     };
+    async function fetchUserEmail() {
+      try {
+          const response = await fetch('http://localhost:3000', {
+            method: 'GET',
+            credentials: 'include', // Send cookies with the request
+          });
+      
+          if (response.ok ) {
+            const data = await response.json();
+            console.log(data.email); // Handle email data as needed
+  
+
+          if(data.valid===true){
+            setEmail(data.email);
+            console.log(data.email);
+
+          }
+          else{
+            navigate("/home");
+          }
+          
+
+          } else {
+            throw new Error('Failed to fetch email');
+          }
+        } catch (error) {
+          console.error('Error fetching email:', error);
+          // Handle errors
+        }
+  }
+  
+
+    fetchUserEmail();
 
     fetchProfile();
 
