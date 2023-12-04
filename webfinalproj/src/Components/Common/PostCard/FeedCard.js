@@ -13,7 +13,14 @@ import "./Card.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 
-const Card = ({ user, content, timestamp }) => {
+const Card = ({
+  userName,
+  userImg,
+  postContent,
+  postUrl,
+  mediaType,
+  timestamp,
+}) => {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
 
@@ -40,11 +47,11 @@ const Card = ({ user, content, timestamp }) => {
       <div className="card-header d-flex align-items-center mb-3">
         <img
           className="profile-picture rounded-circle"
-          src={user.profilePicture}
-          alt={`${user.name}'s profile`}
+          src={userImg}
+          alt={`${userName}'s profile`}
         />
         <div className="user-details">
-          <h4>{user.name}</h4>
+          <h4>{userName}</h4>
           <p>{timestamp}</p>
         </div>
         <div className="menu-icon" onClick={toggleMenu}>
@@ -60,15 +67,17 @@ const Card = ({ user, content, timestamp }) => {
         )}
       </div>
       <div className="card-content mb-3">
-        <p>{content}</p>
+        <p>{postContent}</p>
       </div>
-      <div className="card-picture mb-3">
-        <img
-          src={user.profilePicture}
-          alt={`${user.name}'s profile`}
-          className="img-fluid rounded"
-        />
-      </div>
+      {mediaType === "image" && postUrl && (
+        <div className="card-picture mb-3">
+          <img
+            src={postUrl}
+            alt={`${userName}'s post`}
+            className="img-fluid rounded"
+          />
+        </div>
+      )}
       <div className="card-actions d-flex">
         <button className="btn btn-outline-primary btn-lg me-3">
           <FontAwesomeIcon icon={faThumbsUp} /> Like
@@ -85,11 +94,11 @@ const Card = ({ user, content, timestamp }) => {
 };
 
 Card.propTypes = {
-  user: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    profilePicture: PropTypes.string.isRequired,
-  }).isRequired,
-  content: PropTypes.string.isRequired,
+  userName: PropTypes.string.isRequired,
+  userImg: PropTypes.string.isRequired,
+  postContent: PropTypes.string.isRequired,
+  postUrl: PropTypes.string,
+  mediaType: PropTypes.string.isRequired,
   timestamp: PropTypes.string.isRequired,
 };
 
