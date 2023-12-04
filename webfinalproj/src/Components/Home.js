@@ -21,6 +21,41 @@ function Home() {
   };
   const [allPosts,setallPosts]=useState([]);
 
+  
+  async function fetchallPosts() {
+    try {
+      const response = await fetch("http://localhost:3000/post/getallposts", {
+        method: "GET",
+        credentials: "include", 
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // if(data!=null)
+        setallPosts(data.post.map(post => ({
+          // email: post.email,
+          userName: post.userName? post.userName : post.email,
+          userImg: post.userImg? post.userImg:image3,
+          postName: post.postName,
+          postimgUrl: post.postimgUrl,
+          postType: post.postType? post.postType : "img",
+          timestamp:post.timestamp ? post.timestamp: "2023-12-05T12:34:56",
+          _id: post._id
+        })));
+        
+        console.log(data.post[0].timestamp);
+        
+      } else {
+        throw new Error("Failed to fetch email");
+      }
+    } catch (error) {
+      console.error("Error fetching email:", error);
+      // Handle errors
+    }
+  }
+
+
+
   useEffect(() => {
     async function fetchUserEmail() {
       try {
@@ -90,6 +125,27 @@ function Home() {
         <p>No user logged in or error fetching user email</p>
       )}
       <div>
+
+        <CreatePost userProfilePicture={image3} onPostCreated={fetchallPosts} />
+
+        {/* <h1>{allPosts[0]}</h1> */}
+
+        {allPosts && allPosts.length > 0 ? (
+  allPosts.slice().reverse().map((post, index) => (
+    <Card
+      key={index}
+      userName={post.userName}
+      userImg={post.userImg}
+      postContent={post.postName}
+      postUrl={post.postimgUrl}
+      mediaType={"image"}
+      timestamp={post.timestamp}
+    />
+  ))
+) : (
+  <p>Loading...</p>
+)}
+
         <CreatePost userProfilePicture={image3} />
 
         {/* <h1>{allPosts[0]}</h1> */}
@@ -109,6 +165,7 @@ function Home() {
         ) : (
           <p>Loading...</p>
           )}
+
 
 {/* {hourdata && hourdata[1] ? (
             hourdata[days.indexOf(day)].map((dayData, index) => (
