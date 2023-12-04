@@ -1,6 +1,4 @@
-// CreatePost.js
-
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,12 +7,14 @@ import {
   faFile,
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
-import "./Post.css"; // Import the CSS file
+import "./Post.css"; 
+import UploadWidget from "./Common/UploadWidget/UploadWidget"
 
 const CreatePost = ({ userProfilePicture }) => {
   const [mediaType, setMediaType] = useState(null);
-  const [uploadedFiles, setUploadedFiles] = useState([]);
-  const [postContent, setPostContent] = useState("");
+  const [postimgUrl, setpostimgUrl] = useState("");
+  const [postName, setpostName] = useState("");
+  const [email, setemail] = useState(null);
 
   const openMediaModal = (type) => {
     setMediaType(type);
@@ -25,22 +25,78 @@ const CreatePost = ({ userProfilePicture }) => {
   };
 
   const handleFileUpload = (files) => {
-    // Process the uploaded files, e.g., save them to state
-    setUploadedFiles((prevFiles) => [...prevFiles, ...files]);
+
+    setpostimgUrl((prevFiles) => [...prevFiles, ...files]);
     closeMediaModal();
   };
 
-  const handlePost = () => {
-    // Implement logic to handle the post, e.g., send data to the server
-    console.log("Post Data:", {
-      userProfilePicture,
-      uploadedFiles,
-      postContent,
-    });
-    // Reset state after posting
-    setUploadedFiles([]);
-    setPostContent("");
+  const handlePost = async () => {
+   
+    // console.log("Post Data:", {
+    //   userEmail,
+    //   postContent,
+    //   postimgUrl
+    // });
+
+    console.log(postName);
+
+    try {
+      const response = await fetch("http://localhost:3000/post/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, postName, postimgUrl })
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert(data.message);
+        //  navigate('/home');
+      } else {
+        alert(`Post Upload failed: ${data.message}`);
+      }
+    } catch (error) {
+      console.error("Error during Post Upload:", error);
+      alert("An error occurred during Post Upload.");
+    }
+
+
+
+    // setPostContent("");
   };
+  useEffect(() => {
+    async function fetchUserEmail() {
+      try {
+        const response = await fetch("http://localhost:3000", {
+          method: "GET",
+          credentials: "include", // Send cookies with the request
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data); 
+          if (data.valid === false) {
+     
+          } else setemail(data.email);
+        } else {
+          throw new Error("Failed to fetch email");
+        }
+      } catch (error) {
+        console.error("Error fetching email:", error);
+        // Handle errors
+      }
+    }
+
+    fetchUserEmail();
+  }, []);
+
+  const handleOntTest = (result) => {
+    if(result!=null){
+     // console.log("url"+result);
+      setpostimgUrl(result);
+    }
+  }
 
   return (
     <div className="create-post-container">
@@ -52,13 +108,14 @@ const CreatePost = ({ userProfilePicture }) => {
         />
         {"       "}
         <h3 className="want-to-post">Want to Post Something ? </h3>
+        <UploadWidget onTest={handleOntTest}></UploadWidget>
       </div>
       <div className="post-box-container">
         <textarea
           className="post-box"
           placeholder="Start a post..."
-          value={postContent}
-          onChange={(e) => setPostContent(e.target.value)}
+          value={postName}
+          onChange={(e) => setpostName(e.target.value)}
         ></textarea>
       </div>
       <div className="media-buttons">
@@ -108,7 +165,7 @@ const CreatePost = ({ userProfilePicture }) => {
         </div>
       )}
       {/* Section to display uploaded files */}
-      {uploadedFiles.length > 0 && (
+      {/* {uploadedFiles.length > 0 && (
         <div className="uploaded-files">
           <h3>Uploaded Files</h3>
           <ul>
@@ -117,7 +174,7 @@ const CreatePost = ({ userProfilePicture }) => {
             ))}
           </ul>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

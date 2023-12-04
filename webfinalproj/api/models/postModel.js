@@ -7,8 +7,12 @@ var postSchema = new mongoose.Schema({
     },
     postName: {
     type: String,
-    required: true,
+
     },
+    postimgUrl: {
+      type: String,
+   
+      },
     timestamp: { type: Date, default: Date.now }
 });
 const Post = mongoose.model('Post', postSchema);

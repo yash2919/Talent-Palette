@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react"
 
-const UploadWidget=()=>{
+
+const UploadWidget=(props)=>{
+
     const cloudinaryRef=useRef();
     const widgetRef=useRef();
     useEffect(()=>{
@@ -9,7 +11,13 @@ const UploadWidget=()=>{
             cloudName: 'dxgtfcez8',
             uploadPreset: 'veadh5cq'
          },function(error,result){
+
+         //   console.log(result);
+            if(result.event==="success")
+            props.onTest(result.info.secure_url);
+
             console.log(result);
+
          })
     },[])
     return(
