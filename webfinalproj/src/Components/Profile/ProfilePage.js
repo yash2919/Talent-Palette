@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../Header/Navbar';
@@ -16,6 +15,8 @@ const PortfolioPage = () => {
   const [skills, setSkills] = useState("dfad");
   const [profileImage, setProfileImage] = useState("");
   const [gigsInfo, setGigsInfo] = useState("adfad");
+  const [allPosts,setallPosts]=useState([]);
+
 
   const [postimgUrl, setpostimgUrl] = useState("dfdf");
 
@@ -94,6 +95,38 @@ const PortfolioPage = () => {
       // Handle errors
     }
   }
+
+  async function fetchallPosts() {
+    try {
+      const response = await fetch("http://localhost:3000/post/getallposts", {
+        method: "GET",
+        credentials: "include", 
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // if(data!=null)
+        setallPosts(data.post.map(post => ({
+          // email: post.email,
+          userName: post.userName? post.userName : post.email,
+          userImg: post.userImg? post.userImg:image3,
+          postName: post.postName,
+          postimgUrl: post.postimgUrl,
+          postType: post.postType? post.postType : "img",
+          timestamp:post.timestamp ? post.timestamp: "2023-12-05T12:34:56",
+          _id: post._id
+        })));
+        
+        console.log(data.post[0].timestamp);
+        
+      } else {
+        throw new Error("Failed to fetch email");
+      }
+    } catch (error) {
+      console.error("Error fetching email:", error);
+      // Handle errors
+    }
+  }
   
 
     fetchUserEmail();
@@ -105,6 +138,8 @@ const PortfolioPage = () => {
       if (email) {
         fetchProfile();
       }
+
+      fetchallPosts();
 
   }, [email]);
 
@@ -182,7 +217,7 @@ const handleSave = async (result)  => {
   const handleOntTest = (result) => {
     if(result!=null){
      // console.log("url"+result);
-      setpostimgUrl(result);
+      setProfileImage(result);
     }
   };
 
@@ -191,30 +226,28 @@ const handleSave = async (result)  => {
       <Navbar />
       {artistProfile && (
         <div className="profile-container">
-  
+          
           {editMode ? (
-            <input
-              type="text"
-              name="fullName"
-              value={fullName}
-              onChange={handleChange}
-            />
+            <div>
+            <h3 className="want-to-post">Want to Post Something?</h3>
+            <UploadWidget onTest={handleOntTest}></UploadWidget>
+          </div>
           ) : (
-            <h1>{artistProfile.fullName}</h1>
+            <img
+              src={profileImage || image3}
+              alt={`${artistProfile.profileImage}'s Profile`}
+              className="profile-image"
+            />
           )}
           {editMode ? (
             <input
               type="text"
-              name="profileImage"
-              value={profileImage}
+              name="fullName"
+              value={artistProfile.fullName}
               onChange={handleChange}
             />
           ) : (
-            <img
-              src={profileImage || image3}
-              alt={`${artistProfile.fullName}'s Profile`}
-              className="profile-image"
-            />
+            <h1>{artistProfile.fullName}</h1>
           )}
           <div className="about-section">
             {editMode ? (
@@ -233,7 +266,7 @@ const handleSave = async (result)  => {
               <input
                 type="text"
                 name="skills"
-                value={artistProfile.fullName}
+                value={artistProfile.skills}
                 onChange={handleChange}
               />
             ) : (
@@ -245,7 +278,7 @@ const handleSave = async (result)  => {
               <input
                 type="text"
                 name="gigsInfo"
-                value={gigsInfo}
+                value={artistProfile.gigsInfo}
                 onChange={handleChange}
               />
             ) : (
@@ -265,7 +298,21 @@ const handleSave = async (result)  => {
       )}
       {
         <div>
-          {/* ... (other components) */}
+          {allPosts && allPosts[1] ? (
+          allPosts.map((post, index) => (
+            <Card
+              key={index}
+              userName={post.userName}
+              userImg={post.userImg}
+              postContent={post.postName}
+              postUrl={post.postimgUrl}
+              mediaType={"image"}
+              timestamp={post.timestamp}
+            />
+          ))
+        ) : (
+          <p>Loading...</p>
+          )}
         </div>
       }
     </div>
