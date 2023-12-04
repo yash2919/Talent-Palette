@@ -52,7 +52,9 @@ const CreatePost = ({ userProfilePicture ,onPostCreated}) => {
       const data = await response.json();
       if (response.ok) {
         alert(data.message);
+
         onPostCreated();
+
         //  navigate('/home');
       } else {
         alert(`Post Upload failed: ${data.message}`);
