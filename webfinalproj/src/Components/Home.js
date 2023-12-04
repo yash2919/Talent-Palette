@@ -6,6 +6,7 @@ import Card from "./Common/PostCard/FeedCard";
 import image3 from "../assets/images/artist.jpg";
 import CreatePost from "../Components/Post";
 
+
 function Home() {
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState(null);
@@ -90,6 +91,7 @@ function Home() {
       )}
       <div>
         <CreatePost userProfilePicture={image3} />
+
         {/* <h1>{allPosts[0]}</h1> */}
 
         {allPosts && allPosts[1] ? (
@@ -122,6 +124,7 @@ function Home() {
           ) : (
             <p>Loading...</p>
           )} */}
+
       </div>
     </div>
   );

@@ -11,6 +11,7 @@ const cookieParser=require("cookie-parser")
 app.use(cookieParser());
 app.use(bodyParser.json());
 const postRouter = require('./api/routes/postRouter');
+const profileAbout = require('./api/routes/profileRouter');
 const allowedOrigins = ["http://localhost:3001", "http://localhost:3000","http://localhost:3000/email","localhost"]; // Add your actual domain here
 
 const corsOptions = {
@@ -81,12 +82,21 @@ const User = mongoose.model("User", {
   },
   about:{
     type: String
+  },
+  skills:{
+    type: String
+  },
+  profileImage:{
+    type: String
+  },
+  gigsInfo:{
+    type: String
   }
 });
 
 
 app.use('/post', postRouter);
-
+// app.use('/profile/about', profileAbout);
 
 app.post("/user/login", async (req, res) => {
   try {
@@ -270,6 +280,62 @@ app.get("/user/getAll", async (req, res) => {
     res.status(500).json({ message: "An error occurred" });
   }
 });
+
+app.put("/user/profile", async (req, res) => {
+  try {
+    const { email, about, skills, profileImage, gigsInfo } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update the 'about' field if provided
+    if (about) {
+      user.about = about;
+    }
+
+    // Update the 'skills' field if provided
+    if (skills) {
+      user.skills = skills;
+    }
+
+    // Update the 'profileImage' field if provided
+    if (profileImage) {
+      user.profileImage = profileImage;
+    }
+
+    if (gigsInfo) {
+      user.gigsInfo = gigsInfo;
+    }
+
+    await user.save();
+
+    res.status(200).json({ message: "User details updated successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "An error occurred", error: error.message });
+  }
+});
+
+// Node.js backend using Express
+app.get("/user/profile/:email", async (req, res) => {
+  try {
+    // Assuming you are getting the user's email from a session or a token
+    const email = req.params.email; // Replace with your session or token parsing logic
+
+    const user = await User.findOne({ email }, 'fullName about skills profileImage gigsInfo -_id');
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: "An error occurred", error: error.message });
+  }
+});
+
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
