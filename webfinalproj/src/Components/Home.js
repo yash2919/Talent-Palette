@@ -124,7 +124,7 @@ function Home() {
               userImg: post.userImg ? post.userImg : image3,
               postName: post.postName,
               postimgUrl: post.postimgUrl,
-              postType: post.postType ? post.postType : "img",
+              postType: post.postType ? post.postType : "image",
               timestamp: post.timestamp
                 ? post.timestamp
                 : "2023-12-05T12:34:56",
@@ -149,6 +149,8 @@ function Home() {
   console.log(allPosts);
   console.log("Users");
   console.log(allUsers);
+
+  
   return (
     <div>
       <Navbar></Navbar>
@@ -161,25 +163,24 @@ function Home() {
             />
 
             {/* <h1>{allPosts[0]}</h1> */}
+         
+        {allPosts && allPosts.length > 0 ? (
+  allPosts.slice().reverse().map((post, index) => (
+    <Card
+      key={index}
+      userName={post.userName}
+      userImg={post.userImg}
+      postContent={post.postName}
+      postUrl={post.postimgUrl}
+      mediaType={post.postType}
+      timestamp={post.timestamp}
+    />
+  ))
+) : (
+  <p>Loading...</p>
+)}
 
-            {allPosts && allPosts.length > 0 ? (
-              allPosts
-                .slice()
-                .reverse()
-                .map((post, index) => (
-                  <Card
-                    key={index}
-                    userName={post.userName}
-                    userImg={post.userImg}
-                    postContent={post.postName}
-                    postUrl={post.postimgUrl}
-                    mediaType={"image"}
-                    timestamp={post.timestamp}
-                  />
-                ))
-            ) : (
-              <p>Loading...</p>
-            )}
+      
 
             {/* {hourdata && hourdata[1] ? (
             hourdata[days.indexOf(day)].map((dayData, index) => (

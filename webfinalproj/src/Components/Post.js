@@ -14,6 +14,7 @@ const CreatePost = ({ userProfilePicture, onPostCreated }) => {
   const [mediaType, setMediaType] = useState(null);
   const [postimgUrl, setpostimgUrl] = useState("");
   const [postName, setpostName] = useState("");
+  const [postType, setpostType] = useState("");
   const [email, setemail] = useState(null);
 
   const openMediaModal = (type) => {
@@ -44,7 +45,7 @@ const CreatePost = ({ userProfilePicture, onPostCreated }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, postName, postimgUrl }),
+        body: JSON.stringify({ email, postName, postimgUrl ,postType}),
       });
 
       const data = await response.json();
@@ -92,7 +93,9 @@ const CreatePost = ({ userProfilePicture, onPostCreated }) => {
   const handleOntTest = (result) => {
     if (result != null) {
       // console.log("url"+result);
-      setpostimgUrl(result);
+      setpostimgUrl(result.secure_url);
+      console.log(result.secure_url);
+      setpostType(result.resource_type);
     }
   };
 

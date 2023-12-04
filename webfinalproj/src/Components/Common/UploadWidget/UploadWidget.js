@@ -33,8 +33,9 @@ const UploadWidget = (props) => {
         uploadPreset: "veadh5cq",
       },
       function (error, result) {
-        if (result.event === "success") props.onTest(result.info.secure_url);
-        console.log(result);
+        if (result.event === "success") props.onTest(result.info);
+        console.log(result.secure_url);
+        
       }
     );
   }, []);
