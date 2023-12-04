@@ -1,14 +1,71 @@
 /* PortfolioPage.css */
-.portfolio-page {
-    max-width: 800px;
-    margin: auto;
-  }
-  
-  .profile-section img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-  }
-  
-  /* Further styling for about-section, skills-section, experience-section, etc. */
-  
+
+/* Apply a global reset for margin and padding */
+body, h1, h2, p, input, textarea {
+  margin: 0;
+  padding: 0;
+}
+
+/* Apply a box-sizing border-box to all elements */
+* {
+  box-sizing: border-box;
+}
+
+/* Style the navbar */
+.navbar {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Style the profile container */
+.profile-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the profile image */
+.profile-image {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+/* Style the profile name */
+h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+/* Style the about, skills, gigs sections */
+.about-section,
+.skills-section,
+.gigs-section {
+  margin-bottom: 20px;
+}
+
+/* Style the edit and save buttons */
+button {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Style the posts section */
+.posts-section {
+  margin-top: 20px;
+}
+
+/* Style the post card */
+.post-card {
+  /* Your post card styles go here */
+}
+
+/* Add more styles as needed based on your design */
