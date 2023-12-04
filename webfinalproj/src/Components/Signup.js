@@ -137,6 +137,9 @@ function SignUpForm() {
                   <button type="submit" onClick={signup} className="btn btn-primary w-100" style={{backgroundColor: '#7c4dff' }}>
                     Create new account
                   </button>
+                  <button type="button" className="btn btn-primary w-100" onClick={handleSignup} style={{ marginTop: '10px' }}>
+                    Already a user? Log in
+                  </button>
                 </form>
               </div>
             </div>
