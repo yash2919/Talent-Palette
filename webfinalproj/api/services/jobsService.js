@@ -22,8 +22,14 @@ async function createJobs(email, jobName,jobDesc,jobimgUrl,jobType,timestamp) {
           return job;
     }
 }
-async function getallJobs() {
-    const jobs = await Jobs.find({}, "jobName jobDesc email jobimgUrl jobType adminapproval jobstatus timestamp");
+async function getallJobs(email) {
+  let jobs;
+  if(email!==undefined){
+     jobs = await Jobs.find({email}, "jobName jobDesc email jobimgUrl jobType adminapproval jobstatus timestamp");
+  }
+  else{
+     jobs = await Jobs.find({}, "jobName jobDesc email jobimgUrl jobType adminapproval jobstatus timestamp");
+  }
     return jobs;
  }
 

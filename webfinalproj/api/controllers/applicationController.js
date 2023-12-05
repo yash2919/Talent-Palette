@@ -17,7 +17,7 @@ async function apply(req, res) {
 
 async function getallapplied(req, res) {
     try {
-      const { userId} = req.body;
+      const userId = req.query.email;
       const appl = await applicationService.getallapplied(userId);
   
       res.status(200).json({ message: 'All appl', appl });
@@ -50,7 +50,7 @@ async function getallapplied(req, res) {
         const result = await applicationService.editapp(userId,jobId,status);
       
     
-     
+      
         if (!userId) {
           return res.status(400).json({ message: "User Email cant be emmpty." });
         }

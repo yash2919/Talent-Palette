@@ -18,7 +18,8 @@ async function create(req, res) {
 async function getalljobs(req, res) {
     try {
    //   const { email, postName ,postimgUrl,postType} = req.body;
-      const jobs = await jobsService.getallJobs();
+   const email = req.query.email;
+      const jobs = await jobsService.getallJobs(email);
   
       res.status(200).json({ message: 'All Jobs', jobs });
     } catch (error) {
