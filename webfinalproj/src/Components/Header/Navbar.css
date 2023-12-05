@@ -1,19 +1,53 @@
 /* Navbar.css */
 .navbar {
-  background-color: #333;
-  padding: 12px;
+  background-color: #acacac; /* Light background color */
+  margin-top: -1.2%;
   text-align: center;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 90px;
+}
+.active {
+  background-color: #333; /* Change to the desired color for the active item */
+  color: white; /* Change to the desired text color for the active item */
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 4.00rem;
+  height: 2rem;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.website-name {
+  color: black; /* Text color */
+  font-size: 2rem;
+  font-family:'Arial Narrow Bold';
 }
 
 .nav-list {
   list-style-type: none;
   padding: 0;
   display: flex;
+  padding-left: 25%;
   justify-content: center;
+  align-items: center;
 }
 
 .nav-item {
-  margin: 0 60px;
+  margin: 0 15px;
+  margin-left: 10%;
   opacity: 0;
   transform: translateY(-10px);
   animation: fadeInUp 1.5s forwards;
@@ -21,25 +55,73 @@
 
 .nav-item:hover {
   transform: translateY(-15px);
+  color: #333;
+}
+
+.label {
+  font-size: 1.0rem;
 }
 
 .nav-link {
   text-decoration: none;
-  color: white;
+  color: black; /* Text color */
   display: flex;
   flex-direction: column;
+  position: relative;
   align-items: center;
-  margin: 0 80px;
 }
 
 .icon {
   font-size: 1.5rem;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
+
+/* Profile picture styling */
+.profile-icon {
+  width: 2.0rem;
+  height: 2.0rem;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-bottom: 0%;
+}
+
+/* Dropdown styling */
+/* (Commented out to disable dropdown styles for now) */
 
 @keyframes fadeInUp {
   to {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Search box styling */
+.search-box {
+  position: relative;
+}
+
+.search-input {
+  padding-left: 10px; /* Adjust the padding based on the icon size */
+  height: 2.8rem;
+  width: 350px;
+  font-size: 1.2rem;
+  color: black; /* Text color */
+  background-color: #f2f2f2; /* Light grey background color */
+  border: 1px solid #ccc; /* Border color */
+  border-radius: 20px; /* Rounded corners */
+}
+
+.search-icon {
+  position: absolute;
+  left: 300px; /* Adjust the left position based on your design */
+  top: 50%;
+  color: black; /* Text color */
+  height: 25px;
+  transform: translateY(-50%);
+  font-weight: 500;
+}
+/* Ensure equal space distribution for all nav items */
+.nav-list > li {
+  flex: 1;
+  text-align: center;
 }

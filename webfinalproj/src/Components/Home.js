@@ -9,7 +9,6 @@ import UserList from "./Common/PostCard/Users";
 import "./Home.css";
 import PersonCard from "../Components/PersonCards";
 
-
 function Home() {
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState(null);
@@ -152,13 +151,11 @@ function Home() {
   console.log("Users");
   console.log(allUsers);
 
-
   return (
     <div>
       <Navbar></Navbar>
       <div className="home-container">
         <div className="main-content">
-
           <div className="person-card-container">
             <PersonCard
               userName={userEmail} // Assuming the logged-in user's email is the username
@@ -176,23 +173,24 @@ function Home() {
 
             {/* <h1>{allPosts[0]}</h1> */}
 
-         
-        {allPosts && allPosts.length > 0 ? (
-  allPosts.slice().reverse().map((post, index) => (
-    <Card
-      key={index}
-      userName={post.userName}
-      userImg={post.userImg}
-      postContent={post.postName}
-      postUrl={post.postimgUrl}
-      mediaType={post.postType}
-      timestamp={post.timestamp}
-    />
-  ))
-) : (
-  <p>Loading...</p>
-)}
-
+            {allPosts && allPosts.length > 0 ? (
+              allPosts
+                .slice()
+                .reverse()
+                .map((post, index) => (
+                  <Card
+                    key={index}
+                    userName={post.userName}
+                    userImg={post.userImg}
+                    postContent={post.postName}
+                    postUrl={post.postimgUrl}
+                    mediaType={post.postType}
+                    timestamp={post.timestamp}
+                  />
+                ))
+            ) : (
+              <p>Loading...</p>
+            )}
 
             {/* {hourdata && hourdata[1] ? (
             hourdata[days.indexOf(day)].map((dayData, index) => (
