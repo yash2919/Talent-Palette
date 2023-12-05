@@ -1,118 +1,144 @@
-/* PortfolioPage.css */
-
-/* Apply a global reset for margin and padding */
-body, h1, h2, p, input, textarea, button {
+/* Base styles */
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
-/* Apply a box-sizing border-box to all elements */
-*, *::before, *::after {
-  box-sizing: inherit;
+body, html {
+  width: 100%;
+  height: 100%;
+  font-family: 'Arial', sans-serif;
 }
 
-/* Style the navbar */
-.navbar {
-  background-color: #333;
-  color: #fff;
-  padding: 10px;
-  text-align: center;
-}
-
-/* Style the main profile page */
+/* Profile page styles */
 .profile-page {
-  display: flex;
-  flex-direction: column;
+  background: linear-gradient(135deg,#a777e3, #6e8efb, #a777e3);
   min-height: 100vh;
-  background: linear-gradient(to right, rgb(161, 97, 235), #3b525c); /* Example gradient */
+  /* Adjust this to push your content down */
 }
 
-/* Style the profile container */
+/* Profile container */
 .profile-container {
-  display: grid;
-  grid-template-columns: min-content auto; /* Profile card takes space as much as its content and the rest is for posts */
-  gap: 20px;
-  align-items: start;
-  padding: 20px;
-  max-width: 100%;
-  margin-left: 0; /* Remove left margin if needed */
+  max-width: 1200px;
+  margin: 0 auto; /* Center the container */
+  padding: 60px;
 }
 
-/* Style the left-profile */
+
+
+
+/* Profile section */
 .left-profile {
-  width: 300px; /* Only as wide as its contents */
-  padding: 20px;
-  background-color: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Style the profile image */
-.profile-image {
-  width: 120px; /* Adjust as needed */
-  height: 120px;
-  border-radius: 50%;
-  margin-bottom: 20px;
-  object-fit: cover;
-}
-
-/* Style the profile name and sections */
-h1, .about-section, .skills-section, .gigs-section {
   text-align: center;
+  padding: 20px;
+  background: #fff;
   margin-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
-/* Style the edit and save buttons */
+/* Profile image */
+.profile-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  margin-top: -75px; /* Adjust to position the image correctly */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Profile details */
+.profile-details {
+  margin-top: 50px; /* Space between image and details */
+}
+
 button {
-  background-color: #4caf50;
-  color: #fff;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
+  background-color: #5c6bc0;
+  color: white;
+  font-size: 16px;
   cursor: pointer;
-  display: block;
-  margin: 10px auto;
+  outline: none;
+  transition: background-color 0.3s ease;
 }
 
-/* Style the right-posts section */
-
-.posts-section{
-display: grid;
-grid-template-columns: repeat(3, 1fr); /* Three columns grid */
-gap: 20px;
-padding: 20px;
+button:hover {
+  background-color: #3f51b5;
 }
 
-.posts-section .card {
- 
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow: hidden; /* Ensure content doesn't overflow */
-    margin-bottom: 20px; /* Space between cards */
-    width: 100%; /* Use full width of the column */
-    max-width: none; /* Remove max-width if previously set */
-  }
-  
-  .card-content {
-    padding: 15px; /* Padding inside the card */
-    word-wrap: break-word; /* Break long words to prevent overflow */
-  }
+/* Styles specific to the Save button */
+button.save {
+  background-color: #66bb6a; /* A green color indicating a 'save' action */
+}
 
-  .card img {
-    max-width: 100%; /* Full width of the card */
-    height: auto; /* Maintain aspect ratio */
-    display: block; /* Remove inline spacing */
-  }
-  
+button.save:hover {
+  background-color: #4caf50;
+}
 
-/* Initially hide the like, comment, share options */
-/* Target the actions within the card only within the posts-section */
-.posts-section .card .card-actions {
+/* Styles specific to the Edit button */
+button.edit {
+  background-color: #ffa726; /* An orange color to indicate 'edit' mode */
+}
+
+button.edit:hover {
+  background-color: #fb8c00;
+}
+
+.profile-page .posts-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 posts per row for larger screens */
+  gap: 20px; /* Space between cards */
+  margin-top: 20px; /* Space from top content */
+}
+
+/* Grid item adjustments */
+.profile-page .card {
+  /* Override width and height from Card.css for grid items to work properly */
+  height: auto; /* Height should be auto for grid items */
+  width: 100%; /* Width should be 100% to fill the grid column */
+  margin-left: 0; /* Remove left margin */
+  margin-right: 0; /* Remove right margin */
+  /* Keep the rest of your .card styles from Card.css */
+}
+
+@media (max-width: 1024px) {
+  .profile-page .posts-section {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for smaller screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-page  .posts-section {
+    grid-template-columns: 1fr; /* 1 column for mobile screens */
+  }
+}
+
+.profile-page .menu-icon {
+  display: none;
+}
+
+.profile-page .card {
+  /* Other styles */
+  overflow: hidden; /* Hide overflow */
+}
+
+.profile-page .card-content {
+  word-wrap: break-word; /* Break long words to prevent overflow */
+  white-space: normal; /* Ensure the text wraps */
+  overflow: auto; /* Add scrollbars if content is too long */
+  max-height: 50px; /* Adjust based on your design */
+  padding: 10px; /* Adjust padding as needed */
+}
+
+/* If you have images or other media in your cards, ensure they fit */
+
+
+/* Adjust the card header if it has overflowing content */
+.profile-page .posts-section .card .card-actions {
   display: flex;
   position: absolute;
   bottom: 0;
@@ -131,11 +157,3 @@ padding: 20px;
   opacity: 1;
   visibility: visible;
 }
-
-/* This ensures the hover effect applies only to the post card actions within the PortfolioPage */
-
-
-/* @media (max-width: 768px) {
-  .right-posts {
-    grid-template-columns: 1fr; /* Single column on smaller screens */
-  
