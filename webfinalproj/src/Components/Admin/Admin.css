@@ -1,0 +1,43 @@
+.admin-panel {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.admin-panel h2 {
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.admin-panel div {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+.admin-panel img {
+  max-width: 100px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.profile, .job, .post {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.profile h3, .job h3, .post h3 {
+  margin: 0;
+  margin-right: 10px;
+  color: #333;
+}
+
+.profile p, .job p, .post p {
+  margin: 5px 0;
+  color: #666;
+}
