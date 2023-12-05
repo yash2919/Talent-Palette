@@ -198,99 +198,135 @@ const handleOntTest = (result) => {
 return (
   <div className="profile-page">
     <Navbar />
-    <div className="cover-photo"></div>
-    <div className="profile-container">
       
-      <div className="left-profile">
-        {/* Profile Image */}
+          <div className="profile-header">
+        {/* Conditional rendering for Cover Photo Upload */}
         {editMode ? (
-          <>
-            <UploadWidget onTest={ handleOntTest} />
-            {profileImage && (
-              <img
-                src={artistProfile.profileImage}
-                className="profile-image"
+          <UploadWidget 
+            onTest={(result) => {
+              if(result?.secure_url) {
+                setArtistProfile({
+                  ...artistProfile,
+                  coverPhoto: result.secure_url,
+                });
+              }
+            }}
+          />
+        ) : (
+          <div className="cover-photo" style={{ backgroundImage: `url(${artistProfile.coverPhoto})` }}></div>
+        )}
+        <div className = "profile-image-container">
+        {/* Conditional rendering for Profile Image Upload */}
+        {editMode ? (
+          <UploadWidget 
+            onTest={(result) => {
+              if(result?.secure_url) {
+                setArtistProfile({
+                  ...artistProfile,
+                  profileImage: result.secure_url,
+                });
+              }
+            }}
+          />
+        ) : (
+          <img src={artistProfile.profileImage || image3} alt="Profile" className="profile-image" />
+        )}
+         </div>
+        {/* Edit Profile Button */}
+        {!editMode && (
+          <button onClick={handleEdit} className="edit-profile-btn">Edit Profile</button>
+        )}
+      </div>
+
+      <div className="profile-container">
+        {/* Profile Details */}
+        <div className="profile-details">
+          {/* Full Name */}
+            {editMode ? (
+              <textarea
+                name="fullName"
+                value={artistProfile.fullName}
+                onChange={handleChange}
               />
+            ) : (
+              <div className="animated-text">
+              <h2>Hello, <span className="profile-fullname">{artistProfile.fullName || 'Your Name'}</span>!</h2>
+            </div>
             )}
-          </>
-        ) : (
-          <img
-            src={artistProfile.profileImage || image3}
-            className="profile-image"
-          />
-        )}
-         <div className="profile-details">
-        {/* Profile Name */}
-        {editMode ? (
-          <input
-            type="text"
-            name="fullName"
-            value={artistProfile.fullName}
-            onChange={handleChange}
-          />
-        ) : (
-          <h1>{artistProfile.fullName || 'Your Name'}</h1>
-        )}
+          
 
-        {/* About Section */}
-        {editMode ? (
-          <textarea
-            name="about"
-            value={artistProfile.about}
-            onChange={handleChange}
-          />
-        ) : (
-          <p>{artistProfile.about || 'About section'}</p>
-        )}
+         {/* About Section */}
+         <div className="section about">
+            <h2>About</h2>
+            {editMode ? (
+              <textarea
+                name="about"
+                value={artistProfile.about}
+                onChange={handleChange}
+              />
+            ) : (
+              <p>{artistProfile.about || 'A little about me...'}</p>
+            )}
+          </div>
 
-        {/* Skills Section */}
-        {editMode ? (
-          <textarea
-            name="skills"
-            value={artistProfile.skills}
-            onChange={handleChange}
-          />
-        ) : (
-          <p>{artistProfile.skills || 'Skills section'}</p>
-        )}
+          {/* Skills Section */}
+          <div className="section skills">
+            <h2>Skills</h2>
+            {editMode ? (
+              <textarea
+                name="skills"
+                value={artistProfile.skills}
+                onChange={handleChange}
+              />
+            ) : (
+              <p>{artistProfile.skills || 'My skills include...'}</p>
+            )}
+          </div>
 
-        {/* Gigs Info Section */}
-        {editMode ? (
-          <textarea
-            name="gigsInfo"
-            value={artistProfile.gigsInfo}
-            onChange={handleChange}
-          />
-        ) : (
-          <p>{artistProfile.gigsInfo || 'Gigs info section'}</p>
-        )}
+          {/* Experience Section */}
+          <div className="section experience">
+            <h2>Experience</h2>
+            {editMode ? (
+              <textarea
+                name="gigsInfo"
+                value={artistProfile.gigsInfo}
+                onChange={handleChange}
+              />
+            ) : (
+              <p>{artistProfile.gigsInfo || 'My professional experience...'}</p>
+            )}
+          </div>
 
-        {/* Edit and Save Buttons */}
-        {editMode ? (
-          <button onClick={handleSave}>Save</button>
-        ) : (
-          <button onClick={handleEdit}>Edit</button>
-        )}
-      </div>
-      </div>
-      <div className="posts-section">
-        {/* Post Cards */}
-        {allPosts.map((post, index) => (
-          <Card
-            key={index}
-            // userName={post.userName}
-            userImg={post.userImg}
-            postContent={post.postName}
-            postUrl={post.postimgUrl}
-            mediaType={post.postType}
-            timestamp={post.timestamp}
-          />
-        ))}
-       
+
+          {/* Save and Cancel Buttons in Edit Mode */}
+          {editMode && (
+            <div className="edit-buttons">
+              <button onClick={handleSave} className="save-btn">Save Changes</button>
+              <button onClick={() => setEditMode(false)} className="cancel-btn">Cancel</button>
+            </div>
+          )}
+        </div>
+
+        {/* Posts Section */}
+        <div className="posts-section">
+          {/* Post Cards */}
+          {allPosts.map((post, index) => (
+            <Card
+              key={index}
+              // userName={post.userName}
+              userImg={post.userImg}
+              postContent={post.postName}
+              postUrl={post.postimgUrl}
+              mediaType={post.postType}
+              timestamp={post.timestamp}
+            />
+          ))}
+         
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
 };
 
+      
 export default PortfolioPage;
