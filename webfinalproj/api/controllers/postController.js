@@ -14,8 +14,8 @@ async function create(req, res) {
 
 async function getallposts(req, res) {
     try {
-     // const { email, postName ,postimgUrl,postType} = req.body;
-      const post = await postService.getallposts();
+      const { email} = req.body;
+      const post = await postService.getallposts(email);
   
       res.status(200).json({ message: 'All Posts', post });
     } catch (error) {
