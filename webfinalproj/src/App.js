@@ -7,6 +7,7 @@ import Navbar from "./Components/Header/Navbar";
 import ProfilePage from "./Components/Profile/ProfilePage";
 import WelApp from "./Components/wel";
 import Home from "./Components/Home"
+import Admin from "./Components/Admin/Admin"
 function App() {
   return (
     <BrowserRouter>
@@ -17,6 +18,7 @@ function App() {
         <Route path="/signup" element={<SignUpForm />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </BrowserRouter>
   );
