@@ -98,7 +98,8 @@ const PortfolioPage = () => {
 
   async function fetchallPosts() {
     try {
-      const response = await fetch("http://localhost:3000/post/getallposts", {
+      console.log('in fetchall');
+      const response = await fetch(`http://localhost:3000/post/getallposts?email=${email}`, {
         method: "GET",
         credentials: "include", 
       });
@@ -112,7 +113,7 @@ const PortfolioPage = () => {
           userImg: post.userImg? post.userImg:image3,
           postName: post.postName,
           postimgUrl: post.postimgUrl,
-          postType: post.postType? post.postType : "img",
+          postType: post.postType? post.postType : "image",
           timestamp:post.timestamp ? post.timestamp: "2023-12-05T12:34:56",
           _id: post._id
         })));
@@ -137,9 +138,10 @@ const PortfolioPage = () => {
     // };
       if (email) {
         fetchProfile();
+        fetchallPosts();
       }
 
-      fetchallPosts();
+      
 
   }, [email]);
 
@@ -193,100 +195,102 @@ const handleOntTest = (result) => {
   }
 };
 
-  return (
-    <div className="profile-page">
-      <Navbar />
-      <div className="profile-container">
-        <div className="left-profile">
-          {/* Profile Image */}
-          {editMode ? (
-            <>
-              <UploadWidget onTest={ handleOntTest} />
-              {profileImage && (
-                <img
-                  src={profileImage}
-                  className="profile-image"
-                />
-              )}
-            </>
-          ) : (
-            <img
-              src={artistProfile.profileImage || image3}
-              alt={`${artistProfile.fullName || 'Profile'}`}
-              className="profile-image"
-            />
-          )}
+return (
+  <div className="profile-page">
+    <Navbar />
+    <div className="cover-photo"></div>
+    <div className="profile-container">
+      
+      <div className="left-profile">
+        {/* Profile Image */}
+        {editMode ? (
+          <>
+            <UploadWidget onTest={ handleOntTest} />
+            {profileImage && (
+              <img
+                src={artistProfile.profileImage}
+                className="profile-image"
+              />
+            )}
+          </>
+        ) : (
+          <img
+            src={artistProfile.profileImage || image3}
+            className="profile-image"
+          />
+        )}
+         <div className="profile-details">
+        {/* Profile Name */}
+        {editMode ? (
+          <input
+            type="text"
+            name="fullName"
+            value={artistProfile.fullName}
+            onChange={handleChange}
+          />
+        ) : (
+          <h1>{artistProfile.fullName || 'Your Name'}</h1>
+        )}
 
-          {/* Profile Name */}
-          {editMode ? (
-            <input
-              type="text"
-              name="fullName"
-              value={artistProfile.fullName}
-              onChange={handleChange}
-            />
-          ) : (
-            <h1>{artistProfile.fullName || 'Your Name'}</h1>
-          )}
+        {/* About Section */}
+        {editMode ? (
+          <textarea
+            name="about"
+            value={artistProfile.about}
+            onChange={handleChange}
+          />
+        ) : (
+          <p>{artistProfile.about || 'About section'}</p>
+        )}
 
-          {/* About Section */}
-          {editMode ? (
-            <textarea
-              name="about"
-              value={artistProfile.about}
-              onChange={handleChange}
-            />
-          ) : (
-            <p>{artistProfile.about || 'About section'}</p>
-          )}
+        {/* Skills Section */}
+        {editMode ? (
+          <textarea
+            name="skills"
+            value={artistProfile.skills}
+            onChange={handleChange}
+          />
+        ) : (
+          <p>{artistProfile.skills || 'Skills section'}</p>
+        )}
 
-          {/* Skills Section */}
-          {editMode ? (
-            <textarea
-              name="skills"
-              value={artistProfile.skills}
-              onChange={handleChange}
-            />
-          ) : (
-            <p>{artistProfile.skills || 'Skills section'}</p>
-          )}
+        {/* Gigs Info Section */}
+        {editMode ? (
+          <textarea
+            name="gigsInfo"
+            value={artistProfile.gigsInfo}
+            onChange={handleChange}
+          />
+        ) : (
+          <p>{artistProfile.gigsInfo || 'Gigs info section'}</p>
+        )}
 
-          {/* Gigs Info Section */}
-          {editMode ? (
-            <textarea
-              name="gigsInfo"
-              value={artistProfile.gigsInfo}
-              onChange={handleChange}
-            />
-          ) : (
-            <p>{artistProfile.gigsInfo || 'Gigs info section'}</p>
-          )}
-
-          {/* Edit and Save Buttons */}
-          {editMode ? (
-            <button onClick={handleSave}>Save</button>
-          ) : (
-            <button onClick={handleEdit}>Edit</button>
-          )}
-        </div>
-        <div className="posts-section">
-          {/* Post Cards */}
-          
-          {allPosts.map((post, index) => (
-            <Card
-              key={index}
-              userName={post.userName}
-              userImg={post.userImg}
-              postContent={post.postName}
-              postUrl={post.postimgUrl}
-              mediaType={"image"}
-              timestamp={post.timestamp}
-            />
-          ))}
-        </div>
+        {/* Edit and Save Buttons */}
+        {editMode ? (
+          <button onClick={handleSave}>Save</button>
+        ) : (
+          <button onClick={handleEdit}>Edit</button>
+        )}
+      </div>
+      </div>
+      <div className="posts-section">
+        {/* Post Cards */}
+        {allPosts.map((post, index) => (
+          <Card
+            key={index}
+            // userName={post.userName}
+            userImg={post.userImg}
+            postContent={post.postName}
+            postUrl={post.postimgUrl}
+            mediaType={post.postType}
+            timestamp={post.timestamp}
+          />
+        ))}
+       
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default PortfolioPage;
