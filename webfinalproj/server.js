@@ -11,6 +11,7 @@ const cookieParser=require("cookie-parser")
 app.use(cookieParser());
 app.use(bodyParser.json());
 const postRouter = require('./api/routes/postRouter');
+const jobsRouter = require('./api/routes/jobsRouter');
 const profileAbout = require('./api/routes/profileRouter');
 const allowedOrigins = ["http://localhost:3001", "http://localhost:3000","http://localhost:3000/email","localhost"]; // Add your actual domain here
 
@@ -96,6 +97,7 @@ const User = mongoose.model("User", {
 
 
 app.use('/post', postRouter);
+app.use('/jobs', jobsRouter);
 // app.use('/profile/about', profileAbout);
 
 app.post("/user/login", async (req, res) => {

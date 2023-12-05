@@ -42,7 +42,7 @@ function Home() {
             userImg: post.userImg ? post.userImg : image3,
             postName: post.postName,
             postimgUrl: post.postimgUrl,
-            postType: post.postType ? post.postType : "img",
+            postType: post.postType ? post.postType : "image",
             timestamp: post.timestamp ? post.timestamp : "2023-12-05T12:34:56",
             _id: post._id,
           }))
