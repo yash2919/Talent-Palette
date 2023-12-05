@@ -285,7 +285,7 @@ app.get("/user/getAll", async (req, res) => {
 
 app.put("/user/profile", async (req, res) => {
   try {
-    const { email, profileImage, fullname, about, skills, gigsInfo } = req.body;
+    const { email, profileImage, fullName, about, skills, gigsInfo } = req.body;
 
     const user = await User.findOne({ email });
 
@@ -298,8 +298,8 @@ app.put("/user/profile", async (req, res) => {
       user.about = about;
     }
 
-    if (fullname) {
-      user.fullname = fullname;
+    if (fullName) {
+      user.fullName = fullName;
     }
 
     // Update the 'skills' field if provided

@@ -147,49 +147,30 @@ const PortfolioPage = () => {
     setEditMode(true);
   };
 
-  // const handleChange = (e) => {
-  //   setArtistProfile({
-  //     ...artistProfile,
-  //     [e.target.name]: e.target.value,
-  //   });
-  // };
+  const handleChange = (e) => {
+    setArtistProfile({
+      ...artistProfile,
+      [e.target.name]: e.target.value,
 
-const handleChange = (e) => {
-  const { name, value } = e.target;
-
-  // Update the corresponding state based on the name attribute
-  switch (name) {
-    case 'profileImage':
-      setProfileImage(value);
-      break;
-    case 'fullName':
-      setFullName(value);
-      break;
-    case 'about':
-      setAbout(value);
-      break;
-    case 'skills':
-      setSkills(value);
-      break;
-    case 'gigsInfo':
-      setGigsInfo(value);
-      break;
-    // Add other cases as needed
-    default:
-      break;
-  }
-}
+    });
+  };
 
 const handleSave = async (result)  => {
+  const fullName = artistProfile.fullName;
+  const about = artistProfile.about;
+  const skills = artistProfile.skills;
+  const gigsInfo = artistProfile.gigsInfo;
+
   try {
     const response = await fetch("http://localhost:3000/user/profile", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
+      
       body: JSON.stringify({ email, profileImage, fullName, about, skills, gigsInfo }),
     });
-
+    // console.log();
     const data = await response.json();
     if (response.ok) {
       alert(data.message);
@@ -202,6 +183,7 @@ const handleSave = async (result)  => {
     alert("An error occurred during Post Upload.");
   }
   setEditMode(false);
+  
 };
 
 const handleOntTest = (result) => {
@@ -223,15 +205,14 @@ const handleOntTest = (result) => {
               {profileImage && (
                 <img
                   src={profileImage}
-                  alt={`${fullName || 'Profile'}`}
                   className="profile-image"
                 />
               )}
             </>
           ) : (
             <img
-              src={profileImage || image3}
-              alt={`${fullName || 'Profile'}`}
+              src={artistProfile.profileImage || image3}
+              alt={`${artistProfile.fullName || 'Profile'}`}
               className="profile-image"
             />
           )}
@@ -241,11 +222,11 @@ const handleOntTest = (result) => {
             <input
               type="text"
               name="fullName"
-              value={fullName}
+              value={artistProfile.fullName}
               onChange={handleChange}
             />
           ) : (
-            <h1>{fullName || 'Your Name'}</h1>
+            <h1>{artistProfile.fullName || 'Your Name'}</h1>
           )}
 
           {/* About Section */}
@@ -263,22 +244,22 @@ const handleOntTest = (result) => {
           {editMode ? (
             <textarea
               name="skills"
-              value={skills}
+              value={artistProfile.skills}
               onChange={handleChange}
             />
           ) : (
-            <p>{skills || 'Skills section'}</p>
+            <p>{artistProfile.skills || 'Skills section'}</p>
           )}
 
           {/* Gigs Info Section */}
           {editMode ? (
             <textarea
               name="gigsInfo"
-              value={gigsInfo}
+              value={artistProfile.gigsInfo}
               onChange={handleChange}
             />
           ) : (
-            <p>{gigsInfo || 'Gigs info section'}</p>
+            <p>{artistProfile.gigsInfo || 'Gigs info section'}</p>
           )}
 
           {/* Edit and Save Buttons */}
