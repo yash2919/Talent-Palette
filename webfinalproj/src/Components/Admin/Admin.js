@@ -141,4 +141,4 @@ const fetchPosts = async () => {
   
 }
 
-        export default Admin;
+        export default Admin
