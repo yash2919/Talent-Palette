@@ -100,25 +100,28 @@ const PortfolioPage = () => {
     try {
       const response = await fetch("http://localhost:3000/post/getallposts", {
         method: "GET",
-        credentials: "include", 
+        credentials: "include",
       });
 
       if (response.ok) {
         const data = await response.json();
         // if(data!=null)
-        setallPosts(data.post.map(post => ({
-          // email: post.email,
-          userName: post.userName? post.userName : post.email,
-          userImg: post.userImg? post.userImg:image3,
-          postName: post.postName,
-          postimgUrl: post.postimgUrl,
-          postType: post.postType? post.postType : "img",
-          timestamp:post.timestamp ? post.timestamp: "2023-12-05T12:34:56",
-          _id: post._id
-        })));
-        
+        setallPosts(
+          data.post.map((post) => ({
+            // email: post.email,
+            userName: post.userName ? post.userName : post.email,
+            userImg: post.userImg ? post.userImg : image3,
+            postName: post.postName,
+            postimgUrl: post.postimgUrl,
+            postType: post.postType ? post.postType : "image",
+            timestamp: post.timestamp
+              ? post.timestamp
+              : "2023-12-05T12:34:56",
+            _id: post._id,
+          }))
+        );
+
         console.log(data.post[0].timestamp);
-        
       } else {
         throw new Error("Failed to fetch email");
       }
@@ -217,13 +220,14 @@ const handleSave = async (result)  => {
   const handleOntTest = (result) => {
     if(result!=null){
      // console.log("url"+result);
-      setProfileImage(result);
+      setProfileImage(result.secure_url);
     }
   };
 
   return (
     <div className="profile-page">
       <Navbar />
+      <div className="cover-photo"></div>
       <div className="profile-container">
         <div className="left-profile">
           {/* Profile Image */}
@@ -245,7 +249,7 @@ const handleSave = async (result)  => {
               className="profile-image"
             />
           )}
-
+           <div className="profile-details">
           {/* Profile Name */}
           {editMode ? (
             <input
@@ -298,20 +302,21 @@ const handleSave = async (result)  => {
             <button onClick={handleEdit}>Edit</button>
           )}
         </div>
+        </div>
         <div className="posts-section">
           {/* Post Cards */}
-          
           {allPosts.map((post, index) => (
             <Card
               key={index}
-              userName={post.userName}
+              // userName={post.userName}
               userImg={post.userImg}
               postContent={post.postName}
               postUrl={post.postimgUrl}
-              mediaType={"image"}
+              mediaType={post.postType}
               timestamp={post.timestamp}
             />
           ))}
+         
         </div>
       </div>
     </div>
