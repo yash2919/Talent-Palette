@@ -256,7 +256,7 @@ app.get("/user/getAll", async (req, res) => {
 
 app.put("/user/profile", async (req, res) => {
   try {
-    const { email, about, skills, profileImage, gigsInfo } = req.body;
+    const { email, profileImage, fullName, about, skills, gigsInfo } = req.body;
 
     const user = await User.findOne({ email });
 
@@ -267,6 +267,10 @@ app.put("/user/profile", async (req, res) => {
     // Update the 'about' field if provided
     if (about) {
       user.about = about;
+    }
+
+    if (fullName) {
+      user.fullName = fullName;
     }
 
     // Update the 'skills' field if provided
