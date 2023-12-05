@@ -4,8 +4,10 @@ const Jobs = require('../models/jobModel');
 
 async function create(req, res) {
   try {
-    const { email, jobName , jobimgUrl,jobType,timestamp } = req.body;
-    const jobs = await jobsService.createJobs(email, jobName,jobimgUrl,jobType,timestamp);
+
+    const { email, jobName ,jobDesc, jobimgUrl,jobType,timestamp } = req.body;
+    const jobs = await jobsService.createJobs(email, jobName,jobDesc,jobimgUrl,jobType,timestamp);
+
 
     res.status(200).json({ message: 'Job creation successful', jobs });
   } catch (error) {
@@ -16,7 +18,8 @@ async function create(req, res) {
 async function getalljobs(req, res) {
     try {
    //   const { email, postName ,postimgUrl,postType} = req.body;
-      const jobs = await jobsService.getallJobs();
+   const email = req.query.email;
+      const jobs = await jobsService.getallJobs(email);
   
       res.status(200).json({ message: 'All Jobs', jobs });
     } catch (error) {
@@ -44,14 +47,18 @@ async function getalljobs(req, res) {
   async function editjob(req, res) {
     
       try {
-        const { _id,jobName,jobimgUrl,jobType} = req.body;
-        const result = await jobsService.editJob(_id,jobName,jobimgUrl,jobType);
-      
-    
+
+        const { _id,jobName,jobDesc,jobimgUrl,jobType,adminapproval,jobstatus} = req.body;
+        const result = await jobsService.editJob(_id,jobName,jobDesc,jobimgUrl,jobType,adminapproval,jobstatus);    
      
         if (!jobName) {
           return res.status(400).json({ message: "Job name cant be emmpty." });
         }
+
+        if (!jobDesc) {
+          return res.status(400).json({ message: "Job description cant be emmpty." });
+        }
+
         if (!jobType) {
           return res.status(400).json({ message: "Job Type cant be emmpty." });
         }

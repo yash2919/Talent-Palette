@@ -17,6 +17,7 @@ async function createPost(email, postName,postimgUrl,postType) {
           return post;
     }
 }
+
 async function getallposts(email) {
     let posts;
     if(email==null)

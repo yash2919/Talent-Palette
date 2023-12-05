@@ -9,13 +9,27 @@ var jobSchema = new mongoose.Schema({
     type: String,
     required: true,
     },
+    jobDesc: {
+      type: String,
+      required: true,
+      },
     jobimgUrl: {
       type: String,
       },
       jobType: {
         type: String,
         },
-    timestamp: { type: Date, default: Date.now }
+        adminapproval:{
+          type: String,
+          default: "AdminCheck"
+        },
+        jobstatus:{
+          type: String,
+          default: "open"
+        },
+    timestamp: { 
+      type: Date, default: Date.now 
+    }
 });
 const Jobs = mongoose.model('Jobs', jobSchema);
 
