@@ -16,6 +16,7 @@ const profileAbout = require('./api/routes/profileRouter');
 const allowedOrigins = ["http://localhost:3001", "http://localhost:3000","http://localhost:3000/email","localhost"]; // Add your actual domain here
 const User = require('./api/models/userModel');
 const applicationRouter = require("./api/routes/applicationRouter");
+const port = process.env.PORT || 3000;
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -319,6 +320,6 @@ app.get("/user/profile/:email", async (req, res) => {
 });
 
 
-app.listen(3000, () => {
+app.listen(port, () => {
   console.log("Server is running on port 3000");
 });
