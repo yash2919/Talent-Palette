@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../Header/Navbar';
 import Card from '../Common/PostCard/FeedCard';
 import image3 from '../../assets/images/artist.jpg';
-import CreatePost from '../../Components/Post';
 import './PortfolioPage.css';
 import UploadWidget from "../Common/UploadWidget/UploadWidget"
 
@@ -15,6 +14,7 @@ const PortfolioPage = () => {
   const [skills, setSkills] = useState("dfad");
   const [about, setAbout] = useState("absbado")
   const [profileImage, setProfileImage] = useState("");
+  const [coverImage, setCoverImage] = useState("");
   const [gigsInfo, setGigsInfo] = useState("adfad");
   const [allPosts,setallPosts]=useState([]);
 
@@ -32,6 +32,7 @@ const PortfolioPage = () => {
   };
   const [artistProfile, setArtistProfile] = useState({
     profileImage: '',
+    coverPhoto: '',
     fullName: '',
     about: '',
     skills: '',
@@ -170,7 +171,7 @@ const handleSave = async (result)  => {
         "Content-Type": "application/json",
       },
       
-      body: JSON.stringify({ email, profileImage, fullName, about, skills, gigsInfo }),
+      body: JSON.stringify({ email, coverImage, profileImage, fullName, about, skills, gigsInfo }),
     });
     // console.log();
     const data = await response.json();
@@ -205,10 +206,7 @@ return (
           <UploadWidget 
             onTest={(result) => {
               if(result?.secure_url) {
-                setArtistProfile({
-                  ...artistProfile,
-                  coverPhoto: result.secure_url,
-                });
+                setProfileImage(result.secure_url);
               }
             }}
           />
@@ -221,10 +219,7 @@ return (
           <UploadWidget 
             onTest={(result) => {
               if(result?.secure_url) {
-                setArtistProfile({
-                  ...artistProfile,
-                  profileImage: result.secure_url,
-                });
+                setCoverImage(result.secure_url);
               }
             }}
           />
