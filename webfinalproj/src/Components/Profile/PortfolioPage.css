@@ -12,9 +12,19 @@ body, html {
   background: linear-gradient(135deg, #a777e3, #6e8efb, #a777e3);
 }
 
+
+/* Style the navbar */
+.navbar {
+  background-color: #fff9f9;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
 /* Profile page styles */
 .profile-page {
   min-height: 100vh;
+
 }
 
 /* Profile header */

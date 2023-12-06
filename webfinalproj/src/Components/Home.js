@@ -9,7 +9,6 @@ import UserList from "./Common/PostCard/Users";
 import "./Home.css";
 import PersonCard from "../Components/PersonCards";
 
-
 function Home() {
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState(null);
@@ -176,6 +175,7 @@ function Home() {
 
             {/* <h1>{allPosts[0]}</h1> */}
 
+
          
         {allPosts && allPosts.length > 0 ? (
   allPosts.slice().reverse().map((post, index) => (
@@ -192,6 +192,7 @@ function Home() {
 ) : (
   <p>Loading...</p>
 )}
+
 
 
             {/* {hourdata && hourdata[1] ? (
