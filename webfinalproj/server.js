@@ -256,7 +256,7 @@ app.get("/user/getAll", async (req, res) => {
 
 app.put("/user/profile", async (req, res) => {
   try {
-    const { email, profileImage, fullName, about, skills, gigsInfo } = req.body;
+    const { email, coverImage, profileImage, fullName, about, skills, gigsInfo } = req.body;
 
     const user = await User.findOne({ email });
 
@@ -283,6 +283,10 @@ app.put("/user/profile", async (req, res) => {
       user.profileImage = profileImage;
     }
 
+    if (coverImage) {
+      user.coverImage = coverImage;
+    }
+
     if (gigsInfo) {
       user.gigsInfo = gigsInfo;
     }
@@ -301,7 +305,7 @@ app.get("/user/profile/:email", async (req, res) => {
     // Assuming you are getting the user's email from a session or a token
     const email = req.params.email; // Replace with your session or token parsing logic
 
-    const user = await User.findOne({ email }, 'fullName about skills profileImage gigsInfo -_id');
+    const user = await User.findOne({ email }, 'fullName about skills profileImage coverImage gigsInfo -_id');
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
