@@ -7,7 +7,9 @@ import Navbar from "./Components/Header/Navbar";
 import ProfilePage from "./Components/Profile/ProfilePage";
 import WelApp from "./Components/wel";
 import Home from "./Components/Home";
-import Profession from "/Users/anshikakhandelwal/Desktop/webd/WebDFinalProject/webfinalproj/src/Components/Profession/ProfessionPage.js"
+
+import Profession from "./Components/Profession/ProfessionPage"
+
 
 function App() {
   return (
