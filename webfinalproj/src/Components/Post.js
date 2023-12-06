@@ -59,7 +59,7 @@ const CreatePost = ({ userProfilePicture, onPostCreated }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, postName, postimgUrl ,postType}),
+        body: JSON.stringify({ email, postName, postimgUrl, postType }),
       });
 
       const data = await response.json();
@@ -126,9 +126,6 @@ const CreatePost = ({ userProfilePicture, onPostCreated }) => {
           alt="User Profile"
         />
         {"       "}
-        <h3 className="want-to-post">Want to Post Something ? </h3>
-      </div>
-      <div className="post-box-container">
         <textarea
           className="post-box"
           placeholder="Start a post..."
@@ -149,6 +146,7 @@ const CreatePost = ({ userProfilePicture, onPostCreated }) => {
           }
         </div> :<div></div>}
       </div>
+
       <div className="media-buttons">
         <UploadWidget onTest={handleOntTest}></UploadWidget>
         <button className="media-button post-button" onClick={handlePost}>
