@@ -112,7 +112,7 @@ function Navbar() {
         <NavItem to="/profession" icon={faBriefcase} label="Profession" />
         <NavItem to="/contact" icon={faUser} label="Contact" />
         <NavItem to="/profile" icon={faUser} label="Profile" />
-        <NavItem onClick={logout} icon={faSignInAlt} label="Sign Out" />
+        <NavItem onClick={logout} icon={faSignInAlt} label="SignOut" />
       </ul>
     </nav>
   );

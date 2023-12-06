@@ -1,16 +1,16 @@
 /* Navbar.css */
 .navbar {
-  background-color: #acacac; /* Light background color */
-  margin-top: -1.2%;
+  background-color: #f7f6f6; /* Light background color */
+  margin-top: 0%;
   text-align: center;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  height: 90px;
+  height: 70px;
 }
 .active {
-  background-color: #333; /* Change to the desired color for the active item */
-  color: white; /* Change to the desired text color for the active item */
+  background-color: #ffffff; /* Change to the desired color for the active item */
+  color: rgb(4, 4, 4); /* Change to the desired text color for the active item */
 }
 
 .brand {
@@ -50,12 +50,12 @@
   margin-left: 10%;
   opacity: 0;
   transform: translateY(-10px);
-  animation: fadeInUp 1.5s forwards;
+  animation: fadeInUp 0s forwards;
 }
 
 .nav-item:hover {
   transform: translateY(-15px);
-  color: #333;
+  color: #0c0c0c;
 }
 
 .label {
