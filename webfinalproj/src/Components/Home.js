@@ -71,7 +71,7 @@ function Home() {
         setallUsers(
           data.map((post) => ({
             userName: post.fullName,
-            userImg: image3,
+            userImg: post.profileImage | image3,
             userEmail: post.email,
             userRole: post.role,
             _id: post._id,
