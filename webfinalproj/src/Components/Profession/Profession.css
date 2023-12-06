@@ -1,10 +1,6 @@
 /* Profession.css */
 /* General Styles */
-body, html {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-  }
+
   
 
   .ProfessionPage {
@@ -34,6 +30,7 @@ body, html {
   }
   /* Job Listings */
   .job-listings {
+    padding: 100px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

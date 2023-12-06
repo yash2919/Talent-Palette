@@ -8,13 +8,13 @@ const JobListings = ({ jobs, onSelectJob }) => {
     return <div>No jobs available for this category.</div>;
   }
 
-  return (
-    <div className="job-listings">
-      {jobs.map(job => (
-        <JobCard key={job.id} job={job} onClick={() => onSelectJob(job)} />
-      ))}
-    </div>
-  );
-};
+    return (
+      <div className="job-listings">
+        {jobs.map((job, index) => (
+          <JobCard key={job.id} job={job} onClick={() => onSelectJob(job, index)} />
+        ))}
+      </div>
+    );
+  };
 
 export default JobListings;

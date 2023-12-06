@@ -1,0 +1,87 @@
+/* JobModal.css */
+.job-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+  }
+  
+  .job-modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Add more styles for buttons and layout */
+  .job-modal-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .job-modal-actions {
+    margin-top: 20px;
+  }
+  
+  .job-modal-actions button {
+    background-color: #007bff; /* Blue */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-right: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+    font-weight: bold;
+  }
+  
+  .job-modal-actions button:hover {
+    background-color: #0056b3; /* Darker blue */
+    transform: scale(1.05);
+  }
+  
+  .job-modal-actions button:last-child {
+    margin-right: 0;
+  }
+  /* JobModal.css */
+.job-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+  }
+  
+  .job-modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    width: auto;
+    max-width: 500px;
+    position: relative; /* To position the Next/Previous buttons absolutely */
+      
+  }
+  
+  .job-modal-actions button {
+    margin-right: 10px;
+    /* You can add more button styles here */
+  }
+  
+  .job-modal-actions button:last-child {
+    margin-right: 0;
+  }
+  
