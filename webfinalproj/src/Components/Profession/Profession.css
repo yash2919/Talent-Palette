@@ -36,48 +36,58 @@
     justify-content: center;
   }
   
-  /* Job Card */
-  .job-card {
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin: 10px;
-    padding: 20px;
-    width: 200px; /* Adjust as necessary */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    cursor: pointer;
-    transition: box-shadow 0.3s;
-  }
   
-  .job-card:hover {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-  }
-  
-  /* Job Details */
-  .job-details {
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin: 20px auto;
-    padding: 20px;
-    max-width: 400px;
-  }
-  
-  .job-details h2 {
-    margin-top: 0;
-  }
-  
-  .back-to-listings {
-    background-color: #f44336; /* Red color */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin: 10px 0;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
-  }
-  
-  .back-to-listings:hover, .back-to-listings:focus {
-    background-color: #d32f2f; /* Darker Red */
-    transform: translateY(-2px); /* Slight lift */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  }
+
+
+/* Job Card */
+.job-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Ensures content is spaced evenly */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 15px;
+  padding: 15px;
+  width: 300px; /* Adjust width as necessary */
+  min-height: 400px; /* Set a minimum height for consistency */
+  background-color: #f9f9f9; /* Light background color */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: box-shadow 0.3s;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s; 
+}
+
+.job-card img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.job-card h3 {
+  margin: 10px 0;
+  color: #333;
+  font-size: 1.2em;
+}
+
+.job-card p {
+  color: #555;
+  font-size: 0.9em;
+  overflow-wrap: break-word;
+}
+
+.job-card:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+}
+
+.job-card.active { 
+  transform: scale(1.05); 
+  z-index: 10; 
+}
+
+.category-buttons button.active {
+  background-color: #0056b3; /* Active button background color */
+  color: white;
+  /* Add other styles for active state if needed */
+}

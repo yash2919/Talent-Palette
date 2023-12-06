@@ -1,56 +1,4 @@
 
-// import React, { useState,useEffect } from 'react';
-
-// import JobListings from './JobListings';
-// import JobDetails from './JobDetails';
-// import CategoryButtons from './CategoryButtons'; 
-// import jobData from './JobData';
-// import './Profession.css'
-
-// const ProfessionPage=()=> {
-//   const [selectedCategory, setSelectedCategory] = useState(null);
-//   const [selectedJob, setSelectedJob] = useState(null);
-//   const [alljobs, setallJobs] = useState([{}]);
-
-//   useEffect(() => {
-//     const fetchJobs = async () => {
-//       try {
-//         const fetchedData = await jobData(); // Call the jobData function to fetch data
-//        console.log(fetchedData);
-//         setallJobs(fetchedData);
-//       } catch (error) {
-//         console.error('Error fetching jobs:', error);
-//       }
-//     };
-
-//     fetchJobs();
-//   }, []); 
-
-//   const handleCategorySelect = (category) => {
-//     setSelectedCategory(category);
-//     setSelectedJob(null); 
-//   };
-
-//   return (
-//     <div>
-//       <CategoryButtons onSelectCategory={handleCategorySelect} />
-//       {!selectedJob && selectedCategory ? (
-//         <JobListings 
-
-//           jobs={alljobs[selectedCategory]} 
-
-//           onSelectJob={setSelectedJob} 
-//         />
-//       ) : selectedJob ? (
-//         <JobDetails job={selectedJob} onBack={() => setSelectedJob(null)} />
-//       ) : null}
-//     </div>
-//   );
-// }
-
-// export default ProfessionPage;
-
-
 // ProfessionPage.js
 import React, { useState, useEffect } from 'react';
 import JobListings from './JobListings';
@@ -62,6 +10,7 @@ import Navbar from '../Header/Navbar';
 import axios from 'axios';
 const ProfessionPage = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [activeCategory, setActiveCategory] = useState('Artist');//Defaut
   const [selectedJob, setSelectedJob] = useState(null);
   const [allJobs, setAllJobs] = useState({});
   const [showModal, setShowModal] = useState(false);
@@ -104,6 +53,7 @@ const ProfessionPage = () => {
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
+     setActiveCategory(category);
     setSelectedJob(null);
     setCurrentJobIndex(0);
     setShowModal(false);
@@ -140,10 +90,6 @@ const ProfessionPage = () => {
     }
   };
 
-  const handleAlreadyApplied = () => {
-    console.log('Already applied to job:', selectedJob);
-    // Add functionality for already applied logic
-  };
 
   const handleCloseModal = () => {
     setShowModal(false);
@@ -153,7 +99,7 @@ const ProfessionPage = () => {
     <div>
       <Navbar />
       <div className='ProfessionPage'>
-        <CategoryButtons onSelectCategory={handleCategorySelect} />
+      <CategoryButtons onSelectCategory={handleCategorySelect} activeCategory={activeCategory} />
         {selectedCategory && !showModal && (
           <JobListings 
             jobs={allJobs[selectedCategory] || []} 
@@ -161,14 +107,14 @@ const ProfessionPage = () => {
           />
         )}
         {showModal && selectedJob && (
-          <JobModal 
-            job={selectedJob} 
-            onNext={handleNextJob}
-            onApply={handleApplyJob}
-            onAlreadyApplied={handleAlreadyApplied}
-            onClose={handleCloseModal}
-          />
-        )}
+    <JobModal 
+        job={selectedJob}
+        onNext={handleNextJob}
+        onApply={handleApplyJob}
+        onClose={handleCloseModal}
+        isApplication={selectedCategory === 'My Applications'}
+    />
+)}
       </div>
     </div>
   );
