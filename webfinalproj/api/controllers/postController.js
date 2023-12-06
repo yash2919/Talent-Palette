@@ -3,8 +3,8 @@ const postService = require('../services/postService');
 
 async function create(req, res) {
   try {
-    const { email, postName , postimgUrl,postType } = req.body;
-    const post = await postService.createPost(email, postName,postimgUrl,postType);
+    const { email, postName , postimgUrl,postType, timestamp } = req.body;
+    const post = await postService.createPost(email, postName,postimgUrl,postType, timestamp);
 
     res.status(200).json({ message: 'Post creation successful', post });
   } catch (error) {

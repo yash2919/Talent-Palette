@@ -25,7 +25,7 @@ const corsOptions = {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ["POST","GET","PUT"],
+  methods: ["POST","GET","PUT","DELETE"],
   credentials: true, // Allow credentials (cookies)
 };
 
@@ -248,7 +248,7 @@ app.delete("/user/delete", async (req, res) => {
 
 app.get("/user/getAll", async (req, res) => {
   try {
-    const users = await User.find({}, "fullName role email password");
+    const users = await User.find({}, "fullName role email password profileImage");
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ message: "An error occurred" });
