@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import "./Users.css";
+import Navbar from '../Header/Navbar';
 
 function Admin() {
   const [allUsers, setAllUsers] = useState([]);
@@ -67,6 +68,7 @@ function Admin() {
 
   return (
     <div className="admin-panel">
+        <Navbar />
       <h1>Admin Panel</h1>
 
       <div>
