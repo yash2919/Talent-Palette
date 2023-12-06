@@ -13,7 +13,7 @@ async function apply(email, jobId) {
     catch(e){
         throw new Error('Job not found');
     }
-    if (!user || !job) {
+    if (!user ) {
         throw new Error('User not found');
     }
     const existingApplication = await Application.findOne({ jobId, userId });
