@@ -1,171 +1,105 @@
+// Admin.js
+
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import "./Users.css";
 
 function Admin() {
-  const [profiles, setProfiles] = useState([]);
-  const [jobs, setJobs] = useState([]);
-  const [posts, setPosts] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
 
-  // Fetch Profiles, Jobs, and Posts on component mount
   useEffect(() => {
-    fetchProfiles();
-    fetchJobs();
-    fetchPosts();
+    async function fetchAllUsers() {
+      try {
+        const response = await fetch("http://localhost:3000/user/getAll", {
+          method: "GET",
+          credentials: "include",
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+          setAllUsers(
+            data.map((user) => ({
+              userName: user.fullName,
+              userImg: user.profileImage,
+              userEmail: user.email,
+              userRole: user.role,
+            }))
+          );
+        } else {
+          throw new Error("Failed to fetch User");
+        }
+      } catch (error) {
+        console.error("Error fetching User:", error);
+        // Handle errors
+      }
+    }
+
+    fetchAllUsers();
   }, []);
 
-  const fetchProfiles = async () => {
+  const handleDeleteUser = async (email) => {
+    // Confirm deletion with a popup
+    const isConfirmed = window.confirm("Are you sure you want to delete this user?");
+    if (!isConfirmed) {
+      return; // If not confirmed, do nothing
+    }
+
     try {
-      const response = await axios.get('http://localhost:3000/user/getAll');
-      setProfiles(response.data);
+      const response = await fetch('http://localhost:3000/user/delete', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log(result.message); // User deleted successfully
+        // Perform any other necessary actions or update state here
+      } else {
+        console.error(`Error deleting user: ${response.status} - ${response.statusText}`);
+      }
     } catch (error) {
-      console.error('Error fetching profiles:', error);
+      console.error('Error deleting user:', error.message);
     }
   };
-  
-  
-const fetchJobs = async () => {
-  try {
-    const response = await axios.get('http://localhost:3000/api/jobs');
-    setJobs(response.data);
-  } catch (error) {
-    console.error('Error fetching jobs:', error);
-  }
-};
 
-const fetchPosts = async () => {
-  try {
-    const response = await axios.get('http://localhost:3000/api/posts');
-    setPosts(response.data);
-  } catch (error) {
-    console.error('Error fetching posts:', error);
-  }
-};
-
-
-  // CRUD operations for profiles
-
-  const createProfile = async (profileData) => {
-    await axios.post('http://localhost:3000/user/create', profileData);
-    fetchProfiles();
-  };
-  const updateProfile = async (profileId, updatedData) => {
-    await axios.put('http://localhost:3000/user/edit', updatedData); // Ensure this matches your API
-    fetchProfiles();
-  };
-  const deleteProfile = async (profileId) => {
-    await axios.delete('http://localhost:3000/user/delete', { data: { id: profileId } }); // Sending ID in the body
-    fetchProfiles();
-  };
-  
-  // CRUD operations for jobs
-  const createJob = async (jobData) => {
-    try {
-      await axios.post('http://localhost:3000/api/jobs', jobData);
-      fetchJobs();
-    } catch (error) {
-      console.error('Error creating job:', error);
-    }
-  };
-  
-  const updateJob = async (jobId, updatedData) => {
-    try {
-      await axios.put(`http://localhost:3000/api/jobs/${jobId}`, updatedData);
-      fetchJobs();
-    } catch (error) {
-      console.error('Error updating job:', error);
-    }
-  };
-  const deleteJob = async (jobId) => {
-    try {
-      await axios.delete(`http://localhost:3000/api/jobs/${jobId}`);
-      fetchJobs();
-    } catch (error) {
-      console.error('Error deleting job:', error);
-    }
-  };
-  
-  //post ops
-  const deletePost = async (postId) => {
-    try {
-      await axios.delete(`http://localhost:3000/api/posts/${postId}`);
-      fetchPosts();
-    } catch (error) {
-      console.error('Error deleting post:', error);
-    }
-  };
-  
-  const handleEditProfile = (profileId) => {
-    // Implement logic for handling profile editing
-    console.log(`Edit profile with ID ${profileId}`);
-  };
-
-  const handleDeleteProfile = (profileId) => {
-    // Implement logic for handling profile deletion
-    console.log(`Delete profile with ID ${profileId}`);
-  };
-
-  // CRUD operations for jobs
-  const handleEditJob = (jobId) => {
-    // Implement logic for handling job editing
-    console.log(`Edit job with ID ${jobId}`);
-  };
-
-  const handleDeleteJob = (jobId) => {
-    // Implement logic for handling job deletion
-    console.log(`Delete job with ID ${jobId}`);
-  };
-
-  // Post operations
-  const handleDeletePost = (postId) => {
-    // Implement logic for handling post deletion
-    console.log(`Delete post with ID ${postId}`);
-  };
-  
   return (
     <div className="admin-panel">
       <h1>Admin Panel</h1>
-  
+
       <div>
         <h2>Profiles</h2>
-        {profiles.map(profile => (
-          <div key={profile._id} className="profile">
-            <img src={profile.profileImage} alt="Profile" />
-            <h3>{profile.fullName}</h3>
-            <p>Email: {profile.email}</p>
-            <p>About: {profile.about}</p>
-            <p>Skills: {profile.skills}</p>
-            <p>Gigs Info: {profile.gigsInfo}</p>
-            <button onClick={() => handleEditProfile(profile._id)}>Edit</button>
-            <button onClick={() => handleDeleteProfile(profile._id)}>Delete</button>
-          </div>
-        ))}
-      </div>
-  
-      <div>
-        <h2>Jobs</h2>
-        {jobs.map(job => (
-          <div key={job._id} className="job">
-            <h3>{job.jobName}</h3>
-            <p>Description: {job.jobDescription}</p>
-            <button onClick={() => handleEditJob(job._id)}>Edit</button>
-            <button onClick={() => handleDeleteJob(job._id)}>Delete</button>
-          </div>
-        ))}
-      </div>
-  
-      <div>
-        <h2>Posts</h2>
-        {posts.map(post => (
-          <div key={post._id} className="post">
-            <h3>{post.postTitle}</h3>
-            <p>{post.postContent}</p>
-            <button onClick={() => handleDeletePost(post._id)}>Delete</button>
-          </div>
-        ))}
+        <div>
+          {allUsers && allUsers.length > 0 ? (
+            <div className="user-list-container">
+              {allUsers.map((user, index) => (
+                <div key={index} className="user-block">
+                  <img
+                    className="user-list-image"
+                    src={user.userImg}
+                    alt={`User ${index + 1}`}
+                  />
+                  <div className="user-details">
+                    <h3 className="user-name">{user.userName}</h3>
+                    <div className="user-email">
+                      <span className="email">{user.userEmail}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <button onClick={() => handleDeleteUser(user.userEmail)}>Delete</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p>Loading</p>
+          )}
+        </div>
       </div>
     </div>
   );
-  
 }
 
-        export default Admin;
+export default Admin;
