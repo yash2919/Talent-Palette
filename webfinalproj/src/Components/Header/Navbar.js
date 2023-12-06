@@ -107,12 +107,11 @@ function Navbar() {
       </div>
 
       <ul className="nav-list">
-        <SearchBox />
         <NavItem to="/home" icon={faHome} label="Home" />
         <NavItem to="/profession" icon={faBriefcase} label="Profession" />
         <NavItem to="/contact" icon={faUser} label="Contact" />
         <NavItem to="/profile" icon={faUser} label="Profile" />
-        <NavItem onClick={logout} icon={faSignInAlt} label="SignOut" />
+        <NavItem onClick={logout} icon={faSignInAlt} label="Logout" />
       </ul>
     </nav>
   );
