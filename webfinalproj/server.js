@@ -87,6 +87,7 @@ app.post("/user/login", async (req, res) => {
     }
     if(user){
       req.session.email1 = user.email;
+      req.session.role1 = user.role;
       await req.session.save(); // Save the session after setting data
   
   //  console.log(req.session.email1+"s");
@@ -103,7 +104,7 @@ app.get("/", (req, res) => {
   if (req.session.email1) {
     console.log("logged in");
    // return res.status(200).send(req.session.email1);
-    return res.json({ valid: true, email: req.session.email1 });
+    return res.json({ valid: true, email: req.session.email1 ,role:req.session.role1 });
   } else {
     console.log("dhccchs");
     return res.json({valid: false});
