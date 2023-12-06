@@ -249,13 +249,12 @@ textarea:focus {
 
 /* Grid item adjustments */
 .profile-page .card {
-  /* Override width and height from Card.css for grid items to work properly */
-  height: auto; /* Height should be auto for grid items */
-  width: 100%; /* Width should be 100% to fill the grid column */
-  margin-left: 0; /* Remove left margin */
-  margin-right: 0; /* Remove right margin */
+  height: auto; 
+  width: 100%; 
+  margin-left: 0; 
+  margin-right: 0; 
   overflow: hidden; 
-  /* Keep the rest of your .card styles from Card.css */
+  
 }
 
 @media (max-width: 1024px) {
