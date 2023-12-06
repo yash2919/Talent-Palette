@@ -22,10 +22,16 @@ const CreateJobs = () => {
     <div>
       <Navbar />
       <div className="diff">
-        <button onClick={handleCreateJobClick} className="createjob">
+        <button
+          onClick={handleCreateJobClick}
+          className={`createjob ${showCreateJob ? "active" : ""}`}
+        >
           Create Jobs
         </button>
-        <button onClick={handleViewJobsClick} className="createjob">
+        <button
+          onClick={handleViewJobsClick}
+          className={`createjob ${showViewJobs ? "active" : ""}`}
+        >
           View Jobs
         </button>
       </div>

@@ -32,10 +32,9 @@ function Navbar() {
     { label: "Home", path: "/home" },
 
     { label: "Create Jobs", path: "/createjobs" },
-       { label: "Contact", path: "/contact" },
+    { label: "Contact", path: "/contact" },
     { label: "My Profile", path: "/profile" },
     { label: "Sign Out", path: "/" },
-
   ];
 
   const NavItem = ({ to, icon, label, onClick }) => {
@@ -114,9 +113,7 @@ function Navbar() {
         <NavItem to="/createjobs" icon={faBriefcase} label="Create Jobs" />
         <NavItem to="/profile" icon={faUser} label="My Profile" />
         <NavItem to="/profile" icon={faUser} label="Contact Us" />
-        <NavItem  onClick={logout} icon={faSignInAlt} label="Sign Out" />
-
-
+        <NavItem onClick={logout} icon={faSignInAlt} label="Logout" />
       </ul>
     </nav>
   );

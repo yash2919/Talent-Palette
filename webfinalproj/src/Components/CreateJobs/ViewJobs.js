@@ -1,16 +1,52 @@
+// ViewJobs.js
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import UploadWidget from "../Common/UploadWidget/UploadWidget";
 import Navbar from "../Header/Navbar";
 import CreateJobForm1 from "./CreateJobForm";
 import "./ViewJobs.css";
+import Modal from "react-modal";
+import AppliedJob from "./AppliedJob";
 
 const ViewJobs = () => {
   const [jobs, setJobs] = useState([]);
-  const [selectedJob, setSelectedJob] = useState(null); // Track the selected job
-
+  const [renderAppliedJob, setRenderAppliedJob] = useState(false);
+  const [selectedJob, setSelectedJob] = useState(null);
   const [email, setEmail] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [applied, setApplied] = useState([]);
+
   useEffect(() => {
+    async function fetchJobsApplied() {
+      try {
+        const response = await fetch(
+          "http://localhost:3000/application/getallapplied",
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data.appl, "AppliedData");
+          setApplied(
+            data.appl.map((jobb) => ({
+              jobId: jobb.jobId,
+              status: jobb.status,
+              timestamp: jobb.timestamp,
+              userId: jobb.userId,
+              _id: jobb._id,
+            }))
+          );
+        } else {
+          throw new Error("Failed to fetch User");
+        }
+      } catch (error) {
+        console.error("Error fetching User:", error);
+      }
+    }
+
     async function fetchUserEmail() {
       try {
         const response = await fetch("http://localhost:3000", {
@@ -42,24 +78,47 @@ const ViewJobs = () => {
       }
     };
 
+    fetchJobsApplied();
     fetchUserEmail();
     if (email) fetchJobs();
-  }, [email, jobs]);
+  }, [email]);
 
   const handleJobClick = (job) => {
-    // Set the selected job when a job is clicked
     setSelectedJob(job);
   };
 
-  const handleCloseClick = () => {
-    // Clear the selected job when the close button is clicked
-    setSelectedJob(null);
+  const handleEditClick = () => {
+    if (selectedJob) {
+      setIsModalOpen(true);
+    }
   };
-  console.log("This is to check Jobs", jobs);
+
+  const handleCloseClick = () => {
+    setSelectedJob(null);
+    setRenderAppliedJob(false);
+    setIsModalOpen(false);
+  };
+
+  const customModalStyles = {
+    content: {
+      width: "50%", // Adjust the width as needed
+      margin: "auto", // Center the modal horizontally
+      borderRadius: "10px",
+      boxShadow:
+        "0 4px 8px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1) inset",
+      backgroundColor: "#fff",
+      padding: "20px",
+    },
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.5)", // Adjust the overlay background color as needed
+    },
+  };
+
+  console.log("Data", applied);
+
   return (
     <div className="maincomp">
       <div style={{ display: "flex", marginTop: "30px" }}>
-        {/* Left side: List of jobs */}
         <div style={{ flex: 1 }}>
           <ul>
             {jobs.map((job) => (
@@ -69,13 +128,11 @@ const ViewJobs = () => {
                 onClick={() => handleJobClick(job)}
               >
                 <p>{job.jobName}</p>
-                {/* Display other job details as needed */}
               </li>
             ))}
           </ul>
         </div>
 
-        {/* Right side: Job details */}
         <div className="right-side" style={{ flex: 2 }}>
           {selectedJob && (
             <div>
@@ -83,23 +140,50 @@ const ViewJobs = () => {
                 Job Details
               </h2>
               <p style={{ textAlign: "center", fontSize: "20px" }}>
-                Name : {selectedJob.jobName}
+                Name: {selectedJob.jobName}
               </p>
               <p style={{ textAlign: "center", fontSize: "20px" }}>
-                Description :{selectedJob.jobDesc}
+                Job Role: {selectedJob.jobType}
               </p>
+              <p> Job Id:</p>
               <img
                 className="job-post-img"
                 src={selectedJob.jobimgUrl}
                 alt={`${selectedJob.jobName}'s post`}
               />
               <div className="job-buttons">
-                <button className="close-button">Edit</button>
+                <button onClick={handleEditClick} className="close-button">
+                  Applicants
+                </button>
                 <button onClick={handleCloseClick} className="close-button">
                   Close
                 </button>
               </div>
-              {/* Display other job details as needed */}
+              {isModalOpen && (
+                <Modal
+                  isOpen={isModalOpen}
+                  onRequestClose={handleCloseClick}
+                  contentLabel="Job Details Modal"
+                  style={customModalStyles} // Apply the custom styles
+                >
+                  <div>
+                    <h2 style={{ textAlign: "center", fontSize: "25px" }}>
+                      Job Details
+                    </h2>
+                    {selectedJob && (
+                      <AppliedJob
+                        jobTitle={selectedJob.jobName}
+                        applicants={applied.filter(
+                          (applicant) => applicant.jobId === selectedJob.jobId
+                        )}
+                      />
+                    )}
+                    <button onClick={handleCloseClick} className="close-button">
+                      Close
+                    </button>
+                  </div>
+                </Modal>
+              )}
             </div>
           )}
         </div>

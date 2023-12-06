@@ -1,7 +1,6 @@
 /* styles.css or your preferred CSS file */
 
 .createjob {
-  
   cursor: pointer;
   background-color: #fff;
   display: flex;
@@ -12,14 +11,13 @@
   padding: 8px 35px;
   border-radius: 25px;
   margin-right: 45px;
-
-
   color: #000;
 }
-.diff{
-display: flex;
-margin-top: 5%;
-margin-left: 38%;
+
+.diff {
+  display: flex;
+  margin-top: 5%;
+  margin-left: 38%;
 }
 
 .createjob:hover {
