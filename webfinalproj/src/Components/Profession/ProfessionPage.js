@@ -1,9 +1,12 @@
+
 import React, { useState,useEffect } from 'react';
+
 import JobListings from './JobListings';
 import JobDetails from './JobDetails';
 import CategoryButtons from './CategoryButtons'; 
 import jobData from './JobData';
 import './Profession.css'
+
 const ProfessionPage=()=> {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedJob, setSelectedJob] = useState(null);
@@ -22,6 +25,7 @@ const ProfessionPage=()=> {
 
     fetchJobs();
   }, []); 
+
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
     setSelectedJob(null); 
@@ -32,7 +36,9 @@ const ProfessionPage=()=> {
       <CategoryButtons onSelectCategory={handleCategorySelect} />
       {!selectedJob && selectedCategory ? (
         <JobListings 
+
           jobs={alljobs[selectedCategory]} 
+
           onSelectJob={setSelectedJob} 
         />
       ) : selectedJob ? (

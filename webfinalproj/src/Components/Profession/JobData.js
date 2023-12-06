@@ -1,3 +1,4 @@
+
 // // jobData.js
 // const jobData = {
 //     Artist: [
@@ -66,5 +67,6 @@ const jobData = async () => {
 };
 
 export default jobData;
+
 
   
