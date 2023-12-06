@@ -11,6 +11,7 @@ import Home from "./Components/Home";
 import Profession from "./Components/Profession/ProfessionPage"
 
 
+import Admin from "./Components/Admin/Admin"
 function App() {
   return (
     <BrowserRouter>
@@ -21,6 +22,7 @@ function App() {
         <Route path="/signup" element={<SignUpForm />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/admin" element={<Admin />} />
         <Route path ="/profession" element={<Profession/>}/>
       </Routes>
     </BrowserRouter>
