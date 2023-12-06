@@ -14,7 +14,7 @@ function Navbar() {
   const navigate = useNavigate();
   const menuData = [
     { label: "Home", path: "/home" },
-    { label: "Profession", path: "/profession" },
+    { label: "Create Jobs", path: "/createjobs" },
     { label: "My Profile", path: "/profile" },
     { label: "Sign Out", path: "/" },
   ];
@@ -70,7 +70,7 @@ function Navbar() {
     <nav className="navbar">
       <ul className="nav-list">
         <NavItem to="/home" icon={faHome} label="Home" />
-        <NavItem to="/profession" icon={faBriefcase} label="Profession" />
+        <NavItem to="/createjobs" icon={faBriefcase} label="Create Jobs" />
         <NavItem to="/profile" icon={faUser} label="My Profile" />
         <NavItem to="/profile" icon={faUser} label="Contact Us" />
         <NavItem  onClick={logout} icon={faSignInAlt} label="Sign Out" />
