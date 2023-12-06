@@ -17,8 +17,14 @@ async function createPost(email, postName,postimgUrl,postType) {
           return post;
     }
 }
-async function getallposts(email, postName,postimgUrl,postType) {
-    const posts = await Post.find({}, "postName email postimgUrl postType");
+
+async function getallposts(email) {
+    let posts;
+    if(email==null)
+    posts=await Post.find({}, "postName email postimgUrl postType");
+    else {
+        posts = await Post.find({ email: email }, "postName email postimgUrl postType");
+    }
     return posts;
  }
 

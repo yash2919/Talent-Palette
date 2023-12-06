@@ -11,8 +11,11 @@ const cookieParser=require("cookie-parser")
 app.use(cookieParser());
 app.use(bodyParser.json());
 const postRouter = require('./api/routes/postRouter');
+const jobsRouter = require('./api/routes/jobsRouter');
 const profileAbout = require('./api/routes/profileRouter');
 const allowedOrigins = ["http://localhost:3001", "http://localhost:3000","http://localhost:3000/email","localhost"]; // Add your actual domain here
+const User = require('./api/models/userModel');
+const applicationRouter = require("./api/routes/applicationRouter");
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -22,7 +25,7 @@ const corsOptions = {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ["POST","GET"],
+  methods: ["POST","GET","PUT"],
   credentials: true, // Allow credentials (cookies)
 };
 
@@ -62,40 +65,10 @@ app.use(
   })
 );
 
-const User = mongoose.model("User", {
-  fullName: {
-    type: String,
-    required: true,
-  },
-  role: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  about:{
-    type: String
-  },
-  skills:{
-    type: String
-  },
-  profileImage:{
-    type: String
-  },
-  gigsInfo:{
-    type: String
-  }
-});
 
-
+app.use('/application',applicationRouter);
 app.use('/post', postRouter);
+app.use('/jobs', jobsRouter);
 // app.use('/profile/about', profileAbout);
 
 app.post("/user/login", async (req, res) => {
@@ -283,7 +256,7 @@ app.get("/user/getAll", async (req, res) => {
 
 app.put("/user/profile", async (req, res) => {
   try {
-    const { email, about, skills, profileImage, gigsInfo } = req.body;
+    const { email, profileImage, fullName, about, skills, gigsInfo } = req.body;
 
     const user = await User.findOne({ email });
 
@@ -294,6 +267,10 @@ app.put("/user/profile", async (req, res) => {
     // Update the 'about' field if provided
     if (about) {
       user.about = about;
+    }
+
+    if (fullName) {
+      user.fullName = fullName;
     }
 
     // Update the 'skills' field if provided

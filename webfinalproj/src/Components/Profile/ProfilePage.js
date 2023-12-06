@@ -13,10 +13,10 @@ const PortfolioPage = () => {
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("dfda");
   const [skills, setSkills] = useState("dfad");
+  const [about, setAbout] = useState("absbado")
   const [profileImage, setProfileImage] = useState("");
   const [gigsInfo, setGigsInfo] = useState("adfad");
   const [allPosts,setallPosts]=useState([]);
-
 
   const [postimgUrl, setpostimgUrl] = useState("dfdf");
 
@@ -31,10 +31,10 @@ const PortfolioPage = () => {
     timestamp: "2 hours ago",
   };
   const [artistProfile, setArtistProfile] = useState({
+    profileImage: '',
     fullName: '',
     about: '',
     skills: '',
-    profileImage: '',
     gigsInfo: ''
   });
 
@@ -98,7 +98,8 @@ const PortfolioPage = () => {
 
   async function fetchallPosts() {
     try {
-      const response = await fetch("http://localhost:3000/post/getallposts", {
+      console.log('in fetchall');
+      const response = await fetch(`http://localhost:3000/post/getallposts?email=${email}`, {
         method: "GET",
         credentials: "include", 
       });
@@ -112,7 +113,7 @@ const PortfolioPage = () => {
           userImg: post.userImg? post.userImg:image3,
           postName: post.postName,
           postimgUrl: post.postimgUrl,
-          postType: post.postType? post.postType : "img",
+          postType: post.postType? post.postType : "image",
           timestamp:post.timestamp ? post.timestamp: "2023-12-05T12:34:56",
           _id: post._id
         })));
@@ -137,9 +138,10 @@ const PortfolioPage = () => {
     // };
       if (email) {
         fetchProfile();
+        fetchallPosts();
       }
 
-      fetchallPosts();
+      
 
   }, [email]);
 
@@ -147,57 +149,30 @@ const PortfolioPage = () => {
     setEditMode(true);
   };
 
-  // const handleSave = async () => {
-  //   try {
-  //     await axios.put('/user/profile', artistProfile);
-  //     alert('Profile updated successfully!');
-  //     setEditMode(false);
-  //     window.location.reload();
-  //   } catch (error) {
-  //     console.error('Error updating profile:', error);
-  //   }
-  // };
+  const handleChange = (e) => {
+    setArtistProfile({
+      ...artistProfile,
+      [e.target.name]: e.target.value,
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setArtistProfile({ ...artistProfile, [name]: value });
-  // };
-
-// ...
-
-const handleChange = (e) => {
-  const { name, value } = e.target;
-
-  // Update the corresponding state based on the name attribute
-  switch (name) {
-    case 'fullName':
-      setFullName(value);
-      break;
-    case 'skills':
-      setSkills(value);
-      break;
-    case 'profileImage':
-      setProfileImage(value);
-      break;
-    case 'gigsInfo':
-      setGigsInfo(value);
-      break;
-    // Add other cases as needed
-    default:
-      break;
-  }
-}
+    });
+  };
 
 const handleSave = async (result)  => {
+  const fullName = artistProfile.fullName;
+  const about = artistProfile.about;
+  const skills = artistProfile.skills;
+  const gigsInfo = artistProfile.gigsInfo;
+
   try {
     const response = await fetch("http://localhost:3000/user/profile", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, fullName, skills, profileImage, gigsInfo }),
+      
+      body: JSON.stringify({ email, profileImage, fullName, about, skills, gigsInfo }),
     });
-
+    // console.log();
     const data = await response.json();
     if (response.ok) {
       alert(data.message);
@@ -209,113 +184,149 @@ const handleSave = async (result)  => {
     console.error("Error during Post Upload:", error);
     alert("An error occurred during Post Upload.");
   }
+  setEditMode(false);
+  
 };
 
-// ...
+const handleOntTest = (result) => {
+  if(result!=null){
+   // console.log("url"+result);
+    setProfileImage(result.secure_url);
+  }
+};
 
+return (
+  <div className="profile-page">
+    <Navbar />
+      
+          <div className="profile-header">
+        {/* Conditional rendering for Cover Photo Upload */}
+        {editMode ? (
+          <UploadWidget 
+            onTest={(result) => {
+              if(result?.secure_url) {
+                setArtistProfile({
+                  ...artistProfile,
+                  coverPhoto: result.secure_url,
+                });
+              }
+            }}
+          />
+        ) : (
+          <div className="cover-photo" style={{ backgroundImage: `url(${artistProfile.coverPhoto})` }}></div>
+        )}
+        <div className = "profile-image-container">
+        {/* Conditional rendering for Profile Image Upload */}
+        {editMode ? (
+          <UploadWidget 
+            onTest={(result) => {
+              if(result?.secure_url) {
+                setArtistProfile({
+                  ...artistProfile,
+                  profileImage: result.secure_url,
+                });
+              }
+            }}
+          />
+        ) : (
+          <img src={artistProfile.profileImage || image3} alt="Profile" className="profile-image" />
+        )}
+         </div>
+        {/* Edit Profile Button */}
+        {!editMode && (
+          <button onClick={handleEdit} className="edit-profile-btn">Edit Profile</button>
+        )}
+      </div>
 
-  const handleOntTest = (result) => {
-    if(result!=null){
-     // console.log("url"+result);
-      setProfileImage(result);
-    }
-  };
-
-  return (
-    <div>
-      <Navbar />
-      {artistProfile && (
-        <div className="profile-container">
-          
-          {editMode ? (
-            <div>
-            <h3 className="want-to-post">Want to Post Something?</h3>
-            <UploadWidget onTest={handleOntTest}></UploadWidget>
-          </div>
-          ) : (
-            <img
-              src={profileImage || image3}
-              alt={`${artistProfile.profileImage}'s Profile`}
-              className="profile-image"
-            />
-          )}
-          {editMode ? (
-            <input
-              type="text"
-              name="fullName"
-              value={artistProfile.fullName}
-              onChange={handleChange}
-            />
-          ) : (
-            <h1>{artistProfile.fullName}</h1>
-          )}
-          <div className="about-section">
+      <div className="profile-container">
+        {/* Profile Details */}
+        <div className="profile-details">
+          {/* Full Name */}
             {editMode ? (
-              <input
+              <textarea
+                name="fullName"
+                value={artistProfile.fullName}
+                onChange={handleChange}
+              />
+            ) : (
+              <div className="animated-text">
+              <h2>Hello, <span className="profile-fullname">{artistProfile.fullName || 'Your Name'}</span>!</h2>
+            </div>
+            )}
+          
+
+         {/* About Section */}
+         <div className="section about">
+            <h2>About</h2>
+            {editMode ? (
+              <textarea
                 name="about"
-                type="text"
                 value={artistProfile.about}
                 onChange={handleChange}
               />
             ) : (
-              <p>{artistProfile.about}</p>
+              <p>{artistProfile.about || 'A little about me...'}</p>
             )}
           </div>
-          <div className="skills-section">
+
+          {/* Skills Section */}
+          <div className="section skills">
+            <h2>Skills</h2>
             {editMode ? (
-              <input
-                type="text"
+              <textarea
                 name="skills"
                 value={artistProfile.skills}
                 onChange={handleChange}
               />
             ) : (
-              <p>{artistProfile.skills}</p>
+              <p>{artistProfile.skills || 'My skills include...'}</p>
             )}
           </div>
-          <div className="gigs-section">
+
+          {/* Experience Section */}
+          <div className="section experience">
+            <h2>Experience</h2>
             {editMode ? (
-              <input
-                type="text"
+              <textarea
                 name="gigsInfo"
                 value={artistProfile.gigsInfo}
                 onChange={handleChange}
               />
             ) : (
-              <p>{artistProfile.gigsInfo}</p>
+              <p>{artistProfile.gigsInfo || 'My professional experience...'}</p>
             )}
           </div>
-          {/* Edit and Save Buttons */}
-          {editMode ? (
-            <button onClick={handleSave}>Save</button>
-          ) : (
-            <button onClick={handleEdit}>Edit</button>
+
+
+          {/* Save and Cancel Buttons in Edit Mode */}
+          {editMode && (
+            <div className="edit-buttons">
+              <button onClick={handleSave} className="save-btn">Save Changes</button>
+              <button onClick={() => setEditMode(false)} className="cancel-btn">Cancel</button>
+            </div>
           )}
-          <div className="posts-section">
-            {/* ... (other components) */}
-          </div>
         </div>
-      )}
-      {
-        <div>
-          {allPosts && allPosts[1] ? (
-          allPosts.map((post, index) => (
+
+        {/* Posts Section */}
+        <div className="posts-section">
+          {/* Post Cards */}
+          {allPosts.map((post, index) => (
             <Card
               key={index}
-              userName={post.userName}
+              // userName={post.userName}
               userImg={post.userImg}
               postContent={post.postName}
               postUrl={post.postimgUrl}
-              mediaType={"image"}
+              mediaType={post.postType}
               timestamp={post.timestamp}
             />
-          ))
-        ) : (
-          <p>Loading...</p>
-          )}
+          ))}
+         
         </div>
-      }
+      </div>
     </div>
   );
-}  
+};
+
+      
 export default PortfolioPage;
