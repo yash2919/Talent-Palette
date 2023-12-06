@@ -106,32 +106,6 @@ function Login() {
       console.error('Error fetching role:', error);
     }
 
-    // fetchUserType(email);
-
-    // try {
-    //   const response = await fetch("http://localhost:3000/user/login", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     credentials: 'include',
-    //     body: JSON.stringify({ email, password }),
-    //   });
-
-    //   const data = await response.json();
-    //   if (response.ok) {
-    //     if (role === "admin") {
-    //       navigate("/admin");
-    //     } else {
-    //       navigate("/home");
-    //     }
-    //   } else {
-    //     alert(`Login failed: ${data.message}`);
-    //   }
-    // } catch (error) {
-    //   console.error("Error during login:", error);
-    //   alert("An error occurred during login.");
-    // }
   };
 
   const handleSignup = () => {
