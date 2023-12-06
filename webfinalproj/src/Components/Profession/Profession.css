@@ -1,0 +1,86 @@
+/* Profession.css */
+/* General Styles */
+body, html {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+  }
+  
+
+  .ProfessionPage {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  /* Category Buttons */
+  .category-buttons button {
+    background-color: #007bff;  /* Primary Blue */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    font-size: 16px; /* Adjust font size as needed */
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .category-buttons button:hover, .category-buttons button:focus {
+    background-color: #0056b3; /* Darker Blue */
+    transform: translateY(-2px); /* Slight lift */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  /* Job Listings */
+  .job-listings {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  /* Job Card */
+  .job-card {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 10px;
+    padding: 20px;
+    width: 200px; /* Adjust as necessary */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: box-shadow 0.3s;
+  }
+  
+  .job-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+  }
+  
+  /* Job Details */
+  .job-details {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 400px;
+  }
+  
+  .job-details h2 {
+    margin-top: 0;
+  }
+  
+  .back-to-listings {
+    background-color: #f44336; /* Red color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+  }
+  
+  .back-to-listings:hover, .back-to-listings:focus {
+    background-color: #d32f2f; /* Darker Red */
+    transform: translateY(-2px); /* Slight lift */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
