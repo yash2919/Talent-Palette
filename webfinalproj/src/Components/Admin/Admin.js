@@ -94,6 +94,33 @@ const fetchPosts = async () => {
     }
   };
   
+  const handleEditProfile = (profileId) => {
+    // Implement logic for handling profile editing
+    console.log(`Edit profile with ID ${profileId}`);
+  };
+
+  const handleDeleteProfile = (profileId) => {
+    // Implement logic for handling profile deletion
+    console.log(`Delete profile with ID ${profileId}`);
+  };
+
+  // CRUD operations for jobs
+  const handleEditJob = (jobId) => {
+    // Implement logic for handling job editing
+    console.log(`Edit job with ID ${jobId}`);
+  };
+
+  const handleDeleteJob = (jobId) => {
+    // Implement logic for handling job deletion
+    console.log(`Delete job with ID ${jobId}`);
+  };
+
+  // Post operations
+  const handleDeletePost = (postId) => {
+    // Implement logic for handling post deletion
+    console.log(`Delete post with ID ${postId}`);
+  };
+  
   return (
     <div className="admin-panel">
       <h1>Admin Panel</h1>
