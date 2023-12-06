@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    
+    "npm-run-all": "^4.1.5"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.4.2",
@@ -33,7 +33,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "concurrently \"npm run start-backend\" \"npm run start-frontend\"",
+    "start": "npm-run-all --parallel start-backend start-frontend",
     "start-frontend": "react-scripts start",
     "start-backend": "node server.js",
     "build": "react-scripts build",
