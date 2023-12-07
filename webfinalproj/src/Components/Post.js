@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./Post.css";
 import UploadWidget from "./Common/UploadWidget/UploadWidget";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const CreatePost = ({ userProfilePicture, onPostCreated }) => {
   const [mediaType, setMediaType] = useState(null);
