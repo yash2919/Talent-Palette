@@ -17,6 +17,12 @@ function SignUpForm() {
       ...formData,
       [e.target.name]: e.target.value,
     });
+    if (e.target.value !== "") {
+      e.target.classList.add('option-selected');
+    } else {
+      e.target.classList.remove('option-selected');
+    }
+  
   };
 
   const handleSubmit = (e) => {
@@ -90,14 +96,21 @@ function SignUpForm() {
             pointer-events: none;
             color: #7c4dff;
           }
-          .form-control-input::placeholder {
-            color: #999; /* Placeholder text color */
-            font-style: italic;
+          .role-select option {
+            font-weight: bold;
+          }
+          
+          .role-select option:first-child {
+            font-weight: bold;
+          }
+          .role-select.option-selected option:first-child {
+            font-weight: normal;
+          }
         
         `}
       </style>
       <div className=" d-flex align-items-center justify-content-center" style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #00008b 0%, #c3cfe2 100%)' }}>
-      <div className="card-signup " style={{ width: 'auto', maxWidth: '1000px', boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)', backgroundColor: 'white' }}>
+      <div className="card-signup " style={{  maxWidth: '900px', boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)', backgroundColor: 'white' }}>
           <div className="row g-0">
             <div className="col-md-6">
               <div className="card-body p-5">
