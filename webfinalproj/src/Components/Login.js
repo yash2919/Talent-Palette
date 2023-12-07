@@ -2,12 +2,36 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import  { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const notify = (message,suc) => {
+    if(suc)
+    toast.success(message, {
+      position: 'bottom-right',
+      autoClose: 3000, // Close the toast after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    else
+    toast.error(message, {
+      position: 'bottom-right',
+      autoClose: 3000, // Close the toast after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  
+  }
   // session handle
   useEffect(() => {
     async function fetchUserEmail() {
@@ -27,15 +51,18 @@ function Login() {
             }
             else{
               if(data.role==='ADMIN'){
+                notify('Admin Login successful',true);
                 navigate("/admin");
               }
               else{
+                notify('Welcome '+data.email,true);
                 navigate("/home");
               }
             }
 
         } else {
-          throw new Error('Failed to fetch email');
+          notify('Failed to fetch email',false);
+        //  throw new Error('Failed to fetch email');
         }
       } catch (error) {
         console.error('Error fetching email:', error);
@@ -64,16 +91,20 @@ function Login() {
       const data = await response.json();
       if (response.ok) {
         if (role === "ADMIN") {
+          notify('Admin Login successful',true);
           navigate("/admin");
         } else {
+          notify('Welcome '+data.email,true);
           navigate("/home");
         }
       } else {
-        alert(`Login failed: ${data.message}`);
+        notify(`Login failed: ${data.message}`,false);
+      //  alert(`Login failed: ${data.message}`);
       }
     } catch (error) {
+      notify("Error during login:"+ error,false);
       console.error("Error during login:", error);
-      alert("An error occurred during login.");
+  //    alert("An error occurred during login.");
     }
     
   }
@@ -100,7 +131,8 @@ function Login() {
           prelogin(data.role);
 
       } else {
-        alert('Invalid Email Id.');
+        notify('Invalid Email Id.',false);
+       // alert('Invalid Email Id.');
       }
     } catch (error) {
       console.error('Error fetching role:', error);
@@ -172,6 +204,7 @@ function Login() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

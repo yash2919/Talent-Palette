@@ -6,6 +6,8 @@ import UploadWidget from "../Common/UploadWidget/UploadWidget";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import "./CreateJob.css"; // Import the CSS file for CreateJobForm1
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CreateJobForm1 = () => {
   const [email, setEmail] = useState("");
@@ -31,6 +33,29 @@ const CreateJobForm1 = () => {
     maxWidth: "400px",
   };
 
+  const notify = (message,suc) => {
+    if(suc)
+    toast.success(message, {
+      position: 'bottom-right',
+      autoClose: 3000, // Close the toast after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    else
+    toast.error(message, {
+      position: 'bottom-right',
+      autoClose: 3000, // Close the toast after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  
+  }
   useEffect(() => {
     async function fetchUserEmail() {
       try {
@@ -65,7 +90,8 @@ const CreateJobForm1 = () => {
         jobimgUrl,
         jobType,
       });
-      alert("Job created:", response.data);
+      notify("Job created:", response.data,true);
+     // alert("Job created:", response.data);
       console.log("Job created:", response.data);
 
       setJobName("");
@@ -74,7 +100,8 @@ const CreateJobForm1 = () => {
       setJobType("");
       setPreview(false);
     } catch (error) {
-      alert("Error creating job:", error.message);
+      notify("Error creating job:",false);
+     // alert("Error creating job:", error.message);
       console.error("Error creating job:", error.message);
     }
   };
@@ -154,6 +181,7 @@ const CreateJobForm1 = () => {
           />
         </button>
       </form>
+      <ToastContainer />
     </div>
   );
 };

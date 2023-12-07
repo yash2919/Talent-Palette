@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { FaCaretDown } from 'react-icons/fa'; 
 
@@ -31,17 +32,41 @@ function SignUpForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.password === formData.confirmPassword) {
-      console.log("Form data:", formData);
-    } else {
-      console.error("Passwords do not match");
-    }
+    // if (formData.password === formData.confirmPassword) {
+    //   console.log("Form data:", formData);
+    // } 
+    // else {
+    //   console.error("Passwords do not match");
+    // }
   };
   const navigate = useNavigate();
 
   const handleSignup = () => {
     navigate("/Login");
   };
+  const notify = (message,suc) => {
+    if(suc)
+    toast.success(message, {
+      position: 'bottom-right',
+      autoClose: 3000, // Close the toast after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    else
+    toast.error(message, {
+      position: 'bottom-right',
+      autoClose: 3000, // Close the toast after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  
+  }
 
   const signup = async () => {
     const email = formData.email;
@@ -60,14 +85,17 @@ function SignUpForm() {
 
       const data = await response.json();
       if (response.ok) {
-        alert(data.message);
-        //  navigate('/home');
+        notify(data.message,true);
+      //  alert(data.message);
+      //    navigate('/login');
       } else {
-        alert(`SignUp failed: ${data.message}`);
+        notify(`SignUp failed: ${data.message}`,false);
+     //   alert(`SignUp failed: ${data.message}`);
       }
     } catch (error) {
+      notify("An error occurred during signUp.",false);
       console.error("Error during signUp:", error);
-      alert("An error occurred during signUp.");
+      //alert("An error occurred during signUp.");
     }
   };
 
@@ -199,6 +227,7 @@ function SignUpForm() {
                 </div>
           </div>
         </div>
+        <ToastContainer />
       </div>
    
     </>
