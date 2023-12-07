@@ -92,7 +92,7 @@ function Admin() {
               <div className="user-list-random">
                 {/* Section 1: Profile Picture */}
                 <div>
-                  <img onClick={handleUserProfile} className="random-user-list-image" src={user.userImg} />
+                  <img className="random-user-list-image" src={user.userImg} />
                 </div>
 
                 {/* Section 2: Name and Role */}

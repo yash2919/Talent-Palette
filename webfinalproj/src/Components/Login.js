@@ -100,7 +100,7 @@ function Login() {
           prelogin(data.role);
 
       } else {
-        throw new Error('Failed to fetch role');
+        alert('Invalid Email Id.');
       }
     } catch (error) {
       console.error('Error fetching role:', error);
