@@ -55,13 +55,20 @@ const ProfessionPage = () => {
     fetchJobs();
   }, []);
 
+  
+  // Rest of your code...
+  
   const handleCategorySelect = (category) => {
+    console.log('Selected category:', category); // Add this line for debugging
     setSelectedCategory(category);
-     setActiveCategory(category);
+    setActiveCategory(category);
     setSelectedJob(null);
     setCurrentJobIndex(0);
     setShowModal(false);
+    setJobs(allJobs[category] || []);
   };
+  
+ 
 
   const handleJobSelect = (job, index) => {
     setSelectedJob(job);
@@ -71,14 +78,17 @@ const ProfessionPage = () => {
 
   const handleNextJob = () => {
     const jobsInCategory = allJobs[selectedCategory];
-    
+  
     if (jobsInCategory && jobsInCategory.length > 0) {
       let nextIndex = (currentJobIndex + 1) % jobsInCategory.length;
-      console.log('Next job index:', nextIndex);
-      
       setSelectedJob(jobsInCategory[nextIndex]);
       setCurrentJobIndex(nextIndex);
-      console.log('Selected job:', selectedJob);
+  
+      // Scroll to the next job's position
+      const jobElement = document.getElementById(`job-${nextIndex}`);
+      if (jobElement) {
+        jobElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
   };
 
@@ -109,7 +119,6 @@ const ProfessionPage = () => {
       <Navbar />
       <div className='ProfessionPage'>
         <CategoryButtons onSelectCategory={handleCategorySelect} activeCategory={activeCategory} />
-
         {selectedCategory && !showModal && (
           <JobListings 
             jobs={allJobs[selectedCategory] || []} 

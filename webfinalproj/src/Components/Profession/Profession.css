@@ -31,54 +31,64 @@
   /* Job Listings */
   .job-listings {
     padding: 100px;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Display three cards in a row */
+    grid-gap: 30px; /* Adjust the gap between cards */
     justify-content: center;
   }
-  
-  
 
 
 /* Job Card */
 .job-card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Ensures content is spaced evenly */
   border: 1px solid #ddd;
   border-radius: 8px;
   margin: 15px;
   padding: 15px;
-  width: 300px; /* Adjust width as necessary */
-  min-height: 400px; /* Set a minimum height for consistency */
-  background-color: #f9f9f9; /* Light background color */
+  width: 500px;
+  min-height: 600px;
+  background-color: #f9f9f9;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: center;
   transition: box-shadow 0.3s;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.3s; 
+  transition: transform 0.3s, box-shadow 0.3s;
 }
+
 
 .job-card img {
   max-width: 100%;
-  height: auto;
+  height: 300px;
   margin-bottom: 10px;
 }
 
-.job-card h3 {
-  margin: 10px 0;
-  color: #333;
-  font-size: 1.2em;
+.job-card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.job-card p {
+.job-card h3{
+  font-weight: bold;
+  font-size: 1em;
+  overflow-wrap: break-word;
+  text-align: center;
+}
+/* Display job title and description at the same height */
+ .job-card p {
   color: #555;
   font-size: 0.9em;
   overflow-wrap: break-word;
+  text-align: center;
 }
 
 .job-card:hover {
-  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+  transform: scale(1.05); /* Increase the scale on hover */
+  z-index: 10;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .job-card.active { 
@@ -93,11 +103,11 @@
 }
 .job-accepted {
  /* or use background-color for full color fill */
-  background-color: green;
+  background-color: #4caf50;
 }
 
 .job-not-accepted {
-  background-color: #FFCCCB;
+  background-color: #Ff5252;;
   font-weight: bold;
 
 
