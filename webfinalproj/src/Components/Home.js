@@ -120,7 +120,7 @@ function Home() {
           // if(data!=null)
           setallPosts(
             data.post.map((post) => ({
-              // email: post.email,
+              email: post.email,
               userName: post.userName ? post.userName : post.email,
               userImg: post.userImg ? post.userImg : image3,
               postName: post.postName,
@@ -173,6 +173,7 @@ function Home() {
 
             {/* <h1>{allPosts[0]}</h1> */}
 
+
             {allPosts && allPosts.length > 0 ? (
               allPosts
                 .slice()
@@ -186,26 +187,14 @@ function Home() {
                     postUrl={post.postimgUrl}
                     mediaType={post.postType}
                     timestamp={post.timestamp}
+                     email={post.email}
                   />
                 ))
             ) : (
               <p>Loading...</p>
             )}
 
-            {/* {hourdata && hourdata[1] ? (
-            hourdata[days.indexOf(day)].map((dayData, index) => (
-              <div className="col-lg-3 col-md-4 col-sm-6 mb-4" key={index}>
-                <WeatherCard
-                  day={dayData.day || ""}
-                  highTemp={dayData.highTemp || ""}
-                  lowTemp={dayData.lowTemp || ""}
-                  weatherType={dayData.icon || ""}
-                />
-              </div>
-            ))
-          ) : (
-            <p>Loading...</p>
-          )} */}
+
           </div>
         </div>
         <div className="user-list">

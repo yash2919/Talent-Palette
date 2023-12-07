@@ -8,10 +8,9 @@ import {
   faShare,
 } from "@fortawesome/free-solid-svg-icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-
 import "./Card.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import { useNavigate, useLocation } from "react-router-dom";
 const Card = ({
   userName, // Assuming this is the email
   userImg,
@@ -19,10 +18,14 @@ const Card = ({
   postUrl,
   mediaType,
   timestamp,
+  email,
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
+
   const [profile, setProfile] = useState(null);
+  const navigate = useNavigate();
+
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -41,6 +44,7 @@ const Card = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
 
   const calculateTimeDifference = (timestamp) => {
     const now = new Date();
@@ -97,6 +101,18 @@ const Card = ({
         style={{ borderRadius: "10%" }}
       >
         <img
+
+  const handleViewProfile = () => {
+    // Navigate to the user's profile page
+    navigate(`/profile?userEmail=${email}`);
+  };
+
+
+  return (
+    <div className="card p-3">
+      <div className="card-header d-flex align-items-center mb-3">
+        <img onClick={handleViewProfile}
+
           className="profile-picture rounded-circle"
           src={profile?.profileImage}
           alt={`${userName}'s profile`}
@@ -111,7 +127,7 @@ const Card = ({
         {showMenu && (
           <div className="menu-list" ref={menuRef}>
             <ul>
-              <li>View Profile</li>
+              <li onClick={handleViewProfile}>View Profile</li>
               <li>More</li>
             </ul>
           </div>
@@ -159,6 +175,7 @@ Card.propTypes = {
   postUrl: PropTypes.string,
   mediaType: PropTypes.string.isRequired,
   timestamp: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
 };
 
 export default Card;
