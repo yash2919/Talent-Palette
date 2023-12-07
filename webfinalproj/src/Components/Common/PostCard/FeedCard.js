@@ -98,7 +98,7 @@ const Card = ({
       >
         <img
           className="profile-picture rounded-circle"
-          src={userImg}
+          src={profile?.profileImage}
           alt={`${userName}'s profile`}
         />
         <div className="user-details">
