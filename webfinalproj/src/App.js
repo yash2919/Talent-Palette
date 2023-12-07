@@ -5,8 +5,10 @@ import Login from "./Components/Login";
 import "./App.css";
 import Navbar from "./Components/Header/Navbar";
 import ProfilePage from "./Components/Profile/ProfilePage";
+import CreateJobs from "./Components/CreateJobs/CreateJobs"
 import WelApp from "./Components/wel";
 import Home from "./Components/Home";
+
 
 import Profession from "./Components/Profession/ProfessionPage"
 
@@ -22,8 +24,13 @@ function App() {
         <Route path="/signup" element={<SignUpForm />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<ProfilePage />} />
+
+        <Route path="/createjobs" element={<CreateJobs />} />
+        
+
         <Route path="/admin" element={<Admin />} />
         <Route path ="/profession" element={<Profession/>}/>
+
       </Routes>
     </BrowserRouter>
   );
