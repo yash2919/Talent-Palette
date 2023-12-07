@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-
+import { FaCaretDown } from 'react-icons/fa'; 
 
 function SignUpForm() {
   const [formData, setFormData] = useState({
@@ -71,6 +71,29 @@ function SignUpForm() {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
           }
+          .custom-dropdown {
+            position: relative;
+          }
+
+          .custom-dropdown select {
+            appearance: none; /* This is necessary to remove the default arrow in most browsers */
+            -webkit-appearance: none; /* For Safari */
+            -moz-appearance: none; /* For Firefox */
+            padding-right: 1.5em; /* Make room for custom arrow */
+          }
+
+          .custom-dropdown .fa-caret-down {
+            position: absolute;
+            right: 0.75em;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: #7c4dff;
+          }
+          .form-control-input::placeholder {
+            color: #999; /* Placeholder text color */
+            font-style: italic;
+        
         `}
       </style>
       <div className=" d-flex align-items-center justify-content-center" style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #00008b 0%, #c3cfe2 100%)' }}>
@@ -91,7 +114,7 @@ function SignUpForm() {
                       required
                     />
                   </div>
-                  <div className="mb-3">
+                  {/* <div className="mb-3">
                     <input
                       type="text"
                       name="role"
@@ -101,7 +124,23 @@ function SignUpForm() {
                       onChange={handleChange}
                       required
                     />
-                  </div>
+                  </div> */}
+                        <div className="mb-3 custom-dropdown">
+                          <select
+                            name="role"
+                            className="form-control"
+                            value={formData.role}
+                            onChange={handleChange}
+                            required
+                          >
+                            <option value="" disabled hidden>Select Role</option>
+                            <option value="Artist">Artist</option>
+                            <option value="Musician">Musician</option>
+                            <option value="Dancer">Dancer</option>
+                            <option value="Employer">Employer</option>
+                          </select>
+                          <FaCaretDown className="fa-caret-down" />
+                        </div>
                   <div className="mb-3">
                     <input
                       type="email"
