@@ -53,7 +53,7 @@ const CreatePost = ({ userProfilePicture, onPostCreated }) => {
     console.log(postName);
 
     try {
-      const response = await fetch("http://localhost:3000/post/create", {
+      const response = await fetch(`${BASE_URL}/post/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -84,7 +84,7 @@ const CreatePost = ({ userProfilePicture, onPostCreated }) => {
   useEffect(() => {
     async function fetchUserEmail() {
       try {
-        const response = await fetch("http://localhost:3000", {
+        const response = await fetch(`${BASE_URL}`, {
           method: "GET",
           credentials: "include", // Send cookies with the request
         });
