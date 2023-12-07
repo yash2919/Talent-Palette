@@ -357,4 +357,10 @@
 .upload-container {
   margin-bottom: 20px; /* Space below the button for separation */
   text-align: left;
+  padding: 10px;
+}
+.upload-widget-container {
+  margin-bottom: 20px; /* Space below the button for separation */
+  text-align: left;
+ padding: 10px;
 }
