@@ -8,9 +8,10 @@ import {
   faShare,
 } from "@fortawesome/free-solid-svg-icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Card.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useNavigate, useLocation } from "react-router-dom";
+
 const Card = ({
   userName, // Assuming this is the email
   userImg,
@@ -22,10 +23,8 @@ const Card = ({
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
-
-  const [profile, setProfile] = useState(null);
   const navigate = useNavigate();
-
+  const [profile, setProfile] = useState(null);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -45,6 +44,10 @@ const Card = ({
     };
   }, []);
 
+  const handleViewProfile = () => {
+    // Navigate to the user's profile page
+    navigate(`/profile?userEmail=${email}`);
+  };
 
   const calculateTimeDifference = (timestamp) => {
     const now = new Date();
@@ -100,19 +103,7 @@ const Card = ({
         className="card-header d-flex align-items-center mb-3 "
         style={{ borderRadius: "10%" }}
       >
-        <img
-
-  const handleViewProfile = () => {
-    // Navigate to the user's profile page
-    navigate(`/profile?userEmail=${email}`);
-  };
-
-
-  return (
-    <div className="card p-3">
-      <div className="card-header d-flex align-items-center mb-3">
         <img onClick={handleViewProfile}
-
           className="profile-picture rounded-circle"
           src={profile?.profileImage}
           alt={`${userName}'s profile`}
