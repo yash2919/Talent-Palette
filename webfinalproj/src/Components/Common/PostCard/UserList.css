@@ -14,7 +14,9 @@
   position: relative;
   max-height: 1000px; /* Set a max height for scrolling */
   overflow-y: auto;
-  
+  background-color: white;
+  scrollbar-width: thin;
+  scrollbar-color: #fdfdfd transparent;
 }
 
 .user-list-container {
@@ -48,8 +50,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  border: 1.5px solid #959595;
+  border-radius: 10px;
   margin-bottom: 10px;
   padding: 10px;
   transition: box-shadow 0.3s ease-in-out;
@@ -67,12 +69,27 @@
   border-radius: 50%;
   margin-right: 16px;
   transition: transform 0.3s ease-in-out;
+  background-color: grey;
+}
+.user-list-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.user-list-container::-webkit-scrollbar-thumb {
+  background-color: #e9e9e9;
+  border-radius: 10px;
+}
+
+.user-list-container::-webkit-scrollbar-track {
+  background-color: transparent;
 }
 
 .user-list-image:hover {
   transform: scale(1.1);
 }
-
+.user-details p {
+  text-transform: capitalize;
+}
 .user-details {
   flex-grow: 1;
 }
@@ -104,7 +121,7 @@
   top: 50%;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #b7afaf;
+  background-color: #c3bcbc;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   padding: 16px;
