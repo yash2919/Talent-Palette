@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faTimes, faEye } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import "./UserList.css";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const UserList = ({ users, isAdmin = false }) => {
   const [selectedUser, setSelectedUser] = useState(null);
@@ -21,7 +22,7 @@ const UserList = ({ users, isAdmin = false }) => {
 
   const handleDeleteUser = async (email) => {
     try {
-      const response = await fetch("http://localhost:3000/user/delete", {
+      const response = await fetch(`${BASE_URL}/user/delete`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

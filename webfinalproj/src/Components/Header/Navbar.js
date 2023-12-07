@@ -13,6 +13,7 @@ import {
   faSignInAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Navbar.css";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 function Navbar({ userImg }) {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ function Navbar({ userImg }) {
   useEffect(() => {
     async function fetchUserEmail() {
       try {
-        const response = await fetch("http://localhost:3000", {
+        const response = await fetch(`${BASE_URL}`, {
           method: "GET",
           credentials: "include",
         });
@@ -113,7 +114,7 @@ function Navbar({ userImg }) {
   const logout = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch("http://localhost:3000/logout", {
+      const response = await fetch(`${BASE_URL}/logout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

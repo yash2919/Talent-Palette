@@ -9,6 +9,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 const PortfolioPage = ({}) => {
   const navigate = useNavigate();
   const [editMode, setEditMode] = useState(false);
@@ -73,7 +74,7 @@ const PortfolioPage = ({}) => {
 
     async function fetchUserEmail() {
       try {
-          const response = await fetch('http://localhost:3000', {
+          const response = await fetch(`${BASE_URL}`, {
             method: 'GET',
             credentials: 'include', // Send cookies with the request
           });
@@ -101,7 +102,7 @@ const PortfolioPage = ({}) => {
   async function fetchProfile() {
     try {
       console.log(email);
-      const response = await fetch(`http://localhost:3000/user/profile/${email}`, {
+      const response = await fetch(`${BASE_URL}/user/profile/${email}`, {
         method: "GET",
         credentials: "include", 
       });
@@ -123,7 +124,7 @@ const PortfolioPage = ({}) => {
   async function fetchallPosts() {
     try {
       console.log('in fetchall');
-      const response = await fetch(`http://localhost:3000/post/getallposts?email=${email}`, {
+      const response = await fetch(`${BASE_URL}/post/getallposts?email=${email}`, {
         method: "GET",
         credentials: "include", 
       });
@@ -188,7 +189,7 @@ const handleSave = async (result)  => {
   const gigsInfo = artistProfile.gigsInfo;
 
   try {
-    const response = await fetch("http://localhost:3000/user/profile", {
+    const response = await fetch(`${BASE_URL}/user/profile`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

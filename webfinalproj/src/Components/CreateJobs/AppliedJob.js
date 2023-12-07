@@ -7,6 +7,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 const AppliedJob = ({ jobTitle, applicants }) => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
@@ -43,7 +44,7 @@ const AppliedJob = ({ jobTitle, applicants }) => {
 
   const updateApplication = async (userId, jobId, status) => {
     try {
-      const response = await axios.put('http://localhost:3000/application/editapp', {
+      const response = await axios.put(`${BASE_URL}/application/editapp`, {
         userId,
         jobId,
         status,
@@ -87,7 +88,7 @@ const AppliedJob = ({ jobTitle, applicants }) => {
     // Fetch all users when the component mounts
     async function fetchAllUsers() {
       try {
-        const response = await fetch("http://localhost:3000/user/getAll", {
+        const response = await fetch(`${BASE_URL}/user/getAll`, {
           method: "GET",
           credentials: "include",
         });

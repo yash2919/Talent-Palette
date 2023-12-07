@@ -8,6 +8,7 @@ import CreateJobForm1 from "./CreateJobForm";
 import "./ViewJobs.css";
 import Modal from "react-modal";
 import AppliedJob from "./AppliedJob";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const ViewJobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -21,7 +22,7 @@ const ViewJobs = () => {
     async function fetchJobsApplied() {
       try {
         const response = await fetch(
-          "http://localhost:3000/application/getallapplied",
+          `${BASE_URL}application/getallapplied`,
           {
             method: "GET",
             credentials: "include",
@@ -49,7 +50,7 @@ const ViewJobs = () => {
 
     async function fetchUserEmail() {
       try {
-        const response = await fetch("http://localhost:3000", {
+        const response = await fetch(`${BASE_URL}`, {
           method: "GET",
           credentials: "include",
         });
@@ -70,7 +71,7 @@ const ViewJobs = () => {
     const fetchJobs = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/jobs/getalljobs?email=${email}`
+          `${BASE_URL}/jobs/getalljobs?email=${email}`
         );
         setJobs(response.data.jobs);
       } catch (error) {

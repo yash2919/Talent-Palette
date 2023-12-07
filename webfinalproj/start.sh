@@ -8,6 +8,10 @@ npm install react-type-animation
 
 npm install @fortawesome/fontawesome-svg-core @fortawesome/react-fontawesome @fortawesome/free-regular-svg-icons
 
+npm install react-modal react-toastify
+
+npm install dotenv
+
 node server.js
 
 

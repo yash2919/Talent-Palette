@@ -9,6 +9,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 function Admin() {
   const [allUsers, setAllUsers] = useState([]);
   const navigate = useNavigate();
@@ -39,7 +41,7 @@ function Admin() {
   useEffect(() => {
     async function fetchAllUsers() {
       try {
-        const response = await fetch("http://localhost:3000/user/getAll", {
+        const response = await fetch(`${BASE_URL}/user/getAll`, {
           method: "GET",
           credentials: "include",
         });
@@ -77,7 +79,7 @@ function Admin() {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/user/delete", {
+      const response = await fetch(`${BASE_URL}/user/delete`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
