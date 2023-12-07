@@ -1,59 +1,62 @@
 /* Navbar.css */
-.navbar {
-  background-color: #f7f6f6; /* Light background color */
+
+.nvr {
+  background-color: #f7f6f6;
   margin-top: 0%;
   text-align: center;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  height: 70px;
+  height: 60px;
 }
+
 .active {
-  background-color: #ffffff; /* Change to the desired color for the active item */
-  color: rgb(4, 4, 4); /* Change to the desired text color for the active item */
+  background-color: #ffffff;
+  color: rgb(4, 4, 4);
 }
 
-.brand {
+.lg-cntnr {
   display: flex;
   align-items: center;
 }
 
-.logo-container {
-  display: flex;
-  align-items: center;
-}
-
-.logo {
+.lg {
   width: 4.00rem;
   height: 2rem;
   margin-right: 10px;
   cursor: pointer;
+  
 }
 
-.website-name {
-  color: black; /* Text color */
+.ws-nm {
+  color: black;
   font-size: 2rem;
-  font-family:'Arial Narrow Bold';
+  font-family: 'Arial Narrow Bold';
+  margin-left: 10px;
 }
 
-.nav-list {
+.nv-lst {
   list-style-type: none;
   padding: 0;
   display: flex;
   padding-left: 25%;
   justify-content: center;
   align-items: center;
+  margin-top: 1.5%;
+   border: none;
+  
 }
 
-.nav-item {
+.nv-it {
   margin: 0 15px;
   margin-left: 10%;
   opacity: 0;
+  border: none;
   transform: translateY(-10px);
   animation: fadeInUp 0s forwards;
 }
 
-.nav-item:hover {
+.nv-it:hover {
   transform: translateY(-15px);
   color: #0c0c0c;
 }
@@ -62,31 +65,30 @@
   font-size: 1.0rem;
 }
 
-.nav-link {
+.nv-link {
   text-decoration: none;
-  color: black; /* Text color */
+  color: black;
   display: flex;
   flex-direction: column;
   position: relative;
+  
   align-items: center;
+  border: none;
 }
 
-.icon {
+.icn {
   font-size: 1.5rem;
   margin-bottom: 5px;
 }
 
-/* Profile picture styling */
-.profile-icon {
+.pfl-icn {
   width: 2.0rem;
   height: 2.0rem;
   border-radius: 50%;
   cursor: pointer;
   margin-bottom: 0%;
+  
 }
-
-/* Dropdown styling */
-/* (Commented out to disable dropdown styles for now) */
 
 @keyframes fadeInUp {
   to {
@@ -95,33 +97,27 @@
   }
 }
 
-/* Search box styling */
-.search-box {
+.srch-box {
   position: relative;
 }
 
-.search-input {
-  padding-left: 10px; /* Adjust the padding based on the icon size */
+.srch-input {
+  padding-left: 10px;
   height: 2.8rem;
   width: 350px;
   font-size: 1.2rem;
-  color: black; /* Text color */
-  background-color: #f2f2f2; /* Light grey background color */
-  border: 1px solid #ccc; /* Border color */
-  border-radius: 20px; /* Rounded corners */
+  color: black;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 20px;
 }
 
-.search-icon {
+.srch-icon {
   position: absolute;
-  left: 300px; /* Adjust the left position based on your design */
+  left: 300px;
   top: 50%;
-  color: black; /* Text color */
+  color: black;
   height: 25px;
   transform: translateY(-50%);
   font-weight: 500;
-}
-/* Ensure equal space distribution for all nav items */
-.nav-list > li {
-  flex: 1;
-  text-align: center;
 }
