@@ -1,5 +1,3 @@
-/* Navbar.css */
-
 .nvr {
   background-color: #f7f6f6;
   margin-top: 0%;
@@ -9,17 +7,14 @@
   align-items: center;
   height: 60px;
 }
-
 .active {
   background-color: #ffffff;
   color: rgb(4, 4, 4);
 }
-
 .lg-cntnr {
   display: flex;
   align-items: center;
 }
-
 .lg {
   width: 4.00rem;
   height: 2rem;
@@ -27,14 +22,12 @@
   cursor: pointer;
   
 }
-
 .ws-nm {
   color: black;
   font-size: 2rem;
   font-family: 'Arial Narrow Bold';
   margin-left: 10px;
 }
-
 .nv-lst {
   list-style-type: none;
   padding: 0;
@@ -44,9 +37,7 @@
   align-items: center;
   margin-top: 1.5%;
    border: none;
-  
-}
-
+  }
 .nv-it {
   margin: 0 15px;
   margin-left: 10%;
@@ -55,16 +46,13 @@
   transform: translateY(-10px);
   animation: fadeInUp 0s forwards;
 }
-
 .nv-it:hover {
   transform: translateY(-15px);
   color: #0c0c0c;
 }
-
 .label {
   font-size: 1.0rem;
 }
-
 .nv-link {
   text-decoration: none;
   color: black;

@@ -1,5 +1,4 @@
-/* ViewJobs.css */
-.maincomp{
+.maincomp {
   border: 0.5px solid #626262;
   border-radius: 25px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1) inset;
@@ -11,7 +10,6 @@
   transition: box-shadow 0.3s ease-in-out;
   margin-top: 45px;
   background-color: #fcfafa;
-  
 }
 .view-jobs-container {
   display: flex;
@@ -31,10 +29,9 @@
   margin-right: 45px;
   color: #000;
 }
-.job-buttons{
+.job-buttons {
   display: flex;
   margin-left: 10%;
-  
 }
 .close-button:hover {
   background-color: #0073b1;
@@ -69,12 +66,10 @@
 .job-details {
   flex: 2;
   padding: 20px;
-  
 }
-.right-side{
-  margin-left:10%;
+.right-side {
+  margin-left: 10%;
   border-radius: 25px;
-
 
   border: 0.5px solid #626262;
   padding: 16px;
@@ -103,7 +98,6 @@
   background-color: #005684;
 }
 
-
 .maincomp {
   display: flex;
 }
@@ -122,7 +116,7 @@
 
 /* Style for job list items */
 .job-list-item {
-  list-style-type:none;
+  list-style-type: none;
   cursor: pointer;
   border-radius: 15px;
   padding: 10px;
@@ -133,15 +127,13 @@
   background-color: #f9f9f9;
   transition: background-color 0.3s ease-in-out;
 }
-.job-post-img{
+.job-post-img {
   margin-top: 10px;
   margin-bottom: 20px;
   border-radius: 25px;
-  margin-left:15%;
+  margin-left: 15%;
   width: 75%;
-  
 }
 .job-list-item:hover {
   background-color: #e0e0e0;
 }
-

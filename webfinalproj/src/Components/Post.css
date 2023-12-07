@@ -10,7 +10,6 @@
   transition: box-shadow 0.3s ease-in-out;
 
   margin-top: -282px;
-
 }
 
 .create-post-container:hover {
@@ -18,15 +17,14 @@
 }
 
 .user-image-container {
-  
   align-items: center;
   margin-bottom: 20px;
 }
-.dividethem{
-display: flex;
-margin-bottom: 30px;
+.dividethem {
+  display: flex;
+  margin-bottom: 30px;
 }
-#imagePreview{
+#imagePreview {
   margin-left: 10%;
   max-width: 60%;
 }
@@ -62,7 +60,7 @@ margin-bottom: 30px;
   padding: 12px;
   border: none;
   border-radius: 8px;
-  
+
   transition: background-color 0.3s;
 }
 
@@ -87,7 +85,7 @@ margin-bottom: 30px;
   border: none;
   padding: 8px 35px;
   border-radius: 25px;
-  color: #000; 
+  color: #000;
 }
 
 .media-buttons .media-button:last-child {
@@ -192,5 +190,5 @@ margin-bottom: 30px;
 }
 
 .uploaded-files li {
-  margin-bottom: 8px;
+  margin-bottom: 8px;
 }
