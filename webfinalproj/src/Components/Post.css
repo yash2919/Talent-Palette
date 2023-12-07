@@ -1,5 +1,5 @@
 .create-post-container {
-  border: 1px solid #ddd;
+  border: 0.1px solid #a5a5a5;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1) inset;
   height: 20%; /* Adjust the height as needed */
@@ -9,7 +9,7 @@
   padding: 16px;
   transition: box-shadow 0.3s ease-in-out;
 
-  margin-top: -298px;
+  margin-top: -282px;
 
 }
 
