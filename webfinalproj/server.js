@@ -25,7 +25,7 @@ const corsOptions = {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ["POST","GET","PUT"],
+  methods: ["POST","GET","PUT","DELETE"],
   credentials: true, // Allow credentials (cookies)
 };
 
@@ -248,7 +248,7 @@ app.delete("/user/delete", async (req, res) => {
 
 app.get("/user/getAll", async (req, res) => {
   try {
-    const users = await User.find({}, "fullName role email password");
+    const users = await User.find({}, "fullName role email password profileImage");
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ message: "An error occurred" });
@@ -318,6 +318,22 @@ app.get("/user/profile/:email", async (req, res) => {
   }
 });
 
+app.get('/user/:email', async (req, res) => {
+  const email = req.params.email;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");

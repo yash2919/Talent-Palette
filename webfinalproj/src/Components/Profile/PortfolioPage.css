@@ -149,8 +149,7 @@ body, html {
 
 
 /* Editable text areas */
-input[type="text"],
-textarea {
+.profile-text{
   width: 100%;
   padding: 10px;
   margin-top: 10px;
@@ -160,7 +159,7 @@ textarea {
 }
 
 input[type="text"]:focus,
-textarea:focus {
+.profile-text {
   border-color: #5c6bc0;
   box-shadow: 0 0 0 2px rgba(92, 107, 192, 0.5);
 }

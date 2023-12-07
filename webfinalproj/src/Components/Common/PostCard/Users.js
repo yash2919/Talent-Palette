@@ -8,7 +8,7 @@ import { faEnvelope, faTimes, faEye } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import "./UserList.css";
 
-const UserList = ({ users }) => {
+const UserList = ({ users, isAdmin = false }) => {
   const [selectedUser, setSelectedUser] = useState(null);
 
   const openUserProfile = (user) => {
@@ -17,6 +17,30 @@ const UserList = ({ users }) => {
 
   const closeUserProfile = () => {
     setSelectedUser(null);
+  };
+
+  const handleDeleteUser = async (email) => {
+    try {
+      const response = await fetch("http://localhost:3000/user/delete", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log(result.message); // User deleted successfully
+        // Perform any other necessary actions or update state here
+      } else {
+        console.error(
+          `Error deleting user: ${response.status} - ${response.statusText}`
+        );
+      }
+    } catch (error) {
+      console.error("Error deleting user:", error.message);
+    }
   };
 
   return (
@@ -35,13 +59,14 @@ const UserList = ({ users }) => {
                 alt={`User ${index + 1}`}
               />
               <div className="user-details ms-3">
-                <h3 className="user-name">{user.userName}</h3>
-                <div className="user-email  align-items-center">
-                  <FontAwesomeIcon icon={faEnvelope} className="icon me-1" />
-                  <div>
-                    <span className="email">{user.userEmail}</span>
-                  </div>
-                </div>
+                <p className="">{user.userName}</p>
+              </div>
+              <div>
+                {isAdmin && (
+                  <button onClick={() => handleDeleteUser(user.userEmail)}>
+                    Delete
+                  </button>
+                )}
               </div>
             </div>
           </li>
@@ -59,6 +84,7 @@ UserList.propTypes = {
       email: PropTypes.string.isRequired,
     })
   ).isRequired,
+  isAdmin: PropTypes.bool.isRequired,
 };
 
 export default UserList;
