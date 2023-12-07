@@ -9,7 +9,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./Post.css";
 import UploadWidget from "./Common/UploadWidget/UploadWidget";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 const CreatePost = ({ userProfilePicture, onPostCreated }) => {
   const [mediaType, setMediaType] = useState(null);
   const [postimgUrl, setpostimgUrl] = useState("");
@@ -43,6 +46,29 @@ const CreatePost = ({ userProfilePicture, onPostCreated }) => {
     closeMediaModal();
   };
 
+  const notify = (message,suc) => {
+    if(suc)
+    toast.success(message, {
+      position: 'bottom-right',
+      autoClose: 3000, // Close the toast after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    else
+    toast.error(message, {
+      position: 'bottom-right',
+      autoClose: 3000, // Close the toast after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  
+  }
   const handlePost = async () => {
     // console.log("Post Data:", {
     //   userEmail,
@@ -53,7 +79,7 @@ const CreatePost = ({ userProfilePicture, onPostCreated }) => {
     console.log(postName);
 
     try {
-      const response = await fetch("http://localhost:3000/post/create", {
+      const response = await fetch(`${BASE_URL}/post/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -63,17 +89,23 @@ const CreatePost = ({ userProfilePicture, onPostCreated }) => {
 
       const data = await response.json();
       if (response.ok) {
-        alert(data.message);
+        notify(data.message,true);
+       // alert(data.message);
 
         onPostCreated();
-
         //  navigate('/home');
       } else {
-        alert(`Post Upload failed: ${data.message}`);
+        if(postName)
+        notify(`Post Upload failed: ${data.message}`,false);
+      else{
+        notify(`Post Upload failed: Post Name can't be empty!`,false);
+      }
+     //   alert(`Post Upload failed: ${data.message}`);
       }
     } catch (error) {
       console.error("Error during Post Upload:", error);
-      alert("An error occurred during Post Upload.");
+      notify("An error occurred during Post Upload.",false);
+    //  alert("An error occurred during Post Upload.");
     }
 
     setpostName("");
@@ -84,7 +116,7 @@ const CreatePost = ({ userProfilePicture, onPostCreated }) => {
   useEffect(() => {
     async function fetchUserEmail() {
       try {
-        const response = await fetch("http://localhost:3000", {
+        const response = await fetch(`${BASE_URL}`, {
           method: "GET",
           credentials: "include", // Send cookies with the request
         });
@@ -199,6 +231,7 @@ const CreatePost = ({ userProfilePicture, onPostCreated }) => {
           </ul>
         </div>
       )} */}
+        <ToastContainer />
     </div>
   );
 };

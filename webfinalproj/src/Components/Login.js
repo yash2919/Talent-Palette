@@ -2,17 +2,43 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import  { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const API_BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3000";
 
+  const notify = (message,suc) => {
+    if(suc)
+    toast.success(message, {
+      position: 'bottom-right',
+      autoClose: 3000, // Close the toast after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    else
+    toast.error(message, {
+      position: 'bottom-right',
+      autoClose: 3000, // Close the toast after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  
+  }
   // session handle
   useEffect(() => {
     async function fetchUserEmail() {
       try {
-        const response = await fetch('http://localhost:3000', {
+        const response = await fetch(`${API_BASE_URL}`, {
           method: 'GET',
           credentials: 'include', // Send cookies with the request
         });
@@ -27,15 +53,18 @@ function Login() {
             }
             else{
               if(data.role==='ADMIN'){
+                notify('Admin Login successful',true);
                 navigate("/admin");
               }
               else{
+                notify('Welcome '+data.email,true);
                 navigate("/home");
               }
             }
 
         } else {
-          throw new Error('Failed to fetch email');
+          notify('Failed to fetch email',false);
+        //  throw new Error('Failed to fetch email');
         }
       } catch (error) {
         console.error('Error fetching email:', error);
@@ -50,7 +79,7 @@ function Login() {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     try {
-      const response = await fetch("http://localhost:3000/user/login", {
+      const response = await fetch(`${API_BASE_URL}/user/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -64,16 +93,20 @@ function Login() {
       const data = await response.json();
       if (response.ok) {
         if (role === "ADMIN") {
+          notify('Admin Login successful',true);
           navigate("/admin");
         } else {
+          notify('Welcome '+data.email,true);
           navigate("/home");
         }
       } else {
-        alert(`Login failed: ${data.message}`);
+        notify(`Login failed: ${data.message}`,false);
+      //  alert(`Login failed: ${data.message}`);
       }
     } catch (error) {
+      notify("Error during login:"+ error,false);
       console.error("Error during login:", error);
-      alert("An error occurred during login.");
+  //    alert("An error occurred during login.");
     }
     
   }
@@ -88,7 +121,7 @@ function Login() {
     console.log(password);
 
     try {
-      const response = await fetch(`http://localhost:3000/user/${document.getElementById("email").value}`, {
+      const response = await fetch(`${API_BASE_URL}/user/${document.getElementById("email").value}`, {
         method: 'GET',
         credentials: 'include',
       });
@@ -100,7 +133,8 @@ function Login() {
           prelogin(data.role);
 
       } else {
-        alert('Invalid Email Id.');
+        notify('Invalid Email Id.',false);
+       // alert('Invalid Email Id.');
       }
     } catch (error) {
       console.error('Error fetching role:', error);
@@ -172,6 +206,7 @@ function Login() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

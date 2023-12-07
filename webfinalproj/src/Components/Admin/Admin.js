@@ -6,17 +6,42 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faTimes, faUser } from "@fortawesome/free-solid-svg-icons";
 import "./Admin.css"; // Reusing the same styles
 import { useNavigate, useLocation } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 function Admin() {
   const [allUsers, setAllUsers] = useState([]);
   const navigate = useNavigate();
 
 
+  const notify = (message,suc) => {
+    if(suc)
+    toast.success(message, {
+      position: 'bottom-right',
+      autoClose: 3000, // Close the toast after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    else
+    toast.error(message, {
+      position: 'bottom-right',
+      autoClose: 3000, // Close the toast after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
   useEffect(() => {
     async function fetchAllUsers() {
       try {
-        const response = await fetch("http://localhost:3000/user/getAll", {
+        const response = await fetch(`${BASE_URL}/user/getAll`, {
           method: "GET",
           credentials: "include",
         });
@@ -54,7 +79,7 @@ function Admin() {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/user/delete", {
+      const response = await fetch(`${BASE_URL}/user/delete`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -64,14 +89,17 @@ function Admin() {
 
       if (response.ok) {
         const result = await response.json();
-        console.log(result.message); // User deleted successfully
+        notify(result.message,true);
+        //console.log(result.message); // User deleted successfully
         // Perform any other necessary actions or update state here
       } else {
+        notify(`Error deleting user: ${response.status} - ${response.statusText}`,false);
         console.error(
           `Error deleting user: ${response.status} - ${response.statusText}`
         );
       }
     } catch (error) {
+      notify("Error deleting user:"+ error.message,false);
       console.error("Error deleting user:", error.message);
     }
   };
@@ -84,6 +112,7 @@ function Admin() {
   return (
     <>
       <Navbar />
+      <h1> User List </h1>
       <div className="random-user-list-container">
         <h2></h2>
         <ul className="random-list-group">
@@ -125,13 +154,17 @@ function Admin() {
                   >
                     Delete
                   </button>
+                  
                 </div>
               </div>
             </li>
           ))}
         </ul>
+        <ToastContainer />
       </div>
+      
     </>
+    
   );
 }
 

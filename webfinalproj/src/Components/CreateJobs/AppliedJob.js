@@ -4,7 +4,10 @@ import "./AppliedJob.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 const AppliedJob = ({ jobTitle, applicants }) => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
@@ -16,20 +19,44 @@ const AppliedJob = ({ jobTitle, applicants }) => {
     // Return the user's name or a default value
     return user ? user.fullName : "Unknown User";
   };
+  const notify = (message,suc) => {
+    if(suc)
+    toast.success(message, {
+      position: 'bottom-right',
+      autoClose: 3000, // Close the toast after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    else
+    toast.error(message, {
+      position: 'bottom-right',
+      autoClose: 3000, // Close the toast after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
 
   const updateApplication = async (userId, jobId, status) => {
     try {
-      const response = await axios.put('http://localhost:3000/application/editapp', {
+      const response = await axios.put(`${BASE_URL}/application/editapp`, {
         userId,
         jobId,
         status,
       });
 
       if (response.data) {
-        alert('Application status updated successfully!');
+        notify("Application status updated successfully!",true);
+      //  alert('Application status updated successfully!');
       }
     } catch (error) {
-      console.error('Error updating application status:', error);
+      notify('Error updating application status:' +error,false);
+  //    console.error('Error updating application status:', error);
     }
   };
 
@@ -61,7 +88,7 @@ const AppliedJob = ({ jobTitle, applicants }) => {
     // Fetch all users when the component mounts
     async function fetchAllUsers() {
       try {
-        const response = await fetch("http://localhost:3000/user/getAll", {
+        const response = await fetch(`${BASE_URL}/user/getAll`, {
           method: "GET",
           credentials: "include",
         });
@@ -122,6 +149,7 @@ const AppliedJob = ({ jobTitle, applicants }) => {
           ))}
         </ul>
       </div>
+      <ToastContainer />
     </div>
   );
 };

@@ -11,6 +11,7 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Card.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Card = ({
   userName, // Assuming this is the email
@@ -73,7 +74,7 @@ const Card = ({
   async function fetchProfile(email) {
     try {
       const response = await fetch(
-        `http://localhost:3000/user/profile/${email}`,
+        `${BASE_URL}/user/profile/${email}`,
         {
           method: "GET",
           credentials: "include",
