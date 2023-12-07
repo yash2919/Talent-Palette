@@ -15,6 +15,9 @@ const AppWrapper = styled.div`
 const Main = styled.div`
   display: flex;
   width: 100%;
+  @media  and (min-width: 300px)and (max-width: 768px) {
+    flex-direction: row; /* Side by side on larger screens */
+  }
 `;
 
 const LeftSection = styled.div`
@@ -25,6 +28,11 @@ const LeftSection = styled.div`
   background-color: #191970;
   padding: 20px; 
   position: relative; 
+  @media and (min-width: 300px)and (max-width: 768px) {
+      flex: none; /* Take the full width of the screen */
+      width: 100%; /* Set width to full screen */
+      justify-content: flex-start; /* Align content to the start */
+    }
 `;
 
 const Logo = styled.div`
@@ -34,6 +42,7 @@ margin-bottom: 20px; /* Add margin for spacing */
 position: absolute;
 top: 20px; /* Adjust top position as needed */
 left: 20px; /* Adjust left position as needed */
+
 `;
 const RightSection = styled.div`
 flex: 0.3;
@@ -42,6 +51,14 @@ flex: 0.3;
   align-items: center;
   background-color: #483d8b;
   font-size : 2em;
+  @media only screen and (min-width: 300px) and (max-width: 768px) {
+   
+      width: 100%; /* Set width to full screen */
+      padding: 1em; /* Adjust padding as needed */
+    }
+   
+  
+
 `;
 const Content30 = styled.div`
   flex: 0.3;
@@ -54,6 +71,10 @@ const Content30 = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
   gap: 15px;
+  @media   (max-width: 767px) {
+      flex-direction: column; /* Stack buttons vertically */
+      align-items: stretch; /* Align buttons to stretch to the container's width */
+    }
 `;
 
 const CtaButton = styled.button`
@@ -69,6 +90,11 @@ const CtaButton = styled.button`
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
+  @media (max-width: 767px) {
+    width: 100%; /* Full width buttons */
+    padding: 10px; /* Adjust padding as needed */
+  }
+
 `;
 
 // Welcome Application Component
@@ -85,8 +111,8 @@ const WelApp = () => {
         <LeftSection>
         <Logo>Talent Palette</Logo> {/* Add the heading text here */}
           {/* Use TypeAnimation component to create typed animation */}
-          <TypeAnimation
-            sequence={[
+          <TypeAnimation 
+          sequence={[
               'Welcome to Talent Palette',
               'Discover and share your unique talents with the world!',
               'Your Unique journey begins here!'
