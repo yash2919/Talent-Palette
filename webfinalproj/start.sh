@@ -10,6 +10,12 @@ npm install @fortawesome/fontawesome-svg-core @fortawesome/react-fontawesome @fo
 
 npm install react-modal react-toastify
 
+npm install react-spinners
+
+npm install react-icons
+
+npm install @emotion/react
+
 npm install dotenv
 
 node server.js

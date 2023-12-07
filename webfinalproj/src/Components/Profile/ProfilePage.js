@@ -225,11 +225,9 @@ const handleOntTest = (result) => {
 };
 
 return (
-  <div>
-<Navbar />
- 
+  <div> 
   <div className="profile-page">
-   <Navbar  />
+  <Navbar userImg={artistProfile.profileImage} />
 
       
           <div className="profile-header">
@@ -392,7 +390,7 @@ return (
             <Card
               key={index}
               // userName={post.userName}
-              userImg={image3}
+              userImg={artistProfile.profileImage}
               postContent={post.postName}
               postUrl={post.postimgUrl}
               mediaType={post.postType}
