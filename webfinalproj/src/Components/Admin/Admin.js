@@ -5,9 +5,13 @@ import Navbar from "../Header/Navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faTimes, faUser } from "@fortawesome/free-solid-svg-icons";
 import "./Admin.css"; // Reusing the same styles
+import { useNavigate, useLocation } from "react-router-dom";
+
 
 function Admin() {
   const [allUsers, setAllUsers] = useState([]);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     async function fetchAllUsers() {
@@ -72,6 +76,11 @@ function Admin() {
     }
   };
 
+  const handleUserProfile = async (email) => {
+
+    navigate(`/profile?userEmail=${email}`);
+  };
+
   return (
     <>
       <Navbar />
@@ -83,7 +92,7 @@ function Admin() {
               <div className="user-list-random">
                 {/* Section 1: Profile Picture */}
                 <div>
-                  <img className="random-user-list-image" src={user.userImg} />
+                  <img onClick={handleUserProfile} className="random-user-list-image" src={user.userImg} />
                 </div>
 
                 {/* Section 2: Name and Role */}
@@ -107,7 +116,9 @@ function Admin() {
 
                 {/* Section 4: Buttons */}
                 <div className="abcd">
-                  <button className="random-action-button">View</button>
+                  <button 
+                    onClick={() => handleUserProfile(user.userEmail)}
+                    className="random-action-button">View</button>
                   <button
                     onClick={() => handleDeleteUser(user.userEmail)}
                     className="random-action-button  random-action-button delete"
