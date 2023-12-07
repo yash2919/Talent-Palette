@@ -2,21 +2,19 @@
 
 import image3 from "../Header/talent.png";
 import image2 from "../Header/artist.jpg";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import {
+  faSearch,
   faHome,
   faBriefcase,
-  faUser,
   faSignInAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Navbar.css";
 
-function Navbar() {
- // console.log(userRole+"sgrb");
+function Navbar({ userImg }) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -34,17 +32,20 @@ function Navbar() {
           const data = await response.json();
           if (data.valid === false) {
             navigate("/");
-          } else {setuserRole(data.role); console.log(data.role+"DDVVD")};
+          } else {
+            setuserRole(data.role);
+            console.log(data.role + "DDVVD");
+          }
         } else {
           throw new Error("Failed to fetch email");
         }
       } catch (error) {
         console.error("Error fetching email:", error);
-        // Handle errors
       }
     }
     fetchUserEmail();
   }, []);
+
   const SearchBox = () => (
     <li className="nav-item">
       <div className="search-box">
@@ -56,27 +57,23 @@ function Navbar() {
 
   const menuData = [
     { label: "Home", path: "/home" },
-
     {
       label: userRole === "Employer" ? "Create Jobs" : "Apply For Jobs",
-      path: userRole === "Employer" ? "/createjobs" : "/profession"
+      path: userRole === "Employer" ? "/createjobs" : "/profession",
     },
-    // { label: "Contact", path: "/contact" },
     { label: "My Profile", path: "/profile" },
     { label: "Sign Out", path: "/" },
-
-
   ];
 
-  const NavItem = ({ to, icon, label, onClick }) => {
+  const NavItem = ({ to, icon, label, onClick, mainimg }) => {
     const isActive = location.pathname === to;
 
     const itemStyle = {
-      color: isActive ? "black" : "grey", // Change to the desired text color
+      color: isActive ? "black" : "grey",
     };
 
     const iconStyle = {
-      color: isActive ? "black" : "grey", // Change to the desired icon color
+      color: isActive ? "black" : "grey",
     };
 
     if (label === "Logout") {
@@ -92,7 +89,11 @@ function Navbar() {
       return (
         <li className="nv-it" style={itemStyle}>
           <Link to={to} className="nv-link">
-            <img src={image2} alt="My Profile" className="pfl-icn" />
+            <img
+              src={mainimg ? mainimg : image2}
+              alt="My Profile"
+              className="pfl-icn"
+            />
             <span>{label}</span>
           </Link>
         </li>
@@ -139,13 +140,30 @@ function Navbar() {
       </div>
 
       <ul className="nv-lst">
-        <NavItem to="/home" icon={faHome} label="Home" />
+        <NavItem to="/home" icon={faHome} label="Home" mainimg={userImg} />
 
-        {userRole==="Employer" ? <NavItem to="/createjobs" icon={faBriefcase} label="Create Jobs" />:  <NavItem to="/profession" icon={faBriefcase} label="Apply For Jobs" />}
-        
-        <NavItem to="/profile" icon={faUser} label="My Profile" />
-        {/* <NavItem to="/profile" icon={faUser} label="Contact Us" /> */}
+        {userRole === "Employer" ? (
+          <NavItem
+            to="/createjobs"
+            icon={faBriefcase}
+            label="Create Jobs"
+            mainimg={userImg}
+          />
+        ) : (
+          <NavItem
+            to="/profession"
+            icon={faBriefcase}
+            label="Apply"
+            mainimg={userImg}
+          />
+        )}
 
+        <NavItem
+          to="/profile"
+          icon={image2}
+          label="Profile"
+          mainimg={userImg}
+        />
         <NavItem onClick={logout} icon={faSignInAlt} label="Logout" />
       </ul>
     </nav>
