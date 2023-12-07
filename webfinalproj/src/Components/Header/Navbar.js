@@ -147,7 +147,7 @@ function Navbar({ userImg }) {
           <NavItem
             to="/createjobs"
             icon={faBriefcase}
-            label="Create Jobs"
+            label="Jobs"
             mainimg={userImg}
           />
         ) : (
