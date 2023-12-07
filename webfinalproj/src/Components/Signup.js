@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 
+import { FaCaretDown } from 'react-icons/fa'; 
+
+
+
 
 function SignUpForm() {
   const [formData, setFormData] = useState({
@@ -17,6 +21,12 @@ function SignUpForm() {
       ...formData,
       [e.target.name]: e.target.value,
     });
+    if (e.target.value !== "") {
+      e.target.classList.add('option-selected');
+    } else {
+      e.target.classList.remove('option-selected');
+    }
+  
   };
 
   const handleSubmit = (e) => {
@@ -71,10 +81,42 @@ function SignUpForm() {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
           }
+          .custom-dropdown {
+            position: relative;
+          }
+
+          .custom-dropdown select {
+            appearance: none; /* This is necessary to remove the default arrow in most browsers */
+            -webkit-appearance: none; /* For Safari */
+            -moz-appearance: none; /* For Firefox */
+            padding-right: 1.5em; /* Make room for custom arrow */
+          }
+
+          .custom-dropdown .fa-caret-down {
+            position: absolute;
+            right: 0.75em;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: #7c4dff;
+          }
+          .role-select option {
+            font-weight: bold;
+          }
+          
+          .role-select option:first-child {
+            font-weight: bold;
+          }
+          .role-select.option-selected option:first-child {
+            font-weight: normal;
+          }
+        
         `}
       </style>
       <div className=" d-flex align-items-center justify-content-center" style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #00008b 0%, #c3cfe2 100%)' }}>
-      <div className="card-signup " style={{ width: 'auto', maxWidth: '1000px', boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)', backgroundColor: 'white' }}>
+
+      <div className="card-signup " style={{  maxWidth: '900px', boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)', backgroundColor: 'white' }}>
+
           <div className="row g-0">
             <div className="col-md-6">
               <div className="card-body p-5">
@@ -91,7 +133,7 @@ function SignUpForm() {
                       required
                     />
                   </div>
-                  <div className="mb-3">
+                  {/* <div className="mb-3">
                     <input
                       type="text"
                       name="role"
@@ -101,7 +143,23 @@ function SignUpForm() {
                       onChange={handleChange}
                       required
                     />
-                  </div>
+                  </div> */}
+                        <div className="mb-3 custom-dropdown">
+                          <select
+                            name="role"
+                            className="form-control"
+                            value={formData.role}
+                            onChange={handleChange}
+                            required
+                          >
+                            <option value="" disabled hidden>Select Role</option>
+                            <option value="Artist">Artist</option>
+                            <option value="Musician">Musician</option>
+                            <option value="Dancer">Dancer</option>
+                            <option value="Employer">Employer</option>
+                          </select>
+                          <FaCaretDown className="fa-caret-down" />
+                        </div>
                   <div className="mb-3">
                     <input
                       type="email"
