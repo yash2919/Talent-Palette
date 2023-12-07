@@ -63,6 +63,7 @@ const JobModal = ({ job, onNext, onApply, onClose, isApplication }) => {
         {job.image && <img src={job.image} alt={job.title} />}
         <div className="job-modal-actions">
           <button onClick={onNext}>Next</button>
+          <button onClick={onClose}>Close</button>
           {isApplication && (
             /* Display the status with different colors based on the status */
             <div className="job-status">
@@ -81,7 +82,7 @@ const JobModal = ({ job, onNext, onApply, onClose, isApplication }) => {
               {hasApplied ? 'Applied' : 'Apply for Job'}
             </button>
           )}
-          <button onClick={onClose}>Close</button>
+        
         </div>
       </div>
     </div>

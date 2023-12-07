@@ -106,14 +106,17 @@
 }
 .job-accepted {
   background-color: #4caf50;
+  font-weight: bold;
 }
 
 .job-rejected {
-  background-color: #Ff5252;;
+  background-color: #Ff5252;
+  font-weight: bold;
 }
 
 .job-not-reviewed {
-  background-color: #f9f9f9 /* Or any other color you prefer */
+  background-color: #f9f9f9 ;
+  font-weight: bold
 }
 
 @media (max-width: 600px) {
