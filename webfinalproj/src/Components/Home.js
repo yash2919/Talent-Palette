@@ -78,7 +78,7 @@ function Home() {
     }
   }
   async function fetchProfile(email) {
-    console.log(email+"dvsvsdvdsvdsvdvd");
+    console.log(email + "dvsvsdvdsvdsvdvd");
     try {
       const response = await fetch(
         `http://localhost:3000/user/profile/${email}`,
@@ -90,7 +90,7 @@ function Home() {
       if (response.ok) {
         const data = await response.json();
         setProfile(data);
-       // console.log(data.password+"dsvfsdvsdffsdgdg");
+        // console.log(data.password+"dsvfsdvsdffsdgdg");
       } else {
         throw new Error("Failed to fetch profile data");
       }
@@ -112,7 +112,10 @@ function Home() {
           const data = await response.json();
           if (data.valid === false) {
             navigate("/");
-          } else {setUserEmail(data.email);  fetchProfile(data.email);}
+          } else {
+            setUserEmail(data.email);
+            fetchProfile(data.email);
+          }
         } else {
           throw new Error("Failed to fetch email");
         }
@@ -160,7 +163,6 @@ function Home() {
     fetchUserEmail();
     fetchallPosts();
     fetchallUsers();
- 
   }, []);
   console.log(allPosts);
   console.log("Users");
@@ -168,26 +170,27 @@ function Home() {
 
   return (
     <div>
-       <Navbar  />
+      <Navbar userImg={profile?.profileImage ? profile.profileImage : image3} />
       <div className="home-container">
         <div className="main-content">
           <div className="person-card-container">
             <PersonCard
-              userName={profile?profile.fullName:userEmail} // Assuming the logged-in user's email is the username
-              userImg={profile?.profileImage?profile.profileImage:image3} // Use the logged-in user's profile picture
+              userName={profile ? profile.fullName : userEmail} // Assuming the logged-in user's email is the username
+              userImg={profile?.profileImage ? profile.profileImage : image3} // Use the logged-in user's profile picture
               userEmail={userEmail}
-              userRole={profile?profile.role:"User"} // You may need to fetch the user role from the server
+              userRole={profile ? profile.role : "User"} // You may need to fetch the user role from the server
             />
           </div>
 
           <div>
             <CreatePost
-              userProfilePicture={profile?.profileImage?profile.profileImage:image3}
+              userProfilePicture={
+                profile?.profileImage ? profile.profileImage : image3
+              }
               onPostCreated={fetchallPosts}
             />
 
             {/* <h1>{allPosts[0]}</h1> */}
-
 
             {allPosts && allPosts.length > 0 ? (
               allPosts
@@ -202,14 +205,12 @@ function Home() {
                     postUrl={post.postimgUrl}
                     mediaType={post.postType}
                     timestamp={post.timestamp}
-                     email={post.email}
+                    email={post.email}
                   />
                 ))
             ) : (
               <p>Loading...</p>
             )}
-
-
           </div>
         </div>
         <div className="user-list">
