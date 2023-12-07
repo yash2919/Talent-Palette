@@ -1,8 +1,10 @@
 // Admin.js
 
-import React, { useState, useEffect } from 'react';
-import "./Users.css";
-import Navbar from '../Header/Navbar';
+import React, { useState, useEffect } from "react";
+import Navbar from "../Header/Navbar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope, faTimes, faUser } from "@fortawesome/free-solid-svg-icons";
+import "./Admin.css"; // Reusing the same styles
 
 function Admin() {
   const [allUsers, setAllUsers] = useState([]);
@@ -40,16 +42,18 @@ function Admin() {
 
   const handleDeleteUser = async (email) => {
     // Confirm deletion with a popup
-    const isConfirmed = window.confirm("Are you sure you want to delete this user?");
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this user?"
+    );
     if (!isConfirmed) {
       return; // If not confirmed, do nothing
     }
 
     try {
-      const response = await fetch('http://localhost:3000/user/delete', {
-        method: 'DELETE',
+      const response = await fetch("http://localhost:3000/user/delete", {
+        method: "DELETE",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email }),
       });
@@ -59,48 +63,64 @@ function Admin() {
         console.log(result.message); // User deleted successfully
         // Perform any other necessary actions or update state here
       } else {
-        console.error(`Error deleting user: ${response.status} - ${response.statusText}`);
+        console.error(
+          `Error deleting user: ${response.status} - ${response.statusText}`
+        );
       }
     } catch (error) {
-      console.error('Error deleting user:', error.message);
+      console.error("Error deleting user:", error.message);
     }
   };
 
   return (
-    <div className="admin-panel">
-        <Navbar />
-      <h1>Admin Panel</h1>
-
-      <div>
-        <h2>Profiles</h2>
-        <div>
-          {allUsers && allUsers.length > 0 ? (
-            <div className="user-list-container">
-              {allUsers.map((user, index) => (
-                <div key={index} className="user-block">
-                  <img
-                    className="user-list-image"
-                    src={user.userImg}
-                    alt={`User ${index + 1}`}
-                  />
-                  <div className="user-details">
-                    <h3 className="user-name">{user.userName}</h3>
-                    <div className="user-email">
-                      <span className="email">{user.userEmail}</span>
-                    </div>
-                  </div>
-                  <div>
-                    <button onClick={() => handleDeleteUser(user.userEmail)}>Delete</button>
-                  </div>
+    <>
+      <Navbar />
+      <div className="random-user-list-container">
+        <h2></h2>
+        <ul className="random-list-group">
+          {allUsers.map((user, index) => (
+            <li key={index} className="random-list-group-item">
+              <div className="user-list-random">
+                {/* Section 1: Profile Picture */}
+                <div>
+                  <img className="random-user-list-image" src={user.userImg} />
                 </div>
-              ))}
-            </div>
-          ) : (
-            <p>Loading</p>
-          )}
-        </div>
+
+                {/* Section 2: Name and Role */}
+                <div className="random-user-details ">
+                  <h3 className="random-user-name">
+                    {user.userName &&
+                      user.userName.charAt(0).toUpperCase() +
+                        user.userName.slice(1)}
+                  </h3>
+                  <span className="random-user-role">
+                    Role -{" "}
+                    {user.userRole
+                      ? user.userRole.charAt(0).toUpperCase() +
+                        user.userRole.slice(1)
+                      : "Not Set"}
+                  </span>
+                  <br></br>
+                  <FontAwesomeIcon icon={faEnvelope} className="random-icon " />
+                  <span>{user.userEmail}</span>
+                </div>
+
+                {/* Section 4: Buttons */}
+                <div className="abcd">
+                  <button className="random-action-button">View</button>
+                  <button
+                    onClick={() => handleDeleteUser(user.userEmail)}
+                    className="random-action-button  random-action-button delete"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
-    </div>
+    </>
   );
 }
 
