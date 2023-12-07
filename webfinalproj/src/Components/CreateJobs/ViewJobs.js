@@ -145,7 +145,7 @@ const ViewJobs = () => {
               <p style={{ textAlign: "center", fontSize: "20px" }}>
                 Job Role: {selectedJob.jobType}
               </p>
-              <p> Job Id:</p>
+
               <img
                 className="job-post-img"
                 src={selectedJob.jobimgUrl}
@@ -174,7 +174,7 @@ const ViewJobs = () => {
                       <AppliedJob
                         jobTitle={selectedJob.jobName}
                         applicants={applied.filter(
-                          (applicant) => applicant.jobId === selectedJob.jobId
+                          (applicant) => applicant.jobId === selectedJob._id
                         )}
                       />
                     )}
