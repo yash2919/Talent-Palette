@@ -26,7 +26,7 @@ function Home() {
 
   async function fetchallPosts() {
     try {
-      const response = await fetch("http://localhost:3000/post/getallposts", {
+      const response = await fetch("http://3.134.245.199:3000/post/getallposts", {
         method: "GET",
         credentials: "include",
       });
@@ -59,7 +59,7 @@ function Home() {
 
   async function fetchallUsers() {
     try {
-      const response = await fetch("http://localhost:3000/user/getAll", {
+      const response = await fetch("http://3.134.245.199:3000/user/getAll", {
         method: "GET",
         credentials: "include",
       });
@@ -89,7 +89,7 @@ function Home() {
   useEffect(() => {
     async function fetchUserEmail() {
       try {
-        const response = await fetch("http://localhost:3000", {
+        const response = await fetch("http://3.134.245.199:3000", {
           method: "GET",
           credentials: "include",
         });
@@ -110,7 +110,7 @@ function Home() {
 
     async function fetchallPosts() {
       try {
-        const response = await fetch("http://localhost:3000/post/getallposts", {
+        const response = await fetch("http://3.134.245.199:3000/post/getallposts", {
           method: "GET",
           credentials: "include",
         });

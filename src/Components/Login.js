@@ -12,7 +12,7 @@ function Login() {
   useEffect(() => {
     async function fetchUserEmail() {
       try {
-        const response = await fetch('http://localhost:3000', {
+        const response = await fetch('http://3.134.245.199:3000', {
           method: 'GET',
           credentials: 'include', // Send cookies with the request
         });
@@ -50,7 +50,7 @@ function Login() {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     try {
-      const response = await fetch("http://localhost:3000/user/login", {
+      const response = await fetch("http://3.134.245.199:3000/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,7 +88,7 @@ function Login() {
     console.log(password);
 
     try {
-      const response = await fetch(`http://localhost:3000/user/${document.getElementById("email").value}`, {
+      const response = await fetch(`http://3.134.245.199:3000/user/${document.getElementById("email").value}`, {
         method: 'GET',
         credentials: 'include',
       });

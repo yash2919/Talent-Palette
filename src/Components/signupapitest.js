@@ -84,7 +84,7 @@ function SignUpForm() {
     const password = document.getElementById('password').value;
 
     try {
-      const response = await fetch('http://localhost:3000/user/create', {
+      const response = await fetch('http://3.134.245.199:3000/user/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
