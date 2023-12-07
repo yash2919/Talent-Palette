@@ -228,6 +228,7 @@ return (
         
            {editMode ? (
             <>
+           < div className="upload-container">
              <h6>Upload Profile Picture</h6> 
               <UploadWidget 
                 onTest={(result) => {
@@ -238,7 +239,7 @@ return (
                 }}
               />
               {/* <button>Upload Profile Picture</button> */}
-              
+              </div>
             </>
           ) : (
             <div className="profile-image-container">
