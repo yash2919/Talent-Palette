@@ -150,7 +150,7 @@ function Home() {
               userName={profile ? profile.fullName : userEmail}
               userImg={profile?.profileImage ? profile.profileImage : image3}
               userEmail={userEmail}
-              userRole={profile ? profile.role : "User"}
+              userRole={profile?.role?profile.role : "User"} // You may need to fetch the user role from the server
             />
           </div>
 

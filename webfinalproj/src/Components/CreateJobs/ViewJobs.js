@@ -22,7 +22,8 @@ const ViewJobs = () => {
     async function fetchJobsApplied() {
       try {
         const response = await fetch(
-          `${BASE_URL}application/getallapplied`,
+          `${BASE_URL}/application/getallapplied`,
+
           {
             method: "GET",
             credentials: "include",
