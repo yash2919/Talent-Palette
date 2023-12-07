@@ -1,9 +1,9 @@
 # WebDAss6
 Assignment 6 Web Design
 
-# Talentconnect
+# TalentPalette
 
-Talentconnect is a platform designed to bridge the gap between professional networking and social interaction, tailored for creative professionals. It blends the formal aspects of LinkedIn with the engaging social experience of Instagram.
+TalentPalette is a platform designed to bridge the gap between professional networking and social interaction, tailored for creative professionals. It blends the formal aspects of LinkedIn with the engaging social experience of Instagram.
 
 ## Table of Contents
 
@@ -76,3 +76,6 @@ cd client
 
 
 npm start
+
+
+Run: http://3.134.245.199
