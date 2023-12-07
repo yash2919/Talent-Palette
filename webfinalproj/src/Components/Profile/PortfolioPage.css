@@ -1,62 +1,61 @@
 /* Base styles */
-* {
+/* * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
+} */
 
-body, html {
-  width: 100%;
+ body {
+  /* width: 100%;
   height: 100%;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Arial', sans-serif;  */
   background: linear-gradient(135deg, #a777e3, #6e8efb, #a777e3);
-}
-
+ }
+ 
 
 /* Style the navbar */
-.navbar {
-  background-color: #fff9f9;
-  color: #fff;
-  padding: 10px;
-  text-align: center;
-}
+
 
 /* Profile page styles */
 .profile-page {
   min-height: 100vh;
-
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #a777e3, #6e8efb, #a777e3);
 }
 
-/* Profile header */
-.profile-header {
+.profile-page .profile-header {
   position: relative;
-  text-align: left; 
-  margin-bottom: -30px; /* Adjust if needed based on the height of the profile image */
-  /* ... other styles ... */
-}
+  text-align: center; /* Center-align the header contents */
 
-.cover-photo {
+}
+.profile-page .cover-photo {
   width: 100%;
-  height: 400px; /* Increased height of the cover photo */
+  height: 550px; /* Adjusted for a smaller cover photo height */
   background-size: cover;
   background-position: center;
+  margin-top: 40px; /* Space below the navbar */
 }
 
-.profile-image-container {
+.profile-page .profile-image-container {
   position: absolute;
-  bottom: 0;
-  top:50px; /* Align to the bottom of the cover photo */
-  left: 30px;  /* Align bottom with cover photo bottom */
-  transform: translateY(50%); /* Offset by half of the image height */
+  bottom: -75px; /* Adjust this value to position the image correctly over the cover photo */
+  transform: translateX(-50%);
+  left: 100px;
+  border-radius: 50%;
+  border: 4px solid white; /* Adjust border size as needed */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Optional shadow for depth */
+  background: white;
+  overflow: hidden;
+  z-index: 5;
 }
 
-.profile-image {
+.profile-page .profile-image {
   width: 150px;
   height: 150px;
+  object-fit: cover;
   border-radius: 50%;
-  border: 5px solid #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+  
 
 .edit-profile-btn {
   position: absolute;
@@ -76,7 +75,7 @@ body, html {
   background-color: #3f51b5;
 }
 
-/* Profile container */
+
 .profile-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -86,7 +85,7 @@ body, html {
 /* Profile details */
 .profile-details {
   background: #fff;
-  padding: 20px;
+  padding: 10px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-top: 60px; /* Adjusted space to account for negative margin above */
@@ -149,8 +148,8 @@ body, html {
 
 
 /* Editable text areas */
-input[type="text"],
-textarea {
+.profile-page input[type="text"],
+.profile-page textarea {
   width: 100%;
   padding: 10px;
   margin-top: 10px;
@@ -159,22 +158,15 @@ textarea {
   resize: none;
 }
 
-input[type="text"]:focus,
-textarea:focus {
+.profile-page-page input[type="text"]:focus,
+.profile-page textarea:focus {
   border-color: #5c6bc0;
   box-shadow: 0 0 0 2px rgba(92, 107, 192, 0.5);
 }
 
-/* Buttons styling for edit mode */
-.edit-buttons {
-  display: flex;
-  justify-content: flex-start;
-  gap: 10px;
-  margin-top: 20px;
-}
 
 .save-btn, .cancel-btn {
-  padding: 10px 20px;
+  padding: 20px 20px;
   border: none;
   border-radius: 5px;
   color: white;
@@ -182,8 +174,8 @@ textarea:focus {
   cursor: pointer;
   outline: none;
   transition: background-color 0.3s ease;
+  margin-right: 10px; /* Adds space to the right of the button */
 }
-
 .save-btn {
   background-color: #66bb6a;
 }
@@ -213,7 +205,7 @@ textarea:focus {
 }
 
 .animated-text h2 {
-  animation: fadeIn 2s ease-out forwards;
+  animation: fadeIn 5s ease-out forwards;
 }
 
 /* Posts section */
@@ -249,7 +241,6 @@ textarea:focus {
 
 /* Grid item adjustments */
 .profile-page .card {
-  /* Override width and height from Card.css for grid items to work properly */
   height: auto; /* Height should be auto for grid items */
   width: 100%; /* Width should be 100% to fill the grid column */
   margin-left: 0; /* Remove left margin */
@@ -258,17 +249,6 @@ textarea:focus {
   /* Keep the rest of your .card styles from Card.css */
 }
 
-@media (max-width: 1024px) {
-  .profile-page .posts-section {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns for smaller screens */
-  }
-}
-
-@media (max-width: 768px) {
-  .profile-page  .posts-section {
-    grid-template-columns: 1fr; /* 1 column for mobile screens */
-  }
-}
 
 .profile-page .menu-icon {
   display: none;
@@ -306,4 +286,75 @@ textarea:focus {
 .posts-section .card:hover .card-actions {
   opacity: 1;
   visibility: visible;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .profile-page .cover-photo {
+    height: 200px; /* Smaller height on smaller screens */
+  }
+
+ 
+
+  .card-content {
+    word-wrap: break-word; /* Break long words to prevent overflow */
+    white-space: normal; /* Ensure the text wraps */
+    overflow: hidden; /* Hide the overflow */
+  }
+
+  .profile-page .card-content {
+    word-wrap: break-word; /* Break long words to prevent overflow */
+    white-space: normal; /* Ensure the text wraps */
+    overflow: auto; /* Add scrollbars if content is too long */
+    max-height: 50px; /* Adjust based on your design */
+    padding: 10px; /* Adjust padding as needed */
+  }
+  .profile-page .posts-section {
+    grid-template-columns: 1fr;
+  }
+
+
+  .profile-page .card-content {
+    word-wrap: break-word; /* Break long words to prevent overflow */
+    white-space: normal; /* Ensure the text wraps */
+    overflow: auto; /* Add scrollbars if content is too long */
+    max-height: 50px; /* Adjust based on your design */
+    padding: 10px; /* Adjust padding as needed */
+  }
+
+
+
+.profile-page .section p {
+  overflow: hidden;
+  word-break: break-word;
+
+}
+
+}
+
+.upload-button {
+  cursor: pointer;
+  background-color: #5c6bc0; /* Your desired background color */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin-bottom: 10px; /* Space between buttons */
+  border-radius: 5px;
+  font-size: 1em;
+  transition: background-color 0.2s;
+}
+
+.upload-button:hover {
+  background-color: #3f51b5; /* Darker shade for hover state */
+}
+
+.upload-container h6 {
+  margin-bottom: 10px; /* Space between the heading and the button */
+  /* Align the text to the left */
+}
+
+.upload-container {
+  margin-bottom: 20px; /* Space below the button for separation */
+  text-align: left;
 }
