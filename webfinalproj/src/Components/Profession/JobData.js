@@ -1,3 +1,4 @@
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const jobData = async () => {
   const organizedData = {};
@@ -5,7 +6,7 @@ const jobData = async () => {
 
  
       try {
-        const response = await fetch("http://localhost:3000", {
+        const response = await fetch(`${BASE_URL}`, {
           method: "GET",
           credentials: "include",
         });
@@ -24,9 +25,9 @@ const jobData = async () => {
     
       async function getjobdata() {
   try {
-    const jobsResponse = await fetch('http://localhost:3000/jobs/getalljobs');
+    const jobsResponse = await fetch(`${BASE_URL}/jobs/getalljobs`);
 
-    const applicationsResponse = await fetch(`http://localhost:3000/application/getallapplied?email=${email}`);
+    const applicationsResponse = await fetch(`${BASE_URL}/application/getallapplied?email=${email}`);
     console.log(email);
     if (!jobsResponse.ok || !applicationsResponse.ok) {
       throw new Error('One or more network responses were not ok.');

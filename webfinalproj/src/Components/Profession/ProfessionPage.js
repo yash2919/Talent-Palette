@@ -11,6 +11,7 @@ import axios from 'axios';
 import JobCard from './JobCard';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const ProfessionPage = () => {
   const [jobs, setJobs] = useState([]); // Initialize jobs state
@@ -59,7 +60,7 @@ const ProfessionPage = () => {
     };
     const getemail = async () => {
     try {
-      const response = await fetch("http://localhost:3000", {
+      const response = await fetch(`${BASE_URL}`, {
         method: "GET",
         credentials: "include",
       });
@@ -124,7 +125,7 @@ const ProfessionPage = () => {
       const userId=email;
       const jobId=selectedJob.id;
     try {
-      const response = await axios.post('http://localhost:3000/application/apply', { userId, jobId }); // Replace with your API endpoint
+      const response = await axios.post(`${BASE_URL}/application/apply`, { userId, jobId }); // Replace with your API endpoint
    //   alert('Application successful:', response.data);
       // Toast.showModal('Application successful:', response.data);
 

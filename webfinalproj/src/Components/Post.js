@@ -12,6 +12,7 @@ import UploadWidget from "./Common/UploadWidget/UploadWidget";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 const CreatePost = ({ userProfilePicture, onPostCreated }) => {
   const [mediaType, setMediaType] = useState(null);
   const [postimgUrl, setpostimgUrl] = useState("");
@@ -78,7 +79,7 @@ const CreatePost = ({ userProfilePicture, onPostCreated }) => {
     console.log(postName);
 
     try {
-      const response = await fetch("http://localhost:3000/post/create", {
+      const response = await fetch(`${BASE_URL}/post/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -115,7 +116,7 @@ const CreatePost = ({ userProfilePicture, onPostCreated }) => {
   useEffect(() => {
     async function fetchUserEmail() {
       try {
-        const response = await fetch("http://localhost:3000", {
+        const response = await fetch(`${BASE_URL}`, {
           method: "GET",
           credentials: "include", // Send cookies with the request
         });

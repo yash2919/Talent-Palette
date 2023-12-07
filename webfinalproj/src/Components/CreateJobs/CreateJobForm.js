@@ -9,6 +9,7 @@ import "./CreateJob.css"; // Import the CSS file for CreateJobForm1
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 const CreateJobForm1 = () => {
   const [email, setEmail] = useState("");
   const [jobName, setJobName] = useState("");
@@ -59,7 +60,7 @@ const CreateJobForm1 = () => {
   useEffect(() => {
     async function fetchUserEmail() {
       try {
-        const response = await fetch("http://localhost:3000", {
+        const response = await fetch(`${BASE_URL}`, {
           method: "GET",
           credentials: "include",
         });
@@ -83,7 +84,7 @@ const CreateJobForm1 = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/jobs/create", {
+      const response = await axios.post(`${BASE_URL}/jobs/create`, {
         email,
         jobName,
         jobDesc,

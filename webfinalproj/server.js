@@ -12,13 +12,10 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 const postRouter = require('./api/routes/postRouter');
 const jobsRouter = require('./api/routes/jobsRouter');
-<<<<<<< Updated upstream
+
 const profileAbout = require('./api/routes/profileRouter');
-const allowedOrigins = ["http://localhost:3001", "http://localhost:3000","http://localhost:3000/email","localhost"]; // Add your actual domain here
-=======
-const profileAbout = require('./api/routes/userRouter');
 const allowedOrigins = ["https://talent-palette-ba48afc325ca.herokuapp.com","http://3.134.245.199","ws://3.134.245.199:3001/ws","http://localhost:3000/user/abc@northeastern.edu","http://localhost:3001", "http://localhost:3000","http://localhost:3000/email","localhost","http://3.134.245.199:3000","http://3.134.245.199:3001"]; // Add your actual domain here
->>>>>>> Stashed changes
+
 const User = require('./api/models/userModel');
 const applicationRouter = require("./api/routes/applicationRouter");
 const userRouter = require("./api/routes/userRouter");
@@ -300,11 +297,11 @@ app.get("/user/profile/:email", async (req, res) => {
     // Assuming you are getting the user's email from a session or a token
     const email = req.params.email; // Replace with your session or token parsing logic
 
-<<<<<<< Updated upstream
-    const user = await User.findOne({ email }, 'fullName about skills profileImage coverImage gigsInfo _id email role');
-=======
+
+
     const user = await User.findOne({ email }, 'fullName about skills profileImage coverImage gigsInfo _id role email');
->>>>>>> Stashed changes
+
+ 
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
