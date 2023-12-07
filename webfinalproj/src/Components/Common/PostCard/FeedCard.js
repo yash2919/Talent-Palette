@@ -1,6 +1,5 @@
 // Card.js
-import { useState } from "react";
-import React, { useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,13 +7,13 @@ import {
   faComment,
   faShare,
 } from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 import "./Card.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 const Card = ({
-  userName,
+  userName, // Assuming this is the email
   userImg,
   postContent,
   postUrl,
@@ -23,6 +22,7 @@ const Card = ({
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
+  const [profile, setProfile] = useState(null);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -42,18 +42,68 @@ const Card = ({
     };
   }, []);
 
+  const calculateTimeDifference = (timestamp) => {
+    const now = new Date();
+    const postTime = new Date(timestamp);
+    const timeDifference = now - postTime;
+
+    const seconds = Math.floor(timeDifference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 0) {
+      return `${days} ${days === 1 ? "day" : "days"} ago`;
+    } else if (hours > 0) {
+      return `${hours} ${hours === 1 ? "hour" : "hours"} ago`;
+    } else if (minutes > 0) {
+      return `${minutes} ${minutes === 1 ? "minute" : "minutes"} ago`;
+    } else {
+      return "just now";
+    }
+  };
+
+  async function fetchProfile(email) {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/user/profile/${email}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setProfile(data);
+      } else {
+        throw new Error("Failed to fetch profile data");
+      }
+    } catch (error) {
+      console.error("Error fetching profile data:", error);
+      // Handle errors
+    }
+  }
+
+  useEffect(() => {
+    fetchProfile(userName); // Assuming userName is the email
+  }, [userName]);
+
+  const formattedTimestamp = calculateTimeDifference(timestamp);
 
   return (
     <div className="card p-3">
-      <div className="card-header d-flex align-items-center mb-3">
+      <div
+        className="card-header d-flex align-items-center mb-3 "
+        style={{ borderRadius: "10%" }}
+      >
         <img
           className="profile-picture rounded-circle"
           src={userImg}
           alt={`${userName}'s profile`}
         />
         <div className="user-details">
-          <h4>{userName}</h4>
-          <p>{timestamp}</p>
+          <h4>{profile?.fullName}</h4>
+          <p>{formattedTimestamp}</p>
         </div>
         <div className="menu-icon" onClick={toggleMenu}>
           <FontAwesomeIcon icon={faBars} />
