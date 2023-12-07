@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 // import { useNavigate } from 'react-router-dom';
-import Navbar from '../Header/Navbar';
-import Card from '../Common/PostCard/FeedCard';
-import image3 from '../../assets/images/artist.jpg';
-import './PortfolioPage.css';
-import UploadWidget from "../Common/UploadWidget/UploadWidget"
+import Navbar from "../Header/Navbar";
+import Card from "../Common/PostCard/FeedCard";
+import image3 from "../../assets/images/artist.jpg";
+import "./PortfolioPage.css";
+import UploadWidget from "../Common/UploadWidget/UploadWidget";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const PortfolioPage = ({}) => {
@@ -13,13 +13,13 @@ const PortfolioPage = ({}) => {
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("dfda");
   const [skills, setSkills] = useState("dfad");
-  const [about, setAbout] = useState("absbado")
+  const [about, setAbout] = useState("absbado");
   const [profileImage, setProfileImage] = useState("");
   const [coverImage, setCoverImage] = useState("");
   const [gigsInfo, setGigsInfo] = useState("adfad");
-  const [allPosts,setallPosts]=useState([]);
+  const [allPosts, setallPosts] = useState([]);
   const location = useLocation();
-  const userEmail = new URLSearchParams(location.search).get('userEmail');
+  const userEmail = new URLSearchParams(location.search).get("userEmail");
   const [differentUser, setDifferentUser] = useState(!!userEmail); // Set to true if userEmail exists, false otherwise
   const [profile, setProfile] = useState(null);
 
@@ -37,98 +37,105 @@ const PortfolioPage = ({}) => {
     timestamp: "2 hours ago",
   };
   const [artistProfile, setArtistProfile] = useState({
-    profileImage: '',
-    coverPhoto: '',
-    fullName: '',
-    about: '',
-    skills: '',
-    gigsInfo: ''
+    profileImage: "",
+    coverPhoto: "",
+    fullName: "",
+    about: "",
+    skills: "",
+    gigsInfo: "",
   });
 
   useEffect(() => {
-
     async function fetchUserEmail() {
       try {
-          const response = await fetch('http://localhost:3000', {
-            method: 'GET',
-            credentials: 'include', // Send cookies with the request
-          });
-          
-          if (response.ok) {
-            const data = await response.json();
-    
-            if (data.valid === true) {
-              // Use the userEmail prop if it exists; otherwise, use the email from the API
-              const fetchedEmail = userEmail || data.email;
-              setEmail(fetchedEmail);
-            } else {
-              navigate("/home");
-            }
+        const response = await fetch("http://localhost:3000", {
+          method: "GET",
+          credentials: "include", // Send cookies with the request
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+
+          if (data.valid === true) {
+            // Use the userEmail prop if it exists; otherwise, use the email from the API
+            const fetchedEmail = userEmail || data.email;
+            setEmail(fetchedEmail);
           } else {
-            throw new Error('Failed to fetch email');
+            navigate("/home");
           }
-        } catch (error) {
-          console.error('Error fetching email:', error);
-          // Handle errors
+        } else {
+          throw new Error("Failed to fetch email");
         }
+      } catch (error) {
+        console.error("Error fetching email:", error);
+        // Handle errors
       }
-
-  // Flag to check if the component is still mounted
-  async function fetchProfile() {
-    try {
-      console.log(email);
-      const response = await fetch(`http://localhost:3000/user/profile/${email}`, {
-        method: "GET",
-        credentials: "include", 
-      });
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        // if(data!=null)
-        setProfile(data.role);
-        setArtistProfile(data);          
-      } else {
-        throw new Error("Failed to fetch profile data");
-      }
-    } catch (error) {
-      console.error("Error fetching profile data:", error);
-      // Handle errors
     }
-  }
 
-  async function fetchallPosts() {
-    try {
-      console.log('in fetchall');
-      const response = await fetch(`http://localhost:3000/post/getallposts?email=${email}`, {
-        method: "GET",
-        credentials: "include", 
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        // if(data!=null)
-        setallPosts(data.post.map(post => ({
-          email: post.email,
-          userName: post.userName? post.userName : post.email,
-          userImg: post.userImg? post.userImg:image3,
-          postName: post.postName,
-          postimgUrl: post.postimgUrl,
-          postType: post.postType? post.postType : "image",
-          timestamp: post.timestamp ? post.timestamp: "2023-12-05T12:34:56",
-          _id: post._id
-        })));
-        
-        console.log(data.post[0].timestamp);
-        
-      } else {
-        throw new Error("Failed to fetch email");
+    // Flag to check if the component is still mounted
+    async function fetchProfile() {
+      try {
+        console.log(email);
+        const response = await fetch(
+          `http://localhost:3000/user/profile/${email}`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+          // if(data!=null)
+          setProfile(data.role);
+          setArtistProfile(data);
+        } else {
+          throw new Error("Failed to fetch profile data");
+        }
+      } catch (error) {
+        console.error("Error fetching profile data:", error);
+        // Handle errors
       }
-    } catch (error) {
-      console.error("Error fetching email:", error);
-      // Handle errors
     }
-  }
-  
+
+    async function fetchallPosts() {
+      try {
+        console.log("in fetchall");
+        const response = await fetch(
+          `http://localhost:3000/post/getallposts?email=${email}`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          // if(data!=null)
+          setallPosts(
+            data.post.map((post) => ({
+              email: post.email,
+              userName: post.userName ? post.userName : post.email,
+              userImg: post.userImg ? post.userImg : image3,
+              postName: post.postName,
+              postimgUrl: post.postimgUrl,
+              postType: post.postType ? post.postType : "image",
+              timestamp: post.timestamp
+                ? post.timestamp
+                : "2023-12-05T12:34:56",
+              _id: post._id,
+            }))
+          );
+
+          console.log(data.post[0].timestamp);
+        } else {
+          throw new Error("Failed to fetch email");
+        }
+      } catch (error) {
+        console.error("Error fetching email:", error);
+        // Handle errors
+      }
+    }
 
     fetchUserEmail();
 
@@ -136,13 +143,10 @@ const PortfolioPage = ({}) => {
     // return () => {
     //   isMounted = false;
     // };
-      if (email) {
-        fetchProfile();
-        fetchallPosts();
-      }
-
-      
-
+    if (email) {
+      fetchProfile();
+      fetchallPosts();
+    }
   }, [email]);
 
   const handleEdit = () => {
@@ -153,115 +157,126 @@ const PortfolioPage = ({}) => {
     setArtistProfile({
       ...artistProfile,
       [e.target.name]: e.target.value,
-
     });
   };
 
-const handleSave = async (result)  => {
-  const fullName = artistProfile.fullName;
-  const about = artistProfile.about;
-  const skills = artistProfile.skills;
-  const gigsInfo = artistProfile.gigsInfo;
+  const handleSave = async (result) => {
+    const fullName = artistProfile.fullName;
+    const about = artistProfile.about;
+    const skills = artistProfile.skills;
+    const gigsInfo = artistProfile.gigsInfo;
 
-  try {
-    const response = await fetch("http://localhost:3000/user/profile", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      
-      body: JSON.stringify({ email, coverImage, profileImage, fullName, about, skills, gigsInfo }),
-    });
-    // console.log();
-    const data = await response.json();
-    if (response.ok) {
-      alert(data.message);
-      //  navigate('/home');
-    } else {
-      alert(`Post Upload failed: ${data.message}`);
+    try {
+      const response = await fetch("http://localhost:3000/user/profile", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          email,
+          coverImage,
+          profileImage,
+          fullName,
+          about,
+          skills,
+          gigsInfo,
+        }),
+      });
+      // console.log();
+      const data = await response.json();
+      if (response.ok) {
+        alert(data.message);
+        //  navigate('/home');
+      } else {
+        alert(`Post Upload failed: ${data.message}`);
+      }
+    } catch (error) {
+      console.error("Error during Post Upload:", error);
+      alert("An error occurred during Post Upload.");
     }
-  } catch (error) {
-    console.error("Error during Post Upload:", error);
-    alert("An error occurred during Post Upload.");
-  }
-  setEditMode(false);
-  
-};
+    setEditMode(false);
+  };
 
-const handleOntTest = (result) => {
-  if(result!=null){
-   // console.log("url"+result);
-    setProfileImage(result.secure_url);
-    setCoverImage(result.secure_url);
-  }
-};
+  const handleOntTest = (result) => {
+    if (result != null) {
+      // console.log("url"+result);
+      setProfileImage(result.secure_url);
+      setCoverImage(result.secure_url);
+    }
+  };
 
-return (
-  <div>
-<Navbar />
- 
-  <div className="profile-page">
-   <Navbar  />
+  return (
+    <div>
+      <div className="profile-page">
+        <Navbar userImg={artistProfile.profileImage} />
 
-      
-          <div className="profile-header">
-        {/* Conditional rendering for Cover Photo Upload */}
-         
+        <div className="profile-header">
+          {/* Conditional rendering for Cover Photo Upload */}
+
           {editMode ? (
-            
             <>
-             <div className="upload-widget-container">
-            <h6>Upload Cover Picture</h6> 
-           
-              <UploadWidget 
-                onTest={(result) => {
-                  <button>Upload Cover Picture</button> 
-                  if(result?.secure_url) {
-                    setCoverImage(result.secure_url);
-                  }
-                }}
-              />
-              {/* <button>Upload Cover Photo</button> */}
+              <div className="upload-widget-container">
+                <h6>Upload Cover Picture</h6>
+
+                <UploadWidget
+                  onTest={(result) => {
+                    <button>Upload Cover Picture</button>;
+                    if (result?.secure_url) {
+                      setCoverImage(result.secure_url);
+                    }
+                  }}
+                />
+                {/* <button>Upload Cover Photo</button> */}
               </div>
             </>
           ) : (
-            <div className="cover-photo" style={{ backgroundImage: `url(${coverImage || artistProfile.coverImage})` }}></div>
+            <div
+              className="cover-photo"
+              style={{
+                backgroundImage: `url(${
+                  coverImage || artistProfile.coverImage
+                })`,
+              }}
+            ></div>
           )}
-        
-           {editMode ? (
+
+          {editMode ? (
             <>
-           < div className="upload-container">
-             <h6>Upload Profile Picture</h6> 
-              <UploadWidget 
-                onTest={(result) => {
-                  if(result?.secure_url) {
-                    
-                    setProfileImage(result.secure_url);
-                  }
-                }}
-              />
-              {/* <button>Upload Profile Picture</button> */}
+              <div className="upload-container">
+                <h6>Upload Profile Picture</h6>
+                <UploadWidget
+                  onTest={(result) => {
+                    if (result?.secure_url) {
+                      setProfileImage(result.secure_url);
+                    }
+                  }}
+                />
+                {/* <button>Upload Profile Picture</button> */}
               </div>
             </>
           ) : (
             <div className="profile-image-container">
-            <img src={artistProfile.profileImage || image3} alt="Profile" className="profile-image" />
+              <img
+                src={artistProfile.profileImage || image3}
+                alt="Profile"
+                className="profile-image"
+              />
             </div>
           )}
-        
-      
 
+          {/* Edit Profile Button */}
+          {!editMode && !differentUser && (
+            <button onClick={handleEdit} className="edit-profile-btn">
+              Edit Profile
+            </button>
+          )}
+        </div>
 
-        {/* Edit Profile Button */}
-        {!editMode && !differentUser && (
-          <button onClick={handleEdit} className="edit-profile-btn">Edit Profile</button>
-        )}
-         </div>
-       
-      <div className="profile-container">
-        {/* Profile Details */}
-        <div className="profile-details">
-          {/* Full Name */}
+        <div className="profile-container">
+          {/* Profile Details */}
+          <div className="profile-details">
+            {/* Full Name */}
             {editMode ? (
               <textarea
                 name="fullName"
@@ -270,114 +285,123 @@ return (
               />
             ) : (
               <div className="animated-text">
-{
-  !differentUser ? (
-    <h2>
-      Hello,{' '}
-      <span className="profile-fullname">
-        {artistProfile.fullName
-          ? artistProfile.fullName
-              .split(' ')
-              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-              .join(' ')
-          : 'Your Name'}
-      </span>
-      !
-    </h2>
-  ) : (
-    <h2>
-      <span className="profile-fullname">
-        {artistProfile.fullName
-          ? artistProfile.fullName
-              .split(' ')
-              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-              .join(' ')
-          : 'Your Name'}
-      </span>
-      's profile
-    </h2>
-  )
-}
+                {!differentUser ? (
+                  <h2>
+                    Hello,{" "}
+                    <span className="profile-fullname">
+                      {artistProfile.fullName
+                        ? artistProfile.fullName
+                            .split(" ")
+                            .map(
+                              (word) =>
+                                word.charAt(0).toUpperCase() + word.slice(1)
+                            )
+                            .join(" ")
+                        : "Your Name"}
+                    </span>
+                    !
+                  </h2>
+                ) : (
+                  <h2>
+                    <span className="profile-fullname">
+                      {artistProfile.fullName
+                        ? artistProfile.fullName
+                            .split(" ")
+                            .map(
+                              (word) =>
+                                word.charAt(0).toUpperCase() + word.slice(1)
+                            )
+                            .join(" ")
+                        : "Your Name"}
+                    </span>
+                    's profile
+                  </h2>
+                )}
+              </div>
+            )}
 
-             
+            {/* About Section */}
+            <div className="section about">
+              <h2>About</h2>
+              {editMode ? (
+                <textarea
+                  name="about"
+                  value={artistProfile.about}
+                  onChange={handleChange}
+                />
+              ) : (
+                <p>{artistProfile.about || "A little about me..."}</p>
+              )}
             </div>
-            )}
-          
 
-         {/* About Section */}
-         <div className="section about">
-            <h2>About</h2>
-            {editMode ? (
-              <textarea
-                name="about"
-                value={artistProfile.about}
-                onChange={handleChange}
-              />
-            ) : (
-              <p>{artistProfile.about || 'A little about me...'}</p>
-            )}
-          </div>
+            {/* Skills Section */}
+            <div className="section skills">
+              <h2>Skills</h2>
+              {editMode ? (
+                <textarea
+                  name="skills"
+                  value={artistProfile.skills}
+                  onChange={handleChange}
+                />
+              ) : (
+                <p>{artistProfile.skills || "My skills include..."}</p>
+              )}
+            </div>
 
-          {/* Skills Section */}
-          <div className="section skills">
-            <h2>Skills</h2>
-            {editMode ? (
-              <textarea
-                name="skills"
-                value={artistProfile.skills}
-                onChange={handleChange}
-              />
-            ) : (
-              <p>{artistProfile.skills || 'My skills include...'}</p>
-            )}
-          </div>
+            {/* Experience Section */}
+            <div className="section experience">
+              <h2>Experience</h2>
+              {editMode ? (
+                <textarea
+                  name="gigsInfo"
+                  value={artistProfile.gigsInfo}
+                  onChange={handleChange}
+                />
+              ) : (
+                <p>
+                  {artistProfile.gigsInfo || "My professional experience..."}
+                </p>
+              )}
+            </div>
 
-          {/* Experience Section */}
-          <div className="section experience">
-            <h2>Experience</h2>
-            {editMode ? (
-              <textarea
-                name="gigsInfo"
-                value={artistProfile.gigsInfo}
-                onChange={handleChange}
-              />
-            ) : (
-              <p>{artistProfile.gigsInfo || 'My professional experience...'}</p>
-            )}
-          </div>
-
-
-          {/* Save and Cancel Buttons in Edit Mode */}
-          {editMode && !differentUser && (
+            {/* Save and Cancel Buttons in Edit Mode */}
+            {editMode && !differentUser && (
               <div className="edit-buttons">
-              <button onClick={handleSave} className="save-btn">Save Changes</button>
-              <button onClick={() => setEditMode(false)} className="cancel-btn">Cancel</button>
-            </div>
-          )}
-        </div>
-        
+                <button onClick={handleSave} className="save-btn">
+                  Save Changes
+                </button>
+                <button
+                  onClick={() => setEditMode(false)}
+                  className="cancel-btn"
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
+          </div>
 
-        {/* Posts Section */}
-        <div className="posts-section">
-          {/* Post Cards */}
-          {allPosts.slice().reverse().map((post, index) => (
-            <Card
-              key={index}
-              // userName={post.userName}
-              userImg={image3}
-              postContent={post.postName}
-              postUrl={post.postimgUrl}
-              mediaType={post.postType}
-              timestamp={post.timestamp}
-            />
-          ))}
-         
+          {/* Posts Section */}
+          <div className="posts-section">
+            {/* Post Cards */}
+            {allPosts
+              .slice()
+              .reverse()
+              .map((post, index) => (
+                <Card
+                  key={index}
+                  // userName={post.userName}
+                  userImg={artistProfile.profileImage}
+                  postContent={post.postName}
+                  postUrl={post.postimgUrl}
+                  mediaType={post.postType}
+                  timestamp={post.timestamp}
+                />
+              ))}
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 };
 
-      
 export default PortfolioPage;
