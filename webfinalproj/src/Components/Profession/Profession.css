@@ -44,23 +44,24 @@
   flex-direction: column;
   border: 1px solid #ddd;
   border-radius: 8px;
-  margin: 15px;
-  padding: 15px;
-  width: 500px;
-  min-height: 600px;
+  margin: 10px; /* Reduced from 15px */
+  padding: 20px; /* Reduced from 15px */
+  width: 300px; /* Reduced from 300px */
+  height: 280px; /* Reduced from 500px */
   background-color: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  opacity: 0.9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   text-align: center;
-  transition: box-shadow 0.3s;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s; /* Removed duplicate transition property */
 }
+
 
 
 .job-card img {
   max-width: 100%;
-  height: 300px;
+  height: 250px;
   margin-bottom: 10px;
 }
 
@@ -69,6 +70,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  
+
 }
 
 .job-card h3{
@@ -78,12 +81,12 @@
   text-align: center;
 }
 /* Display job title and description at the same height */
- .job-card p {
+ /* .job-card p {
   color: #555;
   font-size: 0.9em;
   overflow-wrap: break-word;
   text-align: center;
-}
+} */
 
 .job-card:hover {
   transform: scale(1.05); /* Increase the scale on hover */
@@ -102,13 +105,26 @@
   /* Add other styles for active state if needed */
 }
 .job-accepted {
- /* or use background-color for full color fill */
   background-color: #4caf50;
 }
 
-.job-not-accepted {
+.job-rejected {
   background-color: #Ff5252;;
-  font-weight: bold;
+}
 
+.job-not-reviewed {
+  background-color: #f9f9f9 /* Or any other color you prefer */
+}
 
+@media (max-width: 600px) {
+  .job-listings {
+    grid-template-columns: auto; 
+    align-items: center;
+  }
+
+  .job-card {
+    width: 100%; /* Make each card take full width */
+    max-width: 500px; /* Optional: Set a max-width if needed */
+    margin: 10px 0; /* Adjust margin for vertical layout */
+  }
 }

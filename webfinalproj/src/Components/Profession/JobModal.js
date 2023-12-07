@@ -56,16 +56,20 @@ const JobModal = ({ job, onNext, onApply, onClose, isApplication }) => {
 
   return (
     <div className="job-modal-backdrop">
-      <div className={`job-modal-content ${isApplication ? (job.status === 'accepted' ? 'job-accepted-modal' : 'job-not-accepted-modal') : ''}`}>
+      <div className={`job-modal-content ${job.status === 'accepted' ? 'job-accepted-modal' : job.status === 'rejected' ? 'job-rejected-modal' : 'job-not-reviewed-modal'}`}>
+  {/* ... modal content ... */}
         <h2>{job.title}</h2>
         <p>{job.description}</p>
         {job.image && <img src={job.image} alt={job.title} />}
         <div className="job-modal-actions">
           <button onClick={onNext}>Next</button>
           {isApplication && (
-            /* Display the status only for "My Applications" */
+            /* Display the status with different colors based on the status */
             <div className="job-status">
-              Status: {job.status === 'accepted' ? 'Accepted' : 'Not Accepted'}
+              Status:
+              {job.status === 'accepted' && <span className="job-accepted"> Accepted</span>}
+              {job.status === 'rejected' && <span className="job-rejected"> Rejected</span>}
+              {job.status !== 'accepted' && job.status !== 'rejected' && <span className="job-not-reviewed"> Not Reviewed</span>}
             </div>
           )}
           {!isApplication && (
@@ -85,4 +89,3 @@ const JobModal = ({ job, onNext, onApply, onClose, isApplication }) => {
 };
 
 export default JobModal;
-

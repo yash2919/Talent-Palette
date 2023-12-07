@@ -29,24 +29,37 @@ const JobCard = ({ job, onClick, isApplication, isActive }) => {
     cardClass += ' active';
   }
   if (isApplication) {
-    cardClass += job.status === 'accepted' ? ' job-accepted' : ' job-not-accepted';
-  }
+    switch (job.status) {
+        case 'accepted':
+            cardClass += ' job-accepted';
+            break;
+        case 'rejected':
+            cardClass += ' job-rejected';
+            break;
+        default:
+            cardClass += ' job-not-reviewed';
+    }
+}
 
-  return (
-    <div className={cardClass} onClick={onClick}>
-      <img src={job.image} alt={job.title} />
-      <h3>{job.title}</h3>
-      <p>{job.description}</p>
-      {/* Additional job details */}
+return (
+  <div className={cardClass} onClick={onClick}>
+    <img src={job.image} alt={job.title} />
+    <h3>{job.title}</h3>
+    {/* Uncomment this if you want to display the job description */}
+    {/* <p>{job.description}</p> */}
+    {/* Additional job details */}
 
-      {/* Display the status if it's in 'My Applications' */}
-      {isApplication && (
-        <div className="job-status">
-          Status: {job.status === 'accepted' ? 'Accepted' : 'Not Accepted'}
-        </div>
-      )}
-    </div>
-  );
-};
+    {/* Display the status if it's in 'My Applications' */}
+    {isApplication && (
+      <div className="job-status">
+        Status: 
+        {job.status === 'accepted' && <span className="job-accepted">Accepted</span>}
+        {job.status === 'rejected' && <span className="job-rejected">Rejected</span>}
+        {job.status !== 'accepted' && job.status !== 'rejected' && <span className="job-not-reviewed">Not Reviewed</span>}
+      </div>
+    )}
+  </div>
+);
+    }
 
 export default JobCard;
