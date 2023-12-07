@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+
+
 function SignUpForm() {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -71,9 +73,8 @@ function SignUpForm() {
           }
         `}
       </style>
-     
-      <div className="vh-100 d-flex align-items-center justify-content-center" style={{ background: 'linear-gradient(135deg, #00008b 0%, #c3cfe2 100%)' }}>
-        <div className="card" style={{ minWidth: '900px', boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)' }}>
+      <div className=" d-flex align-items-center justify-content-center" style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #00008b 0%, #c3cfe2 100%)' }}>
+      <div className="card-signup " style={{ width: 'auto', maxWidth: '1000px', boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)', backgroundColor: 'white' }}>
           <div className="row g-0">
             <div className="col-md-6">
               <div className="card-body p-5">
@@ -123,17 +124,6 @@ function SignUpForm() {
                       required
                     />
                   </div>
-                  <div className="mb-4">
-                    <input
-                      type="password"
-                      name="confirmPassword"
-                      className="form-control"
-                      placeholder="Confirm Password"
-                      value={formData.confirmPassword}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
                   <button type="submit" onClick={signup} className="btn btn-primary w-100" style={{backgroundColor: '#7c4dff' }}>
                     Create new account
                   </button>
@@ -152,6 +142,7 @@ function SignUpForm() {
           </div>
         </div>
       </div>
+   
     </>
   );
 }
