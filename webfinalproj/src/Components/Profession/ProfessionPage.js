@@ -8,8 +8,12 @@ import jobData from './JobData';
 import './Profession.css';
 import Navbar from '../Header/Navbar';
 import axios from 'axios';
+import JobCard from './JobCard';
+
 const ProfessionPage = () => {
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [jobs, setJobs] = useState([]); // Initialize jobs state
+  const [selectedCategory, setSelectedCategory] = useState('All'); 
+  // const [selectedCategory, setSelectedCategory] = useState(null);
   const [activeCategory, setActiveCategory] = useState('Artist');//Defaut
   const [selectedJob, setSelectedJob] = useState(null);
   const [allJobs, setAllJobs] = useState({});
@@ -67,12 +71,17 @@ const ProfessionPage = () => {
 
   const handleNextJob = () => {
     const jobsInCategory = allJobs[selectedCategory];
+    
     if (jobsInCategory && jobsInCategory.length > 0) {
       let nextIndex = (currentJobIndex + 1) % jobsInCategory.length;
+      console.log('Next job index:', nextIndex);
+      
       setSelectedJob(jobsInCategory[nextIndex]);
       setCurrentJobIndex(nextIndex);
+      console.log('Selected job:', selectedJob);
     }
   };
+
   const handleApplyJob = async () => {
 
     console.log('Apply for job:', selectedJob.id);
@@ -99,22 +108,26 @@ const ProfessionPage = () => {
     <div>
       <Navbar />
       <div className='ProfessionPage'>
-      <CategoryButtons onSelectCategory={handleCategorySelect} activeCategory={activeCategory} />
+        <CategoryButtons onSelectCategory={handleCategorySelect} activeCategory={activeCategory} />
+
         {selectedCategory && !showModal && (
           <JobListings 
             jobs={allJobs[selectedCategory] || []} 
             onSelectJob={handleJobSelect} 
+            isApplication={selectedCategory === 'My Applications'}
           />
         )}
+
         {showModal && selectedJob && (
-    <JobModal 
-        job={selectedJob}
-        onNext={handleNextJob}
-        onApply={handleApplyJob}
-        onClose={handleCloseModal}
-        isApplication={selectedCategory === 'My Applications'}
-    />
-)}
+          <JobModal 
+          key={selectedJob.id}  // Unique key to force re-render
+          job={selectedJob}
+          onNext={handleNextJob}
+          onApply={handleApplyJob}
+          onClose={handleCloseModal}
+          isApplication={selectedCategory === 'My Applications'}
+        />
+        )}
       </div>
     </div>
   );

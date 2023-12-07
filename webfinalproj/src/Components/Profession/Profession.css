@@ -91,3 +91,14 @@
   color: white;
   /* Add other styles for active state if needed */
 }
+.job-accepted {
+ /* or use background-color for full color fill */
+  background-color: green;
+}
+
+.job-not-accepted {
+  background-color: #FFCCCB;
+  font-weight: bold;
+
+
+}
