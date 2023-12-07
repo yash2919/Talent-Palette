@@ -120,7 +120,7 @@ const WelApp = () => {
             speed={200} // Typing speed in ms
             style={{ fontSize: '3em', color: '#61dafb' }}
             repeat={Infinity}
-          />
+          /> 
         </LeftSection>
         <Content30>
         <RightSection>
