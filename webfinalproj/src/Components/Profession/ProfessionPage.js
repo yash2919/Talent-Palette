@@ -9,6 +9,8 @@ import './Profession.css';
 import Navbar from '../Header/Navbar';
 import axios from 'axios';
 import JobCard from './JobCard';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProfessionPage = () => {
   const [jobs, setJobs] = useState([]); // Initialize jobs state
@@ -22,6 +24,29 @@ const ProfessionPage = () => {
   const [email, setEmail] = useState(''); // State to hold email
   const [jobId, setJobId] = useState(''); // State to hold jobId
 
+  const notify = (message,suc) => {
+    if(suc)
+    toast.success(message, {
+      position: 'bottom-right',
+      autoClose: 3000, // Close the toast after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    else
+    toast.error(message, {
+      position: 'bottom-right',
+      autoClose: 3000, // Close the toast after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  
+  }
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -92,6 +117,7 @@ const ProfessionPage = () => {
     }
   };
 
+
   const handleApplyJob = async () => {
 
     console.log('Apply for job:', selectedJob.id);
@@ -99,11 +125,14 @@ const ProfessionPage = () => {
       const jobId=selectedJob.id;
     try {
       const response = await axios.post('http://localhost:3000/application/apply', { userId, jobId }); // Replace with your API endpoint
-      alert('Application successful:', response.data);
+   //   alert('Application successful:', response.data);
+      // Toast.showModal('Application successful:', response.data);
+
+      notify('Application successful',true);
       console.log('Application successful:', response.data);
       // Optionally, handle success (e.g., show a success message)
     } catch (error) {
-      alert('Error applying:', error.response.data.message);
+      notify('Error applying',false);
       console.error('Error applying:', error.response.data.message);
     //  setErrorMessage(error.response.data.message); // Display error message
     }
@@ -126,6 +155,7 @@ const ProfessionPage = () => {
             isApplication={selectedCategory === 'My Applications'}
           />
         )}
+         <ToastContainer />
 
         {showModal && selectedJob && (
           <JobModal 

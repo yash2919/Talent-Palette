@@ -15,10 +15,10 @@ const PersonCard = ({ userName, userImg, userEmail, userRole }) => {
     <div className="person-card">
       <img src={userImg} alt={userName} />
       <div className="person-details">
-        <h3 className="person-name">
+        <h4 className="person-name">
           <FontAwesomeIcon icon={faUser} className="icon" />
           {userName}
-        </h3>
+        </h4>
         <p className="person-email">
           <FontAwesomeIcon icon={faEnvelope} className="icon" />
           {userEmail}

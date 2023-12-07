@@ -21,7 +21,7 @@ const PortfolioPage = ({}) => {
   const location = useLocation();
   const userEmail = new URLSearchParams(location.search).get('userEmail');
   const [differentUser, setDifferentUser] = useState(!!userEmail); // Set to true if userEmail exists, false otherwise
-
+  const [profile, setProfile] = useState(null);
 
   const [postimgUrl, setpostimgUrl] = useState("dfdf");
 
@@ -85,6 +85,7 @@ const PortfolioPage = ({}) => {
         const data = await response.json();
         console.log(data);
         // if(data!=null)
+        setProfile(data.role);
         setArtistProfile(data);          
       } else {
         throw new Error("Failed to fetch profile data");
@@ -200,7 +201,8 @@ return (
 <Navbar />
  
   <div className="profile-page">
-    
+   <Navbar  />
+
       
           <div className="profile-header">
         {/* Conditional rendering for Cover Photo Upload */}
@@ -268,7 +270,36 @@ return (
               />
             ) : (
               <div className="animated-text">
-              <h2>Hello, <span className="profile-fullname">{artistProfile.fullName || 'Your Name'}</span>!</h2>
+{
+  !differentUser ? (
+    <h2>
+      Hello,{' '}
+      <span className="profile-fullname">
+        {artistProfile.fullName
+          ? artistProfile.fullName
+              .split(' ')
+              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(' ')
+          : 'Your Name'}
+      </span>
+      !
+    </h2>
+  ) : (
+    <h2>
+      <span className="profile-fullname">
+        {artistProfile.fullName
+          ? artistProfile.fullName
+              .split(' ')
+              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(' ')
+          : 'Your Name'}
+      </span>
+      's profile
+    </h2>
+  )
+}
+
+             
             </div>
             )}
           
@@ -329,11 +360,11 @@ return (
         {/* Posts Section */}
         <div className="posts-section">
           {/* Post Cards */}
-          {allPosts.map((post, index) => (
+          {allPosts.slice().reverse().map((post, index) => (
             <Card
               key={index}
               // userName={post.userName}
-              userImg={post.userImg}
+              userImg={image3}
               postContent={post.postName}
               postUrl={post.postimgUrl}
               mediaType={post.postType}

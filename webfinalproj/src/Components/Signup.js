@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+
 import { FaCaretDown } from 'react-icons/fa'; 
+
+
+
 
 function SignUpForm() {
   const [formData, setFormData] = useState({
@@ -43,7 +47,7 @@ function SignUpForm() {
     const email = formData.email;
     const password = formData.password;
     const fullName = formData.fullName;
-    const role = "artist";
+    const role = formData.role;
 
     try {
       const response = await fetch("http://localhost:3000/user/create", {
@@ -110,7 +114,9 @@ function SignUpForm() {
         `}
       </style>
       <div className=" d-flex align-items-center justify-content-center" style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #00008b 0%, #c3cfe2 100%)' }}>
+
       <div className="card-signup " style={{  maxWidth: '900px', boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)', backgroundColor: 'white' }}>
+
           <div className="row g-0">
             <div className="col-md-6">
               <div className="card-body p-5">

@@ -1,7 +1,7 @@
 /* Card.css */
 
 .card {
-  border: 1px solid #ddd;
+  border: 0.1px solid #a5a5a5;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1) inset;
   height: 20%; 
@@ -11,6 +11,7 @@
   padding: 16px;
   transition: box-shadow 0.3s ease-in-out;
   margin-top: 20px;
+  background-color: #fff;
 
 }
 
@@ -26,12 +27,13 @@
 }
 
 .profile-picture {
-  width: 30px; /* Adjust the width as needed */
-  height: 30px; /* Adjust the height as needed */
+  width: 60px; /* Adjust the width as needed */
+  height: 60px; /* Adjust the height as needed */
   object-fit: cover;
   border-radius: 50%;
   margin-right: 12px;
   transition: transform 0.3s ease-in-out;
+  background-color: #a49b9b;
 }
 
 .profile-picture:hover {

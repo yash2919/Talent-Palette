@@ -306,7 +306,7 @@ app.get("/user/profile/:email", async (req, res) => {
     // Assuming you are getting the user's email from a session or a token
     const email = req.params.email; // Replace with your session or token parsing logic
 
-    const user = await User.findOne({ email }, 'fullName about skills profileImage coverImage gigsInfo -_id');
+    const user = await User.findOne({ email }, 'fullName about skills profileImage coverImage gigsInfo _id email role');
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });

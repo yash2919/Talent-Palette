@@ -101,12 +101,15 @@ const Card = ({
     <div className="card p-3">
       <div
         className="card-header d-flex align-items-center mb-3 "
-        style={{ borderRadius: "10%" }}
+        style={{ borderRadius: "2%" }}
       >
-        <img onClick={handleViewProfile}
+        <img
+          onClick={handleViewProfile}
           className="profile-picture rounded-circle"
-          src={profile?.profileImage}
+
+          src={profile?.profileImage?profile.profileImage:userImg}
           alt={`${userName}'s profile`}
+
         />
         <div className="user-details">
           <h4>{profile?.fullName}</h4>
