@@ -8,12 +8,36 @@ import "./Admin.css"; // Reusing the same styles
 import { useNavigate, useLocation } from "react-router-dom";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Admin() {
   const [allUsers, setAllUsers] = useState([]);
   const navigate = useNavigate();
 
 
+  const notify = (message,suc) => {
+    if(suc)
+    toast.success(message, {
+      position: 'bottom-right',
+      autoClose: 3000, // Close the toast after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    else
+    toast.error(message, {
+      position: 'bottom-right',
+      autoClose: 3000, // Close the toast after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
   useEffect(() => {
     async function fetchAllUsers() {
       try {
@@ -65,14 +89,17 @@ function Admin() {
 
       if (response.ok) {
         const result = await response.json();
-        console.log(result.message); // User deleted successfully
+        notify(result.message,true);
+        //console.log(result.message); // User deleted successfully
         // Perform any other necessary actions or update state here
       } else {
+        notify(`Error deleting user: ${response.status} - ${response.statusText}`,false);
         console.error(
           `Error deleting user: ${response.status} - ${response.statusText}`
         );
       }
     } catch (error) {
+      notify("Error deleting user:"+ error.message,false);
       console.error("Error deleting user:", error.message);
     }
   };
@@ -85,6 +112,7 @@ function Admin() {
   return (
     <>
       <Navbar />
+      <h1> User List </h1>
       <div className="random-user-list-container">
         <h2></h2>
         <ul className="random-list-group">
@@ -126,13 +154,17 @@ function Admin() {
                   >
                     Delete
                   </button>
+                  
                 </div>
               </div>
             </li>
           ))}
         </ul>
+        <ToastContainer />
       </div>
+      
     </>
+    
   );
 }
 

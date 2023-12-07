@@ -7,6 +7,9 @@ import axios from 'axios';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const AppliedJob = ({ jobTitle, applicants }) => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
@@ -18,6 +21,28 @@ const AppliedJob = ({ jobTitle, applicants }) => {
     // Return the user's name or a default value
     return user ? user.fullName : "Unknown User";
   };
+  const notify = (message,suc) => {
+    if(suc)
+    toast.success(message, {
+      position: 'bottom-right',
+      autoClose: 3000, // Close the toast after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    else
+    toast.error(message, {
+      position: 'bottom-right',
+      autoClose: 3000, // Close the toast after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
 
   const updateApplication = async (userId, jobId, status) => {
     try {
@@ -28,10 +53,12 @@ const AppliedJob = ({ jobTitle, applicants }) => {
       });
 
       if (response.data) {
-        alert('Application status updated successfully!');
+        notify("Application status updated successfully!",true);
+      //  alert('Application status updated successfully!');
       }
     } catch (error) {
-      console.error('Error updating application status:', error);
+      notify('Error updating application status:' +error,false);
+  //    console.error('Error updating application status:', error);
     }
   };
 
@@ -124,6 +151,7 @@ const AppliedJob = ({ jobTitle, applicants }) => {
           ))}
         </ul>
       </div>
+      <ToastContainer />
     </div>
   );
 };

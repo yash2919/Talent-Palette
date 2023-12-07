@@ -8,6 +8,8 @@ import UploadWidget from "../Common/UploadWidget/UploadWidget"
 import { useNavigate, useLocation } from "react-router-dom";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PortfolioPage = ({}) => {
   const navigate = useNavigate();
@@ -47,6 +49,28 @@ const PortfolioPage = ({}) => {
     gigsInfo: ''
   });
 
+  const notify = (message,suc) => {
+    if(suc)
+    toast.success(message, {
+      position: 'bottom-right',
+      autoClose: 3000, // Close the toast after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    else
+    toast.error(message, {
+      position: 'bottom-right',
+      autoClose: 3000, // Close the toast after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
   useEffect(() => {
 
     async function fetchUserEmail() {
@@ -177,14 +201,17 @@ const handleSave = async (result)  => {
     // console.log();
     const data = await response.json();
     if (response.ok) {
-      alert(data.message);
+    //  alert(data.message);
+      notify(data.message,true);
       //  navigate('/home');
     } else {
-      alert(`Post Upload failed: ${data.message}`);
+      notify(`Profile edit failed: ${data.message}`,false);
+    //  alert(`Post Upload failed: ${data.message}`);
     }
   } catch (error) {
-    console.error("Error during Post Upload:", error);
-    alert("An error occurred during Post Upload.");
+    console.error("Error during Profile Update", error);
+    notify("An error occurred during Profile Update",false);
+   // alert("An error occurred during Post Upload.");
   }
   setEditMode(false);
   
@@ -377,6 +404,7 @@ return (
         </div>
       </div>
     </div>
+    <ToastContainer />
     </div>
   );
 };
