@@ -1,6 +1,6 @@
 /* ViewJobs.css */
 .maincomp{
-  border: 1px solid #a7a6a6;
+  border: 0.5px solid #626262;
   border-radius: 25px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1) inset;
   height: 100%; /* Adjust the height as needed */
@@ -10,7 +10,7 @@
   padding: 16px;
   transition: box-shadow 0.3s ease-in-out;
   margin-top: 45px;
-  background-color: #d6d3d3;
+  background-color: #fcfafa;
   
 }
 .view-jobs-container {
@@ -34,6 +34,7 @@
 .job-buttons{
   display: flex;
   margin-left: 10%;
+  
 }
 .close-button:hover {
   background-color: #0073b1;
@@ -42,7 +43,7 @@
 .job-list {
   flex: 1;
   padding: 20px;
-  border-right: 1px solid #ccc; /* Add a border between job list and details */
+  border: 0.5px solid #626262; /* Add a border between job list and details */
 }
 
 .job-list h2 {
@@ -56,6 +57,7 @@
 
 .job-list li {
   cursor: pointer;
+  border: 0.5px solid #626262;
   padding: 10px;
   border-bottom: 1px solid #eee; /* Add a border between jobs */
 }
@@ -72,10 +74,13 @@
 .right-side{
   margin-left:10%;
   border-radius: 25px;
+
+
+  border: 0.5px solid #626262;
   padding: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1) inset;
   transition: box-shadow 0.3s ease-in-out;
-  background-color: rgb(159, 154, 154);
+  background-color: rgb(240, 237, 237);
 }
 
 .job-details h2 {
@@ -119,12 +124,12 @@
 .job-list-item {
   list-style-type:none;
   cursor: pointer;
-  border-radius: 25px;
+  border-radius: 15px;
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #ddd;
   text-align: center;
-  
+  border: 0.5px solid #626262;
   background-color: #f9f9f9;
   transition: background-color 0.3s ease-in-out;
 }
