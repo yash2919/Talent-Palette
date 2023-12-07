@@ -69,3 +69,11 @@
 .person-card:hover {
   box-shadow: var(--hover-box-shadow);
 }
+
+@media (max-width: 768px){
+  .person-card{
+    display: none;
+  }
+}
+
+
