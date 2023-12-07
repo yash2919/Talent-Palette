@@ -25,7 +25,7 @@ const corsOptions = {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ["POST","GET","PUT"],
+  methods: ["POST","GET","PUT","DELETE"],
   credentials: true, // Allow credentials (cookies)
 };
 
@@ -87,6 +87,7 @@ app.post("/user/login", async (req, res) => {
     }
     if(user){
       req.session.email1 = user.email;
+      req.session.role1 = user.role;
       await req.session.save(); // Save the session after setting data
   
   //  console.log(req.session.email1+"s");
@@ -103,7 +104,7 @@ app.get("/", (req, res) => {
   if (req.session.email1) {
     console.log("logged in");
    // return res.status(200).send(req.session.email1);
-    return res.json({ valid: true, email: req.session.email1 });
+    return res.json({ valid: true, email: req.session.email1 ,role:req.session.role1 });
   } else {
     console.log("dhccchs");
     return res.json({valid: false});
@@ -247,7 +248,7 @@ app.delete("/user/delete", async (req, res) => {
 
 app.get("/user/getAll", async (req, res) => {
   try {
-    const users = await User.find({}, "fullName role email password");
+    const users = await User.find({}, "fullName role email password profileImage");
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ message: "An error occurred" });
@@ -256,7 +257,7 @@ app.get("/user/getAll", async (req, res) => {
 
 app.put("/user/profile", async (req, res) => {
   try {
-    const { email, profileImage, fullName, about, skills, gigsInfo } = req.body;
+    const { email, coverImage, profileImage, fullName, about, skills, gigsInfo } = req.body;
 
     const user = await User.findOne({ email });
 
@@ -283,6 +284,10 @@ app.put("/user/profile", async (req, res) => {
       user.profileImage = profileImage;
     }
 
+    if (coverImage) {
+      user.coverImage = coverImage;
+    }
+
     if (gigsInfo) {
       user.gigsInfo = gigsInfo;
     }
@@ -301,7 +306,7 @@ app.get("/user/profile/:email", async (req, res) => {
     // Assuming you are getting the user's email from a session or a token
     const email = req.params.email; // Replace with your session or token parsing logic
 
-    const user = await User.findOne({ email }, 'fullName about skills profileImage gigsInfo -_id');
+    const user = await User.findOne({ email }, 'fullName about skills profileImage coverImage gigsInfo -_id');
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -313,6 +318,22 @@ app.get("/user/profile/:email", async (req, res) => {
   }
 });
 
+app.get('/user/:email', async (req, res) => {
+  const email = req.params.email;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");

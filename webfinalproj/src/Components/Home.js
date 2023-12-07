@@ -71,7 +71,7 @@ function Home() {
         setallUsers(
           data.map((post) => ({
             userName: post.fullName,
-            userImg: image3,
+            userImg: post.profileImage,
             userEmail: post.email,
             userRole: post.role,
             _id: post._id,
@@ -120,7 +120,7 @@ function Home() {
           // if(data!=null)
           setallPosts(
             data.post.map((post) => ({
-              // email: post.email,
+              email: post.email,
               userName: post.userName ? post.userName : post.email,
               userImg: post.userImg ? post.userImg : image3,
               postName: post.postName,
@@ -151,13 +151,11 @@ function Home() {
   console.log("Users");
   console.log(allUsers);
 
-
   return (
     <div>
       <Navbar></Navbar>
       <div className="home-container">
         <div className="main-content">
-
           <div className="person-card-container">
             <PersonCard
               userName={userEmail} // Assuming the logged-in user's email is the username
@@ -176,39 +174,27 @@ function Home() {
             {/* <h1>{allPosts[0]}</h1> */}
 
 
-         
-        {allPosts && allPosts.length > 0 ? (
-  allPosts.slice().reverse().map((post, index) => (
-    <Card
-      key={index}
-      userName={post.userName}
-      userImg={post.userImg}
-      postContent={post.postName}
-      postUrl={post.postimgUrl}
-      mediaType={post.postType}
-      timestamp={post.timestamp}
-    />
-  ))
-) : (
-  <p>Loading...</p>
-)}
+            {allPosts && allPosts.length > 0 ? (
+              allPosts
+                .slice()
+                .reverse()
+                .map((post, index) => (
+                  <Card
+                    key={index}
+                    userName={post.userName}
+                    userImg={post.userImg}
+                    postContent={post.postName}
+                    postUrl={post.postimgUrl}
+                    mediaType={post.postType}
+                    timestamp={post.timestamp}
+                     email={post.email}
+                  />
+                ))
+            ) : (
+              <p>Loading...</p>
+            )}
 
 
-
-            {/* {hourdata && hourdata[1] ? (
-            hourdata[days.indexOf(day)].map((dayData, index) => (
-              <div className="col-lg-3 col-md-4 col-sm-6 mb-4" key={index}>
-                <WeatherCard
-                  day={dayData.day || ""}
-                  highTemp={dayData.highTemp || ""}
-                  lowTemp={dayData.lowTemp || ""}
-                  weatherType={dayData.icon || ""}
-                />
-              </div>
-            ))
-          ) : (
-            <p>Loading...</p>
-          )} */}
           </div>
         </div>
         <div className="user-list">

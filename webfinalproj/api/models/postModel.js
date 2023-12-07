@@ -13,7 +13,7 @@ var postSchema = new mongoose.Schema({
       type: String,
    
       },
-      postType: {
+    postType: {
         type: String,
         },
     timestamp: { type: Date, default: Date.now }
