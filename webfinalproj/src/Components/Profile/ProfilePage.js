@@ -26,6 +26,7 @@ const PortfolioPage = ({}) => {
   const [postimgUrl, setpostimgUrl] = useState("dfdf");
 
   const [posts, setPosts] = useState([]);
+  // const UploadWidget = ({ label, onTest }) => {
   const samplePost = {
     user: {
       name: "John Doe",
@@ -191,46 +192,72 @@ const handleOntTest = (result) => {
   if(result!=null){
    // console.log("url"+result);
     setProfileImage(result.secure_url);
+    setCoverImage(result.secure_url);
   }
 };
 
 return (
+  <div>
+<Navbar />
+ 
   <div className="profile-page">
    <Navbar  />
+
       
           <div className="profile-header">
         {/* Conditional rendering for Cover Photo Upload */}
-        {editMode ? (
-          <UploadWidget 
-            onTest={(result) => {
-              if(result?.secure_url) {
-                setProfileImage(result.secure_url);
-              }
-            }}
-          />
-        ) : (
-          <div className="cover-photo" style={{ backgroundImage: `url(${artistProfile.coverPhoto})` }}></div>
-        )}
-        <div className = "profile-image-container">
-        {/* Conditional rendering for Profile Image Upload */}
-        {editMode ? (
-          <UploadWidget 
-            onTest={(result) => {
-              if(result?.secure_url) {
-                setCoverImage(result.secure_url);
-              }
-            }}
-          />
-        ) : (
-          <img src={artistProfile.profileImage || image3} alt="Profile" className="profile-image" />
-        )}
-         </div>
+         
+          {editMode ? (
+            
+            <>
+             <div className="upload-widget-container">
+            <h6>Upload Cover Picture</h6> 
+           
+              <UploadWidget 
+                onTest={(result) => {
+                  <button>Upload Cover Picture</button> 
+                  if(result?.secure_url) {
+                    setCoverImage(result.secure_url);
+                  }
+                }}
+              />
+              {/* <button>Upload Cover Photo</button> */}
+              </div>
+            </>
+          ) : (
+            <div className="cover-photo" style={{ backgroundImage: `url(${coverImage || artistProfile.coverImage})` }}></div>
+          )}
+        
+           {editMode ? (
+            <>
+           < div className="upload-container">
+             <h6>Upload Profile Picture</h6> 
+              <UploadWidget 
+                onTest={(result) => {
+                  if(result?.secure_url) {
+                    
+                    setProfileImage(result.secure_url);
+                  }
+                }}
+              />
+              {/* <button>Upload Profile Picture</button> */}
+              </div>
+            </>
+          ) : (
+            <div className="profile-image-container">
+            <img src={artistProfile.profileImage || image3} alt="Profile" className="profile-image" />
+            </div>
+          )}
+        
+      
+
+
         {/* Edit Profile Button */}
         {!editMode && !differentUser && (
           <button onClick={handleEdit} className="edit-profile-btn">Edit Profile</button>
         )}
-      </div>
-
+         </div>
+       
       <div className="profile-container">
         {/* Profile Details */}
         <div className="profile-details">
@@ -321,13 +348,14 @@ return (
 
 
           {/* Save and Cancel Buttons in Edit Mode */}
-          {editMode && differentUser && (
-            <div className="edit-buttons">
+          {editMode && !differentUser && (
+              <div className="edit-buttons">
               <button onClick={handleSave} className="save-btn">Save Changes</button>
               <button onClick={() => setEditMode(false)} className="cancel-btn">Cancel</button>
             </div>
           )}
         </div>
+        
 
         {/* Posts Section */}
         <div className="posts-section">
@@ -346,6 +374,7 @@ return (
          
         </div>
       </div>
+    </div>
     </div>
   );
 };

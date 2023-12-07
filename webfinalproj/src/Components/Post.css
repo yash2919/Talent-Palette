@@ -1,5 +1,5 @@
 .create-post-container {
-  border: 1px solid #ddd;
+  border: 0.1px solid #a5a5a5;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1) inset;
   height: 20%; /* Adjust the height as needed */
@@ -8,9 +8,8 @@
   margin-right: 0;
   padding: 16px;
   transition: box-shadow 0.3s ease-in-out;
-
-  margin-top: -298px;
-
+background-color: #fff;
+  margin-top: -282px;
 }
 
 .create-post-container:hover {
@@ -18,9 +17,16 @@
 }
 
 .user-image-container {
-  display: flex;
   align-items: center;
   margin-bottom: 20px;
+}
+.dividethem {
+  display: flex;
+  margin-bottom: 30px;
+}
+#imagePreview {
+  margin-left: 10%;
+  max-width: 60%;
 }
 
 .user-image {
@@ -54,7 +60,7 @@
   padding: 12px;
   border: none;
   border-radius: 8px;
-  resize: none;
+
   transition: background-color 0.3s;
 }
 
@@ -79,7 +85,7 @@
   border: none;
   padding: 8px 35px;
   border-radius: 25px;
-  color: #000; 
+  color: #000;
 }
 
 .media-buttons .media-button:last-child {
@@ -184,5 +190,5 @@
 }
 
 .uploaded-files li {
-  margin-bottom: 8px;
+  margin-bottom: 8px;
 }

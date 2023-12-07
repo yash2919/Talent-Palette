@@ -64,6 +64,8 @@ function Navbar() {
     // { label: "Contact", path: "/contact" },
     { label: "My Profile", path: "/profile" },
     { label: "Sign Out", path: "/" },
+
+
   ];
 
   const NavItem = ({ to, icon, label, onClick }) => {
@@ -79,27 +81,27 @@ function Navbar() {
 
     if (label === "Logout") {
       return (
-        <li className="nav-item" style={itemStyle}>
-          <button className="nav-link" onClick={onClick}>
-            <FontAwesomeIcon icon={icon} className="icon" style={iconStyle} />
+        <li className="nv-it" style={itemStyle}>
+          <button className="nv-link" onClick={onClick}>
+            <FontAwesomeIcon icon={icon} className="icn" style={iconStyle} />
             <span>{label}</span>
           </button>
         </li>
       );
     } else if (label === "Profile") {
       return (
-        <li className="nav-item" style={itemStyle}>
-          <Link to={to} className="nav-link">
-            <img src={image2} alt="My Profile" className="profile-icon" />
+        <li className="nv-it" style={itemStyle}>
+          <Link to={to} className="nv-link">
+            <img src={image2} alt="My Profile" className="pfl-icn" />
             <span>{label}</span>
           </Link>
         </li>
       );
     } else {
       return (
-        <li className="nav-item" style={itemStyle}>
-          <Link to={to} className="nav-link">
-            <FontAwesomeIcon icon={icon} className="icon" style={iconStyle} />
+        <li className="nv-it" style={itemStyle}>
+          <Link to={to} className="nv-link">
+            <FontAwesomeIcon icon={icon} className="icn" style={iconStyle} />
             <span>{label}</span>
           </Link>
         </li>
@@ -131,17 +133,19 @@ function Navbar() {
   };
 
   return (
-    <nav className="navbar">
-      <div className="logo-container">
-        <span className="website-name">Talent Palette</span>
+    <nav className="nvr">
+      <div className="lg-cntnr">
+        <span className="ws-nm">Talent Palette</span>
       </div>
 
-      <ul className="nav-list">
+      <ul className="nv-lst">
         <NavItem to="/home" icon={faHome} label="Home" />
+
         {userRole==="Employer" ? <NavItem to="/createjobs" icon={faBriefcase} label="Create Jobs" />:  <NavItem to="/profession" icon={faBriefcase} label="Apply For Jobs" />}
         
         <NavItem to="/profile" icon={faUser} label="My Profile" />
         {/* <NavItem to="/profile" icon={faUser} label="Contact Us" /> */}
+
         <NavItem onClick={logout} icon={faSignInAlt} label="Logout" />
       </ul>
     </nav>
