@@ -12,17 +12,9 @@ import PersonCard from "../Components/PersonCards";
 function Home() {
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState(null);
-  const samplePost = {
-    user: {
-      name: "John Doe",
-      profilePicture: image3,
-    },
-    content:
-      "Algorithms are the building blocks of coding! As programmers, it's crucial to have a solid understanding of these powerful tools 🚀. Let's take a moment to appreciate some of the most important algorithms that shape our coding journeys. Join me on this emoji-filled adventure!",
-    timestamp: "2 hours ago",
-  };
   const [allPosts, setallPosts] = useState([]);
   const [allUsers, setallUsers] = useState([]);
+  const [profile, setProfile] = useState(null);
 
   async function fetchallPosts() {
     try {
@@ -85,6 +77,28 @@ function Home() {
       // Handle errors
     }
   }
+  async function fetchProfile(email) {
+    console.log(email+"dvsvsdvdsvdsvdvd");
+    try {
+      const response = await fetch(
+        `http://localhost:3000/user/profile/${email}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setProfile(data);
+       // console.log(data.password+"dsvfsdvsdffsdgdg");
+      } else {
+        throw new Error("Failed to fetch profile data");
+      }
+    } catch (error) {
+      console.error("Error fetching profile data:", error);
+      // Handle errors
+    }
+  }
 
   useEffect(() => {
     async function fetchUserEmail() {
@@ -98,7 +112,7 @@ function Home() {
           const data = await response.json();
           if (data.valid === false) {
             navigate("/");
-          } else setUserEmail(data.email);
+          } else {setUserEmail(data.email);  fetchProfile(data.email);}
         } else {
           throw new Error("Failed to fetch email");
         }
@@ -146,6 +160,7 @@ function Home() {
     fetchUserEmail();
     fetchallPosts();
     fetchallUsers();
+ 
   }, []);
   console.log(allPosts);
   console.log("Users");
@@ -153,21 +168,21 @@ function Home() {
 
   return (
     <div>
-      <Navbar></Navbar>
+       <Navbar  />
       <div className="home-container">
         <div className="main-content">
           <div className="person-card-container">
             <PersonCard
-              userName={userEmail} // Assuming the logged-in user's email is the username
-              userImg={image3} // Use the logged-in user's profile picture
+              userName={profile?profile.fullName:userEmail} // Assuming the logged-in user's email is the username
+              userImg={profile?.profileImage?profile.profileImage:image3} // Use the logged-in user's profile picture
               userEmail={userEmail}
-              userRole="User" // You may need to fetch the user role from the server
+              userRole={profile?profile.role:"User"} // You may need to fetch the user role from the server
             />
           </div>
 
           <div>
             <CreatePost
-              userProfilePicture={image3}
+              userProfilePicture={profile?.profileImage?profile.profileImage:image3}
               onPostCreated={fetchallPosts}
             />
 

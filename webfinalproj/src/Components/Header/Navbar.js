@@ -2,7 +2,7 @@
 
 import image3 from "../Header/talent.png";
 import image2 from "../Header/artist.jpg";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,9 +16,35 @@ import {
 import "./Navbar.css";
 
 function Navbar() {
+ // console.log(userRole+"sgrb");
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [userRole, setuserRole] = useState(null);
+
+  useEffect(() => {
+    async function fetchUserEmail() {
+      try {
+        const response = await fetch("http://localhost:3000", {
+          method: "GET",
+          credentials: "include",
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.valid === false) {
+            navigate("/");
+          } else {setuserRole(data.role); console.log(data.role+"DDVVD")};
+        } else {
+          throw new Error("Failed to fetch email");
+        }
+      } catch (error) {
+        console.error("Error fetching email:", error);
+        // Handle errors
+      }
+    }
+    fetchUserEmail();
+  }, []);
   const SearchBox = () => (
     <li className="nav-item">
       <div className="search-box">
@@ -31,8 +57,11 @@ function Navbar() {
   const menuData = [
     { label: "Home", path: "/home" },
 
-    { label: "Create Jobs", path: "/createjobs" },
-    { label: "Contact", path: "/contact" },
+    {
+      label: userRole === "Employer" ? "Create Jobs" : "Apply For Jobs",
+      path: userRole === "Employer" ? "/createjobs" : "/profession"
+    },
+    // { label: "Contact", path: "/contact" },
     { label: "My Profile", path: "/profile" },
     { label: "Sign Out", path: "/" },
   ];
@@ -109,10 +138,10 @@ function Navbar() {
 
       <ul className="nav-list">
         <NavItem to="/home" icon={faHome} label="Home" />
-
-        <NavItem to="/createjobs" icon={faBriefcase} label="Create Jobs" />
+        {userRole==="Employer" ? <NavItem to="/createjobs" icon={faBriefcase} label="Create Jobs" />:  <NavItem to="/profession" icon={faBriefcase} label="Apply For Jobs" />}
+        
         <NavItem to="/profile" icon={faUser} label="My Profile" />
-        <NavItem to="/profile" icon={faUser} label="Contact Us" />
+        {/* <NavItem to="/profile" icon={faUser} label="Contact Us" /> */}
         <NavItem onClick={logout} icon={faSignInAlt} label="Logout" />
       </ul>
     </nav>

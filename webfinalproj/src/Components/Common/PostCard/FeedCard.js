@@ -105,7 +105,7 @@ const Card = ({
       >
         <img onClick={handleViewProfile}
           className="profile-picture rounded-circle"
-          src={profile?.profileImage}
+          src={profile?.profileImage?profile.profileImage:userImg}
           alt={`${userName}'s profile`}
         />
         <div className="user-details">

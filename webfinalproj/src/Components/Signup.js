@@ -35,7 +35,7 @@ function SignUpForm() {
     const email = formData.email;
     const password = formData.password;
     const fullName = formData.fullName;
-    const role = "artist";
+    const role = formData.role;
 
     try {
       const response = await fetch("http://localhost:3000/user/create", {
