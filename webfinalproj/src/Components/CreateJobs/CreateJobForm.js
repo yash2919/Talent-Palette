@@ -6,10 +6,10 @@ import UploadWidget from "../Common/UploadWidget/UploadWidget";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import "./CreateJob.css"; // Import the CSS file for CreateJobForm1
-const BASE_URL = process.env.REACT_APP_BASE_URL;
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 const CreateJobForm1 = () => {
   const [email, setEmail] = useState("");
   const [jobName, setJobName] = useState("");

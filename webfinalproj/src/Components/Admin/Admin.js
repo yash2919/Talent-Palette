@@ -6,10 +6,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faTimes, faUser } from "@fortawesome/free-solid-svg-icons";
 import "./Admin.css"; // Reusing the same styles
 import { useNavigate, useLocation } from "react-router-dom";
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 function Admin() {
   const [allUsers, setAllUsers] = useState([]);

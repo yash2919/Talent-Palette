@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-const BASE_URL = process.env.REACT_APP_BASE_URL;
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 import { FaCaretDown } from 'react-icons/fa'; 
 
-
-
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 function SignUpForm() {
   const [formData, setFormData] = useState({

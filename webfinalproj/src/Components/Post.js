@@ -9,10 +9,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./Post.css";
 import UploadWidget from "./Common/UploadWidget/UploadWidget";
-const BASE_URL = process.env.REACT_APP_BASE_URL;
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 const CreatePost = ({ userProfilePicture, onPostCreated }) => {
   const [mediaType, setMediaType] = useState(null);
   const [postimgUrl, setpostimgUrl] = useState("");
