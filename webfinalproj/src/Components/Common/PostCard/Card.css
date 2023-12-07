@@ -103,3 +103,30 @@
   margin-right: 8px; /* Adjust the spacing between icon and text */
 }
 
+@media (max-width: 768px){
+  .card{
+    width: 95%;
+    margin-left: 0%;
+margin-right: 0%;
+  }
+  .card-actions{
+    
+    
+    width: 50%;
+  
+  }
+}
+@media (max-width: 1024px){
+  .card{
+    width: 85%;
+   
+
+  }
+  .card-actions{
+    
+    
+    width: 50%;
+  
+  }
+}
+

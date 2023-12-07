@@ -1,5 +1,7 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { css } from "@emotion/react";
+import { ClipLoader } from "react-spinners";
+import axios from "axios";
 import Navbar from "./Header/Navbar";
 import { useNavigate } from "react-router-dom";
 import Card from "./Common/PostCard/FeedCard";
@@ -9,15 +11,23 @@ import UserList from "./Common/PostCard/Users";
 import "./Home.css";
 import PersonCard from "../Components/PersonCards";
 
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
+
 function Home() {
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState(null);
-  const [allPosts, setallPosts] = useState([]);
-  const [allUsers, setallUsers] = useState([]);
+  const [allPosts, setAllPosts] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
   const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-  async function fetchallPosts() {
+  async function fetchAllPosts() {
     try {
       const response = await fetch(`${BASE_URL}/post/getallposts`, {
         method: "GET",
@@ -26,10 +36,8 @@ function Home() {
 
       if (response.ok) {
         const data = await response.json();
-        // if(data!=null)
-        setallPosts(
+        setAllPosts(
           data.post.map((post) => ({
-            // email: post.email,
             userName: post.userName ? post.userName : post.email,
             userImg: post.userImg ? post.userImg : image3,
             postName: post.postName,
@@ -39,18 +47,17 @@ function Home() {
             _id: post._id,
           }))
         );
-
-        console.log(data.post[0].timestamp);
       } else {
         throw new Error("Failed to fetch email");
       }
     } catch (error) {
       console.error("Error fetching email:", error);
-      // Handle errors
+    } finally {
+      setLoading(false);
     }
   }
 
-  async function fetchallUsers() {
+  async function fetchAllUsers() {
     try {
       const response = await fetch(`${BASE_URL}/user/getAll`, {
         method: "GET",
@@ -59,9 +66,7 @@ function Home() {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
-        // if(data!=null)
-        setallUsers(
+        setAllUsers(
           data.map((post) => ({
             userName: post.fullName,
             userImg: post.profileImage,
@@ -75,29 +80,23 @@ function Home() {
       }
     } catch (error) {
       console.error("Error fetching User:", error);
-      // Handle errors
     }
   }
+
   async function fetchProfile(email) {
-    console.log(email + "dvsvsdvdsvdsvdvd");
     try {
-      const response = await fetch(
-        `${BASE_URL}/user/profile/${email}`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`${BASE_URL}/user/profile/${email}`, {
+        method: "GET",
+        credentials: "include",
+      });
       if (response.ok) {
         const data = await response.json();
         setProfile(data);
-        // console.log(data.password+"dsvfsdvsdffsdgdg");
       } else {
         throw new Error("Failed to fetch profile data");
       }
     } catch (error) {
       console.error("Error fetching profile data:", error);
-      // Handle errors
     }
   }
 
@@ -122,62 +121,34 @@ function Home() {
         }
       } catch (error) {
         console.error("Error fetching email:", error);
-        // Handle errors
       }
     }
 
-    async function fetchallPosts() {
+    async function fetchData() {
       try {
-        const response = await fetch(`${BASE_URL}/post/getallposts`, {
-          method: "GET",
-          credentials: "include",
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          // if(data!=null)
-          setallPosts(
-            data.post.map((post) => ({
-              email: post.email,
-              userName: post.userName ? post.userName : post.email,
-              userImg: post.userImg ? post.userImg : image3,
-              postName: post.postName,
-              postimgUrl: post.postimgUrl,
-              postType: post.postType ? post.postType : "image",
-              timestamp: post.timestamp
-                ? post.timestamp
-                : "2023-12-05T12:34:56",
-              _id: post._id,
-            }))
-          );
-
-          console.log(data.post[0].timestamp);
-        } else {
-          throw new Error("Failed to fetch email");
-        }
-      } catch (error) {
-        console.error("Error fetching email:", error);
-        // Handle errors
+        setLoading(true);
+        await fetchUserEmail();
+        await fetchAllPosts();
+        await fetchAllUsers();
+      } finally {
+        setLoading(false);
       }
     }
 
-    fetchUserEmail();
-    fetchallPosts();
-    fetchallUsers();
+    fetchData();
   }, []);
-  console.log(allPosts);
-  console.log("Users");
-  console.log(allUsers);
 
   return (
     <div>
-      <Navbar userImg={profile?.profileImage ? profile.profileImage : image3} />
+      <Navbar
+        userImg={profile?.profileImage ? profile.profileImage : image3}
+      />
       <div className="home-container">
         <div className="main-content">
           <div className="person-card-container">
             <PersonCard
-              userName={profile ? profile.fullName : userEmail} // Assuming the logged-in user's email is the username
-              userImg={profile?.profileImage ? profile.profileImage : image3} // Use the logged-in user's profile picture
+              userName={profile ? profile.fullName : userEmail}
+              userImg={profile?.profileImage ? profile.profileImage : image3}
               userEmail={userEmail}
               userRole={profile?.role?profile.role : "User"} // You may need to fetch the user role from the server
             />
@@ -188,12 +159,14 @@ function Home() {
               userProfilePicture={
                 profile?.profileImage ? profile.profileImage : image3
               }
-              onPostCreated={fetchallPosts}
+              onPostCreated={fetchAllPosts}
             />
 
-            {/* <h1>{allPosts[0]}</h1> */}
-
-            {allPosts && allPosts.length > 0 ? (
+            {loading ? (
+              <div className="loader-container">
+                <ClipLoader css={override} size={50} color={"#123abc"} />
+              </div>
+            ) : allPosts && allPosts.length > 0 ? (
               allPosts
                 .slice()
                 .reverse()
@@ -210,15 +183,19 @@ function Home() {
                   />
                 ))
             ) : (
-              <p>Loading...</p>
+              <p>No posts available</p>
             )}
           </div>
         </div>
         <div className="user-list">
-          {allUsers && allUsers.length > 0 ? (
+          {loading ? (
+            <div className="loader-container">
+              <ClipLoader css={override} size={50} color={"#123abc"} />
+            </div>
+          ) : allUsers && allUsers.length > 0 ? (
             <UserList users={allUsers} />
           ) : (
-            <p>Loading</p>
+            <p>No users available</p>
           )}
         </div>
       </div>
