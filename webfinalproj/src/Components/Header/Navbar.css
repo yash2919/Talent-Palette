@@ -109,3 +109,50 @@
   transform: translateY(-50%);
   font-weight: 500;
 }
+
+@media only screen and (max-width: 768px) {
+.nvr{
+  width: 100%;
+  
+
+}
+.nv-lst{
+  width: fit-content;
+  margin-top: 10%;
+  background-color:#f2f2f2 ;
+}
+.ws-nm{
+  width: fit-content;
+  font-size: 10px;
+  display: none;
+}
+.nv-link{
+  width: fit-content;
+  margin-left: -35%;
+  justify-content: center;
+  
+}
+
+
+}
+
+@media (max-width: 1024px){
+  .nvr{
+    width: 100%;
+    height: 65px;
+
+  }
+  .ws-nm{
+    
+  }
+  
+  .nv-lst{
+    width: 80%;
+    margin-top: 25px;
+    justify-content: center;
+    background-color:#f2f2f2 ;
+  }
+  
+}
+
+

@@ -1,7 +1,4 @@
-:root {
-  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1) inset;
-  --hover-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.2) inset;
-}
+
 
 .person-card {
   display: flex;
@@ -68,4 +65,9 @@
 /* Common hover effect */
 .person-card:hover {
   box-shadow: var(--hover-box-shadow);
+}
+@media (max-width: 768px){
+  .person-card{
+    display: none;
+  }
 }

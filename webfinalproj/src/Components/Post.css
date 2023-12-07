@@ -12,6 +12,7 @@ background-color: #fff;
   margin-top: -282px;
 }
 
+
 .create-post-container:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.2) inset;
 }
@@ -192,3 +193,31 @@ background-color: #fff;
 .uploaded-files li {
   margin-bottom: 8px;
 }
+@media only screen and (max-width: 768px) {
+  .create-post-container {
+    width: 85%; /* Adjust the width for smaller screens */
+margin-top: 0%;
+margin-left: 0%;
+margin-right: 0%;
+     /* Adjust the margin-top for smaller screens */
+  }
+
+  #imagePreview {
+    margin-left: 0;
+    max-width: 100%;
+  }
+  .media-buttons{
+    overflow: hidden;
+    
+  }
+}
+
+
+@media (min-width : 780px) and (max-width: 1025px){
+  .create-post-container {
+    margin-left: 25%;
+    width: 100%;
+  }
+}
+  
+
