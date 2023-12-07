@@ -1,13 +1,61 @@
-// AppliedJob.js
 import React, { useState, useEffect } from "react";
 import temImg from "./paint.jpeg";
 import "./AppliedJob.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import axios from 'axios';
 
 const AppliedJob = ({ jobTitle, applicants }) => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
+
+  const getApplicantName = (applicant) => {
+    // Find the user with matching userId or userEmail
+    const user = allUsers.find((user) => user.email === applicant.userId);
+
+    // Return the user's name or a default value
+    return user ? user.fullName : "Unknown User";
+  };
+
+  const updateApplication = async (userId, jobId, status) => {
+    try {
+      const response = await axios.put('http://localhost:3000/application/editapp', {
+        userId,
+        jobId,
+        status,
+      });
+
+      if (response.data) {
+        alert('Application status updated successfully!');
+      }
+    } catch (error) {
+      console.error('Error updating application status:', error);
+    }
+  };
+
+  const handleAcceptClick = async (index) => {
+    const selectedApplicant = applicants[index];
+    const updatedApplicants = [...applicants]; // Create a copy of applicants array
+
+    // Update the status for the selected applicant in the copy
+    updatedApplicants[index].status = 'accepted';
+    setSelectedItems([...selectedItems, { index, status: 'accepted' }]);
+
+    // Call updateApplication with the updated user and job info
+    await updateApplication(selectedApplicant.userId, selectedApplicant.jobId, 'accepted');
+  };
+
+  const handleRejectClick = async (index) => {
+    const selectedApplicant = applicants[index];
+    const updatedApplicants = [...applicants]; // Create a copy of applicants array
+
+    // Update the status for the selected applicant in the copy
+    updatedApplicants[index].status = 'rejected';
+    setSelectedItems([...selectedItems, { index, status: 'rejected' }]);
+
+    // Call updateApplication with the updated user and job info
+    await updateApplication(selectedApplicant.userId, selectedApplicant.jobId, 'rejected');
+  };
 
   useEffect(() => {
     // Fetch all users when the component mounts
@@ -20,7 +68,7 @@ const AppliedJob = ({ jobTitle, applicants }) => {
 
         if (response.ok) {
           const data = await response.json();
-          console.log(data, "This is data of all users to find applianats");
+          console.log(data, "This is data of all users to find applicants");
           setAllUsers(data);
         } else {
           throw new Error("Failed to fetch User");
@@ -33,25 +81,6 @@ const AppliedJob = ({ jobTitle, applicants }) => {
     fetchAllUsers();
   }, []);
 
-  const getApplicantName = (applicant) => {
-    // Find the user with matching userId or userEmail
-    const user = allUsers.find((user) => user.email === applicant.userId);
-
-    // Return the user's name or a default value
-    return user ? user.fullName : "Unknown User";
-  };
-
-  const handleAcceptClick = (index) => {
-    setSelectedItems([...selectedItems, { index, status: "accepted" }]);
-  };
-
-  const handleRejectClick = (index) => {
-    setSelectedItems([...selectedItems, { index, status: "rejected" }]);
-  };
-  console.log(
-    applicants,
-    "This the list of appliants coming from View applied"
-  );
   return (
     <div className="random-container">
       {/* Left side: List of users */}
@@ -62,20 +91,15 @@ const AppliedJob = ({ jobTitle, applicants }) => {
             <li
               key={index}
               className={`random-list-item ${
-                selectedItems.some(
-                  (item) => item.index === index && item.status === "accepted"
-                )
-                  ? "accepted"
-                  : selectedItems.some(
-                      (item) =>
-                        item.index === index && item.status === "rejected"
-                    )
-                  ? "rejected"
-                  : ""
+                applicant.status === 'accepted'
+                  ? 'accepted'
+                  : applicant.status === 'rejected'
+                  ? 'rejected'
+                  : ''
               }`}
             >
-              <div className="random-button-container">
-                <img
+              <div>
+                <img 
                   src={temImg}
                   alt={`${applicant.name}'s profile`}
                   className="user1-profile-img"
