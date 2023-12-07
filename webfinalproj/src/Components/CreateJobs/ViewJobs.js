@@ -21,7 +21,11 @@ const ViewJobs = () => {
     async function fetchJobsApplied() {
       try {
         const response = await fetch(
+<<<<<<< Updated upstream
           "http://localhost:3000/application/getallapplied",
+=======
+          `${BASE_URL}/application/getallapplied`,
+>>>>>>> Stashed changes
           {
             method: "GET",
             credentials: "include",

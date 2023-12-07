@@ -178,7 +178,7 @@ function Home() {
               userName={profile ? profile.fullName : userEmail} // Assuming the logged-in user's email is the username
               userImg={profile?.profileImage ? profile.profileImage : image3} // Use the logged-in user's profile picture
               userEmail={userEmail}
-              userRole={profile ? profile.role : "User"} // You may need to fetch the user role from the server
+              userRole={profile?.role?profile.role : "User"} // You may need to fetch the user role from the server
             />
           </div>
 
