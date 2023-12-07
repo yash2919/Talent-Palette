@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 const postRouter = require('./api/routes/postRouter');
 const jobsRouter = require('./api/routes/jobsRouter');
 
-const profileAbout = require('./api/routes/profileRouter');
+
 const allowedOrigins = ["https://talent-palette-ba48afc325ca.herokuapp.com","http://3.134.245.199","ws://3.134.245.199:3001/ws","http://localhost:3000/user/abc@northeastern.edu","http://localhost:3001", "http://localhost:3000","http://localhost:3000/email","localhost","http://3.134.245.199:3000","http://3.134.245.199:3001"]; // Add your actual domain here
 
 const User = require('./api/models/userModel');
