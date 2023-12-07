@@ -45,7 +45,7 @@ const UserList = ({ users, isAdmin = false }) => {
 
   return (
     <div className="user-list-container">
-      <h2>User List</h2>
+      <h5>Users</h5>
       <ul className="list-group">
         {users.map((user, index) => (
           <li key={index} className="list-group-item">
@@ -53,11 +53,7 @@ const UserList = ({ users, isAdmin = false }) => {
               onClick={() => openUserProfile(user)}
               className="d-flex align-items-center"
             >
-              <img
-                className="user-list-image"
-                src={user.userImg}
-                alt={`User ${index + 1}`}
-              />
+              <img className="user-list-image" src={user.userImg} />
               <div className="user-details ms-3">
                 <p className="">{user.userName}</p>
               </div>
