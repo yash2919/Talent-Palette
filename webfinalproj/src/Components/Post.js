@@ -16,20 +16,19 @@ const CreatePost = ({ userProfilePicture, onPostCreated }) => {
   const [postName, setpostName] = useState("");
   const [postType, setpostType] = useState("");
   const [email, setemail] = useState(null);
-  const [preview,setPreview] =useState(false);
+  const [preview, setPreview] = useState(false);
   const preimageStyle = {
-    maxWidth: '500px',
-    maxHeight: '500px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    maxWidth: "500px",
+    maxHeight: "500px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   };
   const videoStyle = {
-    width: '100%', // Set your desired width
-    height: 'auto', // The 'auto' value maintains the aspect ratio
-    maxWidth: '400px', // Set your desired max-width
+    width: "100%", // Set your desired width
+    height: "auto", // The 'auto' value maintains the aspect ratio
+    maxWidth: "400px", // Set your desired max-width
   };
-  
 
   const openMediaModal = (type) => {
     setMediaType(type);
@@ -77,10 +76,10 @@ const CreatePost = ({ userProfilePicture, onPostCreated }) => {
       alert("An error occurred during Post Upload.");
     }
 
-     setpostName("");
-     setpostimgUrl("");
-     setpostType("");
-     setPreview(false);
+    setpostName("");
+    setpostimgUrl("");
+    setpostType("");
+    setPreview(false);
   };
   useEffect(() => {
     async function fetchUserEmail() {
@@ -120,31 +119,43 @@ const CreatePost = ({ userProfilePicture, onPostCreated }) => {
   return (
     <div className="create-post-container">
       <div className="user-image-container">
-        <img
-          className="user-image"
-          src={userProfilePicture}
-          alt="User Profile"
-        />
-        {"       "}
-        <textarea
-          className="post-box"
-          placeholder="Start a post..."
-          value={postName}
-          onChange={(e) => setpostName(e.target.value)}
-        ></textarea>
-        {preview?<div>
-          {
-            postType==="image"?<div>
-              <img src={postimgUrl} alt="Preview" id="imagePreview" style={preimageStyle}></img>
-            </div> :
-                <div className="video-container">
+        <div className="dividethem">
+          <img
+            className="user-image"
+            src={userProfilePicture}
+            alt="User Profile"
+          />
+          {"       "}
+          <textarea
+            className="post-box"
+            placeholder="Start a post..."
+            value={postName}
+            onChange={(e) => setpostName(e.target.value)}
+          ></textarea>
+        </div>
+        {preview ? (
+          <div>
+            {postType === "image" ? (
+              <div className="image1234">
+                <img
+                  src={postimgUrl}
+                  alt="Preview"
+                  id="imagePreview"
+                  style={preimageStyle}
+                ></img>
+              </div>
+            ) : (
+              <div className="video-container">
                 <video controls style={videoStyle}>
                   <source src={postimgUrl} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>
-          }
-        </div> :<div></div>}
+            )}
+          </div>
+        ) : (
+          <div></div>
+        )}
       </div>
 
       <div className="media-buttons">
@@ -155,6 +166,7 @@ const CreatePost = ({ userProfilePicture, onPostCreated }) => {
         </button>
       </div>
       {/* Modal or form for uploading media */}
+      <br></br>
       {mediaType && (
         <div className="media-modal">
           <h3>

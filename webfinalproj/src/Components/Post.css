@@ -18,9 +18,17 @@
 }
 
 .user-image-container {
-  display: flex;
+  
   align-items: center;
   margin-bottom: 20px;
+}
+.dividethem{
+display: flex;
+margin-bottom: 30px;
+}
+#imagePreview{
+  margin-left: 10%;
+  max-width: 60%;
 }
 
 .user-image {
@@ -54,7 +62,7 @@
   padding: 12px;
   border: none;
   border-radius: 8px;
-  resize: none;
+  
   transition: background-color 0.3s;
 }
 
