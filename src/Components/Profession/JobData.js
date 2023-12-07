@@ -1,72 +1,91 @@
 
-// // jobData.js
-// const jobData = {
-//     Artist: [
-//       { id: 'a1', title: 'Graphic Designer', description: 'Description for Graphic Designer job...' },
-//       { id: 'a2', title: 'Painter', description: 'Description for Painter job...' },
-//       { id: 'a3', title: 'Illustrator', description: 'Description for Illustrator job...' },
-//     ],
-
-
-
-//     Dancer: [
-//        { id: 'a1', title: 'Hip Hop', description: 'Description' },
-//        { id: 'a2', title: 'Painter', description: 'Description for Painter job...' },
-//        { id: 'a3', title: 'Illustrator', description: 'Description for Illustrator job...' },
-//       ],
-//       Musician: [
-//         { id: 'a1', title: 'Soothing Songs', description: 'Description' },
-//        { id: 'a2', title: 'Jazz', description: 'Description for Painter job...' },
-//        { id: 'a3', title: 'Illustrator', description: 'Description for Illustrator job...' },
-       
-//       ],
-//       'My Applications': [
-//         { id: 'a1', title: 'Soothing Songs', description: 'Description' },
-//         { id: 'a2', title: 'Jazz', description: 'Description for Painter job...' },
-//         { id: 'a3', title: 'Illustrator', description: 'Description for Illustrator job...' },
-    
-//       ],
-//     };
-
-
-  
-//   export default jobData;
 const jobData = async () => {
+  const organizedData = {};
+  let email="";
 
-  try {
-    const response = await fetch('http://localhost:3000/jobs/getalljobs'); // Replace '/api/jobs' with your API endpoint
-    if (!response.ok) {
-      throw new Error('Network response was not ok.');
-    }
-  
-    const data = await response.json();
-   // console.log(data);
+ 
+      try {
+        const response = await fetch("http://localhost:3000", {
+          method: "GET",
+          credentials: "include",
+        });
 
-    // Organize data by jobType
-    const organizedData = {};
-
-    data.jobs.map(job => {
-      if (!organizedData[job.jobType]) {
-        organizedData[job.jobType] = [];
+        if (response.ok) {
+          const data = await response.json();
+          
+          if (data.valid === true) {email=data.email;console.log(email);getjobdata();}
+        } else {
+          throw new Error("Failed to fetch email");
+        }
+      } catch (error) {
+        console.error("Error fetching email:", error);
+        // Handle errors
       }
-      if(job.jobstatus==="open"){
-      organizedData[job.jobType].push({
-        id: job._id,
-        title: job.jobName,
-        description: job.jobDesc,
-        image:job.jobimgUrl
-        // Add other fields as needed
-      });}
-    });
+    
+      async function getjobdata() {
+  try {
+    const jobsResponse = await fetch('http://localhost:3000/jobs/getalljobs');
 
-    return organizedData;
+    const applicationsResponse = await fetch(`http://localhost:3000/application/getallapplied?email=${email}`);
+    console.log(email);
+    if (!jobsResponse.ok || !applicationsResponse.ok) {
+      throw new Error('One or more network responses were not ok.');
+    }
+
+    const jobsData = await jobsResponse.json();
+    const applicationsData = await applicationsResponse.json();
+
+    jobsData.jobs.forEach(job => {
+    //  && job.adminapproval==="AdminCheck"
+      if (job.jobstatus === "open" ) {
+        if (!organizedData[job.jobType]) {
+          organizedData[job.jobType] = [];
+        }
+        organizedData[job.jobType].push({
+          id: job._id,
+          title: job.jobName,
+          description: job.jobDesc,
+          image: job.jobimgUrl
+        });
+      }
+    });
+    // console.log(applicationsData.appl[0].);
+    applicationsData.appl.forEach(application => {
+      const matchedJob = jobsData.jobs.find(job => job._id === application.jobId ); // Assuming the id field matches between jobs and applications
+
+      if (matchedJob) {
+        if (!organizedData['My Applications']) {
+          organizedData['My Applications'] = [];
+        }
+
+        organizedData['My Applications'].push({
+          id: matchedJob._id,
+          title: matchedJob.jobName,
+          description: matchedJob.jobDesc,
+          image:matchedJob.jobimgUrl,
+          status: application.status
+        
+        });
+       // console.log(matchedJob.jobName+application.status);
+      }
+    });
+    
+    if (organizedData['My Applications']) {
+      const myApplicationsJobsIds = new Set(organizedData['My Applications'].map(app => app.id));
+
+      for (const category in organizedData) {
+        if (category !== 'My Applications') {
+          organizedData[category] = organizedData[category].filter(job => !myApplicationsJobsIds.has(job.id));
+        }
+      }
+    }
+
   } catch (error) {
-    console.error('Error fetching data:', error);
-    return {};
+    console.error('Error fetching or processing data:', error);
   }
+}
+
+  return organizedData;
 };
 
 export default jobData;
-
-
-  

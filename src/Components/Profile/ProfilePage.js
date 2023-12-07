@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import Navbar from '../Header/Navbar';
 import Card from '../Common/PostCard/FeedCard';
 import image3 from '../../assets/images/artist.jpg';
 import './PortfolioPage.css';
 import UploadWidget from "../Common/UploadWidget/UploadWidget"
+import { useNavigate, useLocation } from "react-router-dom";
 
-const PortfolioPage = () => {
+const PortfolioPage = ({}) => {
   const navigate = useNavigate();
   const [editMode, setEditMode] = useState(false);
   const [email, setEmail] = useState("");
@@ -17,10 +18,15 @@ const PortfolioPage = () => {
   const [coverImage, setCoverImage] = useState("");
   const [gigsInfo, setGigsInfo] = useState("adfad");
   const [allPosts,setallPosts]=useState([]);
+  const location = useLocation();
+  const userEmail = new URLSearchParams(location.search).get('userEmail');
+  const [differentUser, setDifferentUser] = useState(!!userEmail); // Set to true if userEmail exists, false otherwise
+
 
   const [postimgUrl, setpostimgUrl] = useState("dfdf");
 
   const [posts, setPosts] = useState([]);
+  // const UploadWidget = ({ label, onTest }) => {
   const samplePost = {
     user: {
       name: "John Doe",
@@ -50,22 +56,14 @@ const PortfolioPage = () => {
           
           if (response.ok) {
             const data = await response.json();
-            console.log(data.email); // Handle email data as needed
-
-          if(data.valid===true){
-            // setEmail(data.email);
-            console.log(data.email);
-
-            setEmail(data.email);
-
-            console.log(email);
-            // fetchProfile();
-          }
-          else{
-            navigate("/home");
-          }
-          
-
+    
+            if (data.valid === true) {
+              // Use the userEmail prop if it exists; otherwise, use the email from the API
+              const fetchedEmail = userEmail || data.email;
+              setEmail(fetchedEmail);
+            } else {
+              navigate("/home");
+            }
           } else {
             throw new Error('Failed to fetch email');
           }
@@ -73,7 +71,7 @@ const PortfolioPage = () => {
           console.error('Error fetching email:', error);
           // Handle errors
         }
-  }
+      }
 
   // Flag to check if the component is still mounted
   async function fetchProfile() {
@@ -109,13 +107,13 @@ const PortfolioPage = () => {
         const data = await response.json();
         // if(data!=null)
         setallPosts(data.post.map(post => ({
-          // email: post.email,
+          email: post.email,
           userName: post.userName? post.userName : post.email,
           userImg: post.userImg? post.userImg:image3,
           postName: post.postName,
           postimgUrl: post.postimgUrl,
           postType: post.postType? post.postType : "image",
-          timestamp:post.timestamp ? post.timestamp: "2023-12-05T12:34:56",
+          timestamp: post.timestamp ? post.timestamp: "2023-12-05T12:34:56",
           _id: post._id
         })));
         
@@ -193,46 +191,70 @@ const handleOntTest = (result) => {
   if(result!=null){
    // console.log("url"+result);
     setProfileImage(result.secure_url);
+    setCoverImage(result.secure_url);
   }
 };
 
 return (
+  <div>
+<Navbar />
+ 
   <div className="profile-page">
-    <Navbar />
+    
       
           <div className="profile-header">
         {/* Conditional rendering for Cover Photo Upload */}
-        {editMode ? (
-          <UploadWidget 
-            onTest={(result) => {
-              if(result?.secure_url) {
-                setProfileImage(result.secure_url);
-              }
-            }}
-          />
-        ) : (
-          <div className="cover-photo" style={{ backgroundImage: `url(${artistProfile.coverPhoto})` }}></div>
-        )}
-        <div className = "profile-image-container">
-        {/* Conditional rendering for Profile Image Upload */}
-        {editMode ? (
-          <UploadWidget 
-            onTest={(result) => {
-              if(result?.secure_url) {
-                setCoverImage(result.secure_url);
-              }
-            }}
-          />
-        ) : (
-          <img src={artistProfile.profileImage || image3} alt="Profile" className="profile-image" />
-        )}
-         </div>
+         
+          {editMode ? (
+            
+            <>
+             <div className="upload-widget-container">
+            <h6>Upload Cover Picture</h6> 
+           
+              <UploadWidget 
+                onTest={(result) => {
+                  <button>Upload Cover Picture</button> 
+                  if(result?.secure_url) {
+                    setCoverImage(result.secure_url);
+                  }
+                }}
+              />
+              {/* <button>Upload Cover Photo</button> */}
+              </div>
+            </>
+          ) : (
+            <div className="cover-photo" style={{ backgroundImage: `url(${coverImage || artistProfile.coverImage})` }}></div>
+          )}
+        
+           {editMode ? (
+            <>
+             <h6>Upload Profile Picture</h6> 
+              <UploadWidget 
+                onTest={(result) => {
+                  if(result?.secure_url) {
+                    
+                    setProfileImage(result.secure_url);
+                  }
+                }}
+              />
+              {/* <button>Upload Profile Picture</button> */}
+              
+            </>
+          ) : (
+            <div className="profile-image-container">
+            <img src={artistProfile.profileImage || image3} alt="Profile" className="profile-image" />
+            </div>
+          )}
+        
+      
+
+
         {/* Edit Profile Button */}
-        {!editMode && (
+        {!editMode && !differentUser && (
           <button onClick={handleEdit} className="edit-profile-btn">Edit Profile</button>
         )}
-      </div>
-
+         </div>
+       
       <div className="profile-container">
         {/* Profile Details */}
         <div className="profile-details">
@@ -294,13 +316,14 @@ return (
 
 
           {/* Save and Cancel Buttons in Edit Mode */}
-          {editMode && (
-            <div className="edit-buttons">
+          {editMode && !differentUser && (
+              <div className="edit-buttons">
               <button onClick={handleSave} className="save-btn">Save Changes</button>
               <button onClick={() => setEditMode(false)} className="cancel-btn">Cancel</button>
             </div>
           )}
         </div>
+        
 
         {/* Posts Section */}
         <div className="posts-section">
@@ -319,6 +342,7 @@ return (
          
         </div>
       </div>
+    </div>
     </div>
   );
 };
