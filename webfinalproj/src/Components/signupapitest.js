@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 // import backgroundImage from './'; 
 
 function SignUpForm() {
@@ -84,7 +86,7 @@ function SignUpForm() {
     const password = document.getElementById('password').value;
 
     try {
-      const response = await fetch('http://localhost:3000/user/create', {
+      const response = await fetch(`${BASE_URL}/user/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

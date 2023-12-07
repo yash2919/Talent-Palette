@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faTimes, faUser } from "@fortawesome/free-solid-svg-icons";
 import "./Admin.css"; // Reusing the same styles
 import { useNavigate, useLocation } from "react-router-dom";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 
 function Admin() {
@@ -16,7 +17,7 @@ function Admin() {
   useEffect(() => {
     async function fetchAllUsers() {
       try {
-        const response = await fetch("http://localhost:3000/user/getAll", {
+        const response = await fetch(`${BASE_URL}/user/getAll`, {
           method: "GET",
           credentials: "include",
         });
@@ -54,7 +55,7 @@ function Admin() {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/user/delete", {
+      const response = await fetch(`${BASE_URL}/user/delete`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

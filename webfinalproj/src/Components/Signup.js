@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 
 
@@ -40,7 +41,7 @@ function SignUpForm() {
     const role = formData.role;
 
     try {
-      const response = await fetch("http://localhost:3000/user/create", {
+      const response = await fetch(`${BASE_URL}/user/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

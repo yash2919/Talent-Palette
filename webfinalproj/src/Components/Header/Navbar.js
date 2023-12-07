@@ -14,6 +14,7 @@ import {
   faSignInAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Navbar.css";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 function Navbar() {
  // console.log(userRole+"sgrb");
@@ -25,7 +26,7 @@ function Navbar() {
   useEffect(() => {
     async function fetchUserEmail() {
       try {
-        const response = await fetch("http://localhost:3000", {
+        const response = await fetch(`${BASE_URL}`, {
           method: "GET",
           credentials: "include",
         });
@@ -112,7 +113,7 @@ function Navbar() {
   const logout = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch("http://localhost:3000/logout", {
+      const response = await fetch(`${BASE_URL}/logout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

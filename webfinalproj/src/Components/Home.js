@@ -15,10 +15,11 @@ function Home() {
   const [allPosts, setallPosts] = useState([]);
   const [allUsers, setallUsers] = useState([]);
   const [profile, setProfile] = useState(null);
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   async function fetchallPosts() {
     try {
-      const response = await fetch("http://localhost:3000/post/getallposts", {
+      const response = await fetch(`${BASE_URL}/post/getallposts`, {
         method: "GET",
         credentials: "include",
       });
@@ -51,7 +52,7 @@ function Home() {
 
   async function fetchallUsers() {
     try {
-      const response = await fetch("http://localhost:3000/user/getAll", {
+      const response = await fetch(`${BASE_URL}/user/getAll`, {
         method: "GET",
         credentials: "include",
       });
@@ -81,7 +82,7 @@ function Home() {
     console.log(email+"dvsvsdvdsvdsvdvd");
     try {
       const response = await fetch(
-        `http://localhost:3000/user/profile/${email}`,
+        `${BASE_URL}/user/profile/${email}`,
         {
           method: "GET",
           credentials: "include",
@@ -103,7 +104,7 @@ function Home() {
   useEffect(() => {
     async function fetchUserEmail() {
       try {
-        const response = await fetch("http://localhost:3000", {
+        const response = await fetch(`${BASE_URL}`, {
           method: "GET",
           credentials: "include",
         });

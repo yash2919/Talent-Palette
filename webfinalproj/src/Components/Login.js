@@ -7,12 +7,14 @@ function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const API_BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3000";
+
 
   // session handle
   useEffect(() => {
     async function fetchUserEmail() {
       try {
-        const response = await fetch('http://localhost:3000', {
+        const response = await fetch(`${API_BASE_URL}`, {
           method: 'GET',
           credentials: 'include', // Send cookies with the request
         });
@@ -50,7 +52,7 @@ function Login() {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     try {
-      const response = await fetch("http://localhost:3000/user/login", {
+      const response = await fetch(`${API_BASE_URL}/user/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,7 +90,7 @@ function Login() {
     console.log(password);
 
     try {
-      const response = await fetch(`http://localhost:3000/user/${document.getElementById("email").value}`, {
+      const response = await fetch(`${API_BASE_URL}/user/${document.getElementById("email").value}`, {
         method: 'GET',
         credentials: 'include',
       });
